@@ -127,8 +127,21 @@ faster than re-applying the transformers on every build.
 
 ## Benchmarks
 
-For the main repository I tested on, which had around 2270 modules, the build time went down from 46 seconds to a whopping 12 seconds when there was yet no 
+For the main repository I tested on, which had around 3067 modules, the build time went down from 39 seconds to a whopping ~10 seconds when there was yet no 
 cache. Successive builds now take between 6 and 7 seconds.
+
+Here's a rundown of the various states the build was performed in:
+
+Elapsed (ms) | Happy?  | Cache enabled? | Cache present? | Using DLLs? |
+------------ | ------- | -------------- | -------------- | ----------- |
+39851        | NO      | N/A            | N/A            | NO          |
+37393        | NO      | N/A            | N/A            | YES         |
+14605        | YES     | NO             | N/A            | NO          |
+13925        | YES     | YES            | NO             | NO          |
+11877        | YES     | YES            | YES            | NO          |
+9228         | YES     | NO             | N/A            | YES         |
+9597         | YES     | YES            | NO             | YES         |
+6975         | YES     | YES            | YES            | YES         |
 
 _TODO: test against other projects_
 
