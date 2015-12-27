@@ -1,0 +1,33 @@
+{
+  "name": "happypack",
+  "main": "./lib/HappyPlugin.js",
+  "description": "- proper mapping of source maps (inline isn't good enough right now)",
+  "version": "1.0.0",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/amireh/happypack.git"
+  },
+  "keywords": [
+    "webpack",
+    "plugin",
+    "fast",
+    "speed",
+    "compilation",
+    "transformer",
+    "loader",
+    "happiness",
+    "happy"
+  ],
+  "author": "Ahmad Amireh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amireh/happypack/issues"
+  },
+  "homepage": "https://github.com/amireh/happypack#readme"
+}
