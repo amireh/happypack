@@ -143,9 +143,10 @@ Elapsed (ms) | Happy?  | Cache enabled? | Cache present? | Using DLLs? |
 9597         | YES     | YES            | NO             | YES         |
 6975         | YES     | YES            | YES            | YES         |
 
+The builds above were run on Linux over a machine with 12 cores.
+
 _TODO: test against other projects_
 
 ## TODO
 
 - proper mapping of source maps (inline isn't good enough right now)
-
