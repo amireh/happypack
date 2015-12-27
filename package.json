@@ -1,8 +1,8 @@
 {
   "name": "happypack",
   "main": "./lib/HappyPlugin.js",
-  "description": "- proper mapping of source maps (inline isn't good enough right now)",
-  "version": "1.0.0",
+  "description": "webpack speed booster, makes you happy!",
+  "version": "1.0.1",
   "directories": {
     "test": "test"
   },
