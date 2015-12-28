@@ -11,7 +11,7 @@ module.exports = {
 
   plugins: [
     new HappyPack({
-      transformer: path.resolve(__dirname, '../transform__babel.js'),
+      loaders: [{ path: path.resolve(__dirname, '../transform__babel.js') }],
       threads: 2
     })
   ],

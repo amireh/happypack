@@ -2,3 +2,5 @@
 /node_modules
 /.happypack
 /examples/**/dist
+/tmp
+!/tmp/.gitkeep

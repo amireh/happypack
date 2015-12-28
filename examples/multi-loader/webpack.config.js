@@ -11,11 +11,13 @@ module.exports = {
 
   plugins: [
     new HappyPack({
-      pipeLoaders: true,
       loaders: [
         {
           path: path.resolve(__dirname, '../../node_modules/babel-loader/index.js'),
           query: '?presets[]=es2015,presets[]=react'
+        },
+        {
+          path: path.resolve(__dirname, '../identity-loader.js')
         }
       ],
       threads: 2
