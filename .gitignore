@@ -1,1 +1,4 @@
 *.gnumeric
+/node_modules
+/.happypack
+/examples/**/dist
