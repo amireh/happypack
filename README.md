@@ -158,6 +158,8 @@ Defaults to: `true`
 
 ## How it works
 
+![A diagram showing the flow between HappyPack's components](doc/HappyPack_Workflow.png)
+
 HappyPack sits between webpack and your primary source files (like JS sources)
 where the bulk of loader transformations happen. Every time webpack resolves
 a module, HappyPack will take it and all its dependencies, find out if they
