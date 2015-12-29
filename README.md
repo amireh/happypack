@@ -114,6 +114,8 @@ been compiled, of course.)
 
 Recommended!
 
+Defaults to: `true`
+
 ### `cachePath: String`
 
 Path to a file where the JSON cache will be saved to disk and read from on 

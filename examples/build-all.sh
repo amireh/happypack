@@ -26,11 +26,17 @@ function run_task {
 }
 
 function single_loader {
-  ./node_modules/.bin/webpack --bail --config examples/single-loader/webpack.config.js
+  ./node_modules/.bin/webpack \
+    --bail \
+    --config examples/single-loader/webpack.config.js &&
+  grep "success" ./examples/single-loader/dist/main.js
 }
 
 function multi_loader {
-  ./node_modules/.bin/webpack --bail --config examples/multi-loader/webpack.config.js
+  ./node_modules/.bin/webpack \
+    --bail \
+    --config examples/multi-loader/webpack.config.js &&
+  grep "success" ./examples/multi-loader/dist/main.js
 }
 
 echo "Testing HappyPack using a single loader."

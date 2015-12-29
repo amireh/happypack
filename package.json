@@ -9,8 +9,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint lib",
     "test": "./node_modules/.bin/mocha -r babel-core/register 'lib/**/*.test.js'",
-    "test-examples": "./examples/build-all.sh",
-    "prepublish": "npm run lint && npm run test && npm run test-examples"
+    "test-examples": "./examples/build-all.sh"
   },
   "repository": {
     "type": "git",

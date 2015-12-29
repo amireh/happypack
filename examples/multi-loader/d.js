@@ -1,1 +1,1 @@
-console.log('hello from D!');
+console.log('success');
