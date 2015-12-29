@@ -21,15 +21,24 @@ See "How it works" below for more details.
 npm install --save-dev happypack
 ```
 
-In your `webpack.config.js`, you need to use the plugin:
+In your `webpack.config.js`, you need to use the plugin and tell it of the
+loaders it should use to transform the sources. Note that you must specify
+the absolute paths for these loaders as we do not use webpack's loader resolver
+at this point.
 
 ```javascript
 var HappyPack = require('happypack');
 
 exports.plugins = [
   new HappyPack({ 
-    // this is the only required parameter:
-    transformer: path.resolve(__dirname, 'webpack/my-happy-transformer.js'),
+    // loaders is the only required parameter:
+    loaders: [
+      {
+        path: path.resolve(__dirname, 'node_modules/babel-loader/index.js'),
+        query: '?presets[]=es2015'
+      }
+    ],
+
     // customize as needed, see Configuration below
   })
 ];
@@ -50,43 +59,44 @@ exports.module = {
 };
 ```
 
-Finally, you need to write the transformer which is explained below.
+That's it. Now sources that match `.js$` will be handed off to happypack which 
+will use the loaders you specified to transform them.
 
 ## Configuration
 
 These are the parameters you can pass to the plugin when you instantiate it.
 
-### `transformer: String`
+### `loaders: Array.<Object{path: String, query: String}>`
 
-An **absolute** path to the module that would transform the files. Right now,
-HappyPack doesn't work with webpack loaders as it expects the transformer to
-be as simple (and fast) as possible, which from my experience the loaders are
-not.
+Each loader entry consists of an **absolute** path to the module that would 
+transform the files and an optional query string to pass to it.
 
-The transformer signature is:
+> *NOTE*
+> 
+> HappyPack at this point doesn't work with *all* webpack loaders as the 
+> loader API is not fully ported yet.
+> 
+> See [this wiki page](https://github.com/amireh/happypack/wiki/Webpack-Loader-API-Support)
+> for more details on current API support.
 
-    (source: String, sourcePath: String) -> String
+The "synchronous" loader signature is:
 
-`sourcePath` will be an absolute path to the file the `source` belongs to. You
-can use that for generating source maps.
+    (source: String, map: ?) -> String
 
-Here's an example of writing a simple and effective babel transformer:
+`source` will be the string contents of the file being transformed. The second
+parameter, `map`, is currently not supported. In the future, it should point to
+the input source map for the file - if any.
 
-```javascript
-var babel = require('babel-core');
+You can emit both a source and a map using `this.callback`:
 
-module.exports = function transformWithBabel(source, sourcePath) {
-  return babel.transform(source, {
-    babelrc: false,
-    ast: false,
-    filename: sourcePath,
-    presets: [
-      'babel-preset-es2015',
-      'babel-preset-react',
-    ],
-  }).code;
-}
-```
+    this.callback(null, code, map);
+
+And you can do it asynchronously by calling `this.async`:
+
+    var callback = this.async();
+    someAsyncRoutine(function() {
+      callback(null, code, map);
+    });
 
 ### `id: String`
 
@@ -113,6 +123,8 @@ contents have not changed since the last compilation time (assuming they have
 been compiled, of course.)
 
 Recommended!
+
+Defaults to: `true`
 
 ### `cachePath: String`
 
@@ -146,6 +158,8 @@ Defaults to: `true`
 
 ## How it works
 
+![A diagram showing the flow between HappyPack's components](doc/HappyPack_Workflow.png)
+
 HappyPack sits between webpack and your primary source files (like JS sources)
 where the bulk of loader transformations happen. Every time webpack resolves
 a module, HappyPack will take it and all its dependencies, find out if they
@@ -171,32 +185,38 @@ sure you pass it their loaders. For example:
 // @file webpack.config.js
 exports.plugins = [
   new HappyPack({
-    id: 'js',
-    transform: path.resolve(__dirname, 'happy-transform__js.js')
+    id: 'jsx',
+    threads: 4,
+    loaders: [
+      { path: path.resolve(__dirname, 'node_modules/babel-loader/index.js') }
+    ]
   }),
 
   new HappyPack({
-    id: 'hbs',
-    transform: path.resolve(__dirname, 'happy-transform__hbs.js')
+    id: 'coffeescripts',
+    threads: 2,
+    loaders: [
+      { path: path.resolve(__dirname, 'node_modules/coffee-loader/index.js') }
+    ]
   })
 ];
 
 exports.module.loaders = [
   {
     test: /\.js$/,
-    loaders: 'happypack/loader?id=js'
+    loaders: 'happypack/loader?id=jsx'
   },
 
   {
-    test: /\.hbs$/,
-    loader: 'happypack/loader?id=hbs'
+    test: /\.coffee$/,
+    loader: 'happypack/loader?id=coffeescripts'
   },
 ]
 ```
 
-Now `.js` files will be handled by the first Happy plugin which will use the
-`happy-transform__js.js` transform routine, while `.hbs` files will be handled
-by the second one using the `happy-transform__hbs.js` transform routine.
+Now `.js` files will be handled by the first Happy plugin which will use
+`babel-loader` to transform them, while `.coffee` files will be handled
+by the second one using the `coffee-loader` as a transformer.
 
 Note that each plugin will properly use different cache files as the default
 cache file names include the plugin IDs, so you don't need to override them
@@ -229,6 +249,14 @@ _TODO: test against other projects_
 - proper mapping of source maps (inline isn't good enough right now)
 
 ## Changes
+
+**1.1.0**
+
+- now supporting basic webpack loaders
+- dropped the `transformer` parameter as it's no longer needed
+- `cache` now defaults to `true`
+- now using a forking model utilizing node.js's `process.fork()` for cleaner
+  threading code
 
 **1.0.2**
 

@@ -1,0 +1,90 @@
+{
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+
+  "rules": {
+    "no-trailing-spaces": 2,
+    "indent": [2, 2, {
+      "SwitchCase": 1
+    }],
+    "curly": 0,
+    "eqeqeq": 2,
+    "no-eq-null": 2,
+    "quotes": 0,
+    "strict": 0,
+
+    "consistent-this": 0,
+    "no-undef": 2,
+    "dot-notation": 0,
+    "space-infix-ops": 0,
+    "space-unary-ops": 0,
+    "no-underscore-dangle": 0,
+    "no-unused-vars": 2,
+    "comma-dangle": 0,
+    "semi-spacing": 0,
+    "consistent-return": 0,
+    "camelcase": 0,
+    "eol-last": 0,
+    "no-multi-spaces": 0,
+    "no-extra-boolean-cast": 0,
+    "no-use-before-define": 0,
+    "no-extra-bind": 0,
+    "no-eq-null": 0,
+    "no-shadow": 0,
+    "no-shadow-restricted-names": 0,
+    "no-alert": 0,
+    "no-empty": 0,
+
+    // Bah, this is really useful but we can't turn this on because of chai.
+    //
+    // See https://github.com/eslint/eslint/issues/2102
+    //
+    // Maybe use that chai-lint package someday? so many tests to modify...
+    "no-unused-expressions": 0,
+
+    "no-console": 0,
+    "space-return-throw-case": 0,
+
+    "one-var": [2, {
+      "initialized": "never"
+    }],
+
+    "no-cond-assign": [2, "except-parens"],
+    "no-debugger": 2,
+    "no-dupe-args": 2,
+    "no-dupe-keys": 2,
+    "no-duplicate-case": 2,
+    "no-empty": 2,
+    "no-extra-semi": 0,
+    "no-func-assign": 2,
+    "no-inner-declarations": 2,
+    "no-irregular-whitespace": 2,
+    "no-negated-in-lhs": 2,
+    "no-sparse-arrays": 2,
+    "no-unreachable": 2,
+    "use-isnan": 2,
+    "no-caller": 2,
+    "no-else-return": 0,
+    "no-eval": 2,
+    "no-implied-eval": 2,
+    "no-extend-native": 2,
+    "no-fallthrough": 2,
+    "no-lone-blocks": 2,
+    "no-loop-func": 2,
+    "no-new": 2,
+    "no-redeclare": 2,
+    "no-return-assign": [2, "always"],
+    "no-sequences": 2,
+    "radix": 2,
+    "wrap-iife": [2, "any"],
+    "no-undef-init": 2,
+    "no-delete-var": 2,
+    "no-use-before-define": [2, "nofunc"],
+    "dot-location": [2, "property"],
+    "curly": [2, "multi-line"],
+    "no-shadow": 2,
+    "no-extra-bind": 2,
+  },
+}

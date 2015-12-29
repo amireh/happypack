@@ -1,1 +1,7 @@
 *.gnumeric
+/node_modules
+/.happypack
+/examples/**/dist
+/tmp
+!/tmp/.gitkeep
+/npm-debug.log
