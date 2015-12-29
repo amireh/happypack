@@ -26,6 +26,8 @@ function run_task {
 }
 
 function single_loader {
+  rm -r examples/single-loader/dist
+
   ./node_modules/.bin/webpack \
     --bail \
     --config examples/single-loader/webpack.config.js &&
@@ -33,6 +35,8 @@ function single_loader {
 }
 
 function multi_loader {
+  rm -r examples/multi-loader/dist
+
   ./node_modules/.bin/webpack \
     --bail \
     --config examples/multi-loader/webpack.config.js &&
