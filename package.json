@@ -8,7 +8,9 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint lib",
-    "test": "./node_modules/.bin/mocha -r babel-core/register 'lib/**/*.test.js'"
+    "test": "./node_modules/.bin/mocha -r babel-core/register 'lib/**/*.test.js'",
+    "test-examples": "./examples/build-all.sh",
+    "prepublish": "npm run lint && npm run test && npm run test-examples"
   },
   "repository": {
     "type": "git",
@@ -41,5 +43,9 @@
     "mocha": "^2.3.4",
     "sinon": "^1.17.2",
     "webpack": "^1.12.9"
+  },
+  "dependencies": {
+    "async": "^1.5.0",
+    "json-stringify-safe": "^5.0.1"
   }
 }

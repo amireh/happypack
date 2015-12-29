@@ -1,3 +1,4 @@
 node_modules
 tmp
 .happypack
+lib/__tests__/fixtures

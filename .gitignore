@@ -4,3 +4,4 @@
 /examples/**/dist
 /tmp
 !/tmp/.gitkeep
+/npm-debug.log
