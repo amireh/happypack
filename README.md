@@ -250,6 +250,11 @@ _TODO: test against other projects_
 
 ## Changes
 
+**1.1.1**
+
+- Unrecognized and invalid config parameters will cause the process to abort.
+- The active version is logged on launch.
+
 **1.1.0**
 
 - now supporting basic webpack loaders
