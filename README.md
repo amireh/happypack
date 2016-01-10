@@ -1,4 +1,4 @@
-# HappyPack (beta)
+# HappyPack (beta) [![Build Status](https://travis-ci.org/amireh/happypack.svg)](https://travis-ci.org/amireh/happypack)
 
 Make working with webpack against large code-bases a happier experience.
 
