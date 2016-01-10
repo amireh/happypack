@@ -244,11 +244,13 @@ The builds above were run on Linux over a machine with 12 cores.
 
 _TODO: test against other projects_
 
-## TODO
-
-- proper mapping of source maps (inline isn't good enough right now)
-
 ## Changes
+
+**1.1.2**
+
+- Fixed an issue on old node versions (0.10) with the EventEmitter API (#10)
+- Fixed an issue that was breaking the compiler if an invalid `threads` option
+  was passed (evaluating to `NaN`)
 
 **1.1.1**
 
