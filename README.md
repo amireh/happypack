@@ -246,6 +246,10 @@ _TODO: test against other projects_
 
 ## Changes
 
+**1.1.3**
+
+- Fixed an issue where the initial cache was not being saved properly
+
 **1.1.2**
 
 - Fixed an issue on old node versions (0.10) with the EventEmitter API (#10)

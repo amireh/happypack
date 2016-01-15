@@ -47,7 +47,8 @@
     "mocha": "^2.3.4",
     "sinon": "^1.17.2",
     "style-loader": "^0.13.0",
-    "webpack": "^1.12.9"
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "async": "^1.5.0",
