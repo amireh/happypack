@@ -22,9 +22,9 @@ npm install --save-dev happypack
 ```
 
 In your `webpack.config.js`, you need to use the plugin and tell it of the
-loaders it should use to transform the sources. Note that you must specify
+loaders it should use to transform the sources. ~~Note that you must specify
 the absolute paths for these loaders as we do not use webpack's loader resolver
-at this point.
+at this point.~~
 
 ```javascript
 var HappyPack = require('happypack');
@@ -32,12 +32,7 @@ var HappyPack = require('happypack');
 exports.plugins = [
   new HappyPack({ 
     // loaders is the only required parameter:
-    loaders: [
-      {
-        path: path.resolve(__dirname, 'node_modules/babel-loader/index.js'),
-        query: '?presets[]=es2015'
-      }
-    ],
+    loaders: [ 'babel?presets[]=es2015' ],
 
     // customize as needed, see Configuration below
   })
@@ -66,7 +61,7 @@ will use the loaders you specified to transform them.
 
 These are the parameters you can pass to the plugin when you instantiate it.
 
-### `loaders: Array.<Object{path: String, query: String}>`
+### `loaders: Array.<String|Object{path: String, query: String}>`
 
 Each loader entry consists of an **absolute** path to the module that would 
 transform the files and an optional query string to pass to it.
@@ -133,6 +128,17 @@ successive webpack runs.
 
 Defaults to `.happypack/cache--[id].json`
 
+### `cacheContext: Object`
+
+An object that is used to invalidate the cache between runs based on whatever
+variables that might affect the transformation of your sources, like `NODE_ENV`
+for example.
+
+You should provide this if you perform different builds based on some external
+parameters. **THIS OBJECT MUST BE JSON-SERIALIZABLE**.
+
+Defaults to: `{}`
+
 ### `threads: Number`
 
 This number indicates how many Node VMs HappyPack will spawn for compiling
@@ -187,17 +193,13 @@ exports.plugins = [
   new HappyPack({
     id: 'jsx',
     threads: 4,
-    loaders: [
-      { path: path.resolve(__dirname, 'node_modules/babel-loader/index.js') }
-    ]
+    loaders: [ 'babel-loader' ]
   }),
 
   new HappyPack({
     id: 'coffeescripts',
     threads: 2,
-    loaders: [
-      { path: path.resolve(__dirname, 'node_modules/coffee-loader/index.js') }
-    ]
+    loaders: [ 'coffee-loader' ]
   })
 ];
 
@@ -245,6 +247,10 @@ The builds above were run on Linux over a machine with 12 cores.
 _TODO: test against other projects_
 
 ## Changes
+
+**1.1.4**
+
+- Fixed an issue where the cache was being improperly invalidated due to `cacheContext` not being stored properly (#17, thanks to @blowery)
 
 **1.1.3**
 
