@@ -5,3 +5,4 @@
 /tmp
 !/tmp/.gitkeep
 /npm-debug.log
+/coverage

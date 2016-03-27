@@ -1,0 +1,10 @@
+instrumentation:
+  root: lib
+  excludes:
+    - "*.test.js"
+    - "HappyTestUtils.js"
+  extensions:
+    - .js
+reporting:
+  reports:
+    - html
