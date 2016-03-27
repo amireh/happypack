@@ -48,6 +48,7 @@
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
     "mocha": "^2.3.4",
+    "multiline-slash": "^1.0.0",
     "sinon": "^1.17.2",
     "style-loader": "^0.13.0",
     "transform-loader": "^0.2.3",

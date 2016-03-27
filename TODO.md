@@ -1,0 +1,2 @@
+- [ ] stop serializing options and instead accept webpack config file path and populate fake loader context with that so that worker loaders get access to external options
+- [ ] pitching loader applier
