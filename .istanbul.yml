@@ -3,6 +3,7 @@ instrumentation:
   excludes:
     - "*.test.js"
     - "HappyTestUtils.js"
+    - "__tests__/fixtures/**/*"
   extensions:
     - .js
 reporting:

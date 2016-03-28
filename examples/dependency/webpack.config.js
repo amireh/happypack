@@ -14,7 +14,11 @@ module.exports = {
       {
         test: /\.js$/,
         include: [ path.resolve(__dirname, 'lib') ],
-        loaders: [ path.resolve(__dirname, 'loader.js') ],
+        loaders: [
+          path.resolve(__dirname, 'loader-c.js'),
+          path.resolve(__dirname, 'loader-b.js'),
+          path.resolve(__dirname, 'loader-a.js'),
+        ],
       },
     ]
   },
