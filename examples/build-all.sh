@@ -21,12 +21,10 @@ function run_task {
   fi
 
   echo -e "[$task] FINISHED $(date)\n"
-
-  # exit $exit_status
 }
 
 function single_loader {
-  rm -r examples/single-loader/dist
+  [ -d examples/single-loader/dist ] && rm -r examples/single-loader/dist
 
   ./node_modules/.bin/webpack \
     --bail \
@@ -35,7 +33,7 @@ function single_loader {
 }
 
 function multi_loader {
-  rm -r examples/multi-loader/dist
+  [ -d examples/multi-loader/dist ] && rm -r examples/multi-loader/dist
 
   ./node_modules/.bin/webpack \
     --bail \
@@ -43,8 +41,20 @@ function multi_loader {
   grep "success" ./examples/multi-loader/dist/main.js
 }
 
+function sass_loader {
+  [ -d examples/sass-loader/dist ] && rm -r examples/sass-loader/dist
+
+  ./node_modules/.bin/webpack \
+    --bail \
+    --config examples/sass-loader/webpack.config.js &&
+  grep "background-color: yellow" ./examples/sass-loader/dist/main.js
+}
+
 echo "Testing HappyPack using a single loader."
 run_task single_loader
 
 echo "Testing HappyPack using multiple loaders."
 run_task multi_loader
+
+echo "Testing HappyPack using sass + css + style loaders."
+run_task sass_loader

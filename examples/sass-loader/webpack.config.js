@@ -2,7 +2,7 @@ var path = require('path');
 var HappyPack = require('../../');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'a.js'),
+  entry: path.resolve(__dirname, 'lib/index.scss'),
 
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -11,8 +11,8 @@ module.exports = {
 
   plugins: [
     new HappyPack({
+      loaders: [ 'style!css!sass' ],
       cache: false,
-      loaders: [{ path: path.resolve(__dirname, '../../node_modules/babel-loader/index.js') }],
       threads: 2
     })
   ],
@@ -20,7 +20,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.scss$/,
         loader: path.resolve(__dirname, '../../loader')
       }
     ]

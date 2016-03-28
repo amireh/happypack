@@ -1,6 +1,6 @@
 *.gnumeric
 /node_modules
-/.happypack
+.happypack
 /examples/**/dist
 /tmp
 !/tmp/.gitkeep

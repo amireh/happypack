@@ -11,6 +11,8 @@ module.exports = {
 
   plugins: [
     new HappyPack({
+      cache: false,
+
       loaders: [
         {
           path: path.resolve(__dirname, '../../node_modules/babel-loader/index.js'),
