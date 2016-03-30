@@ -5,6 +5,9 @@ if [ ! -d examples ]; then
   exit 1
 fi
 
+ROOT=$(pwd)
+WEBPACK_BIN="${ROOT}/node_modules/.bin/webpack"
+
 function run_task {
   task=$@
   echo -e "\n[$task] STARTING $(date)"
@@ -21,6 +24,10 @@ function run_task {
   fi
 
   echo -e "[$task] FINISHED $(date)\n"
+}
+
+function install_packages {
+	(cd $@; npm install) 
 }
 
 function single_loader {
@@ -43,11 +50,17 @@ function multi_loader {
 
 function sass_loader {
   [ -d examples/sass-loader/dist ] && rm -r examples/sass-loader/dist
+  [ -f examples/sass-loader/package.json ] && install_packages examples/sass-loader
 
-  ./node_modules/.bin/webpack \
-    --bail \
-    --config examples/sass-loader/webpack.config.js &&
+  (cd examples/sass-loader; $ROOT/node_modules/.bin/webpack --bail) &&
   grep "background-color: yellow" ./examples/sass-loader/dist/main.js
+}
+
+function tslint_loader {
+  [ -d examples/tslint-loader/dist ] && rm -r examples/tslint-loader/dist
+  [ -f examples/tslint-loader/package.json ] && install_packages examples/tslint-loader
+
+	(cd examples/tslint-loader; $WEBPACK_BIN --bail) | grep "forbidden var keyword"
 }
 
 echo "Testing HappyPack using a single loader."
@@ -58,3 +71,6 @@ run_task multi_loader
 
 echo "Testing HappyPack using sass + css + style loaders."
 run_task sass_loader
+
+echo "Testing HappyPack using ts-linter (typescript linter)"
+run_task tslint_loader

@@ -1,5 +1,5 @@
 *.gnumeric
-/node_modules
+node_modules
 .happypack
 /examples/**/dist
 /tmp
