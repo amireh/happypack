@@ -1,4 +1,4 @@
-# HappyPack (beta) [![Build Status](https://travis-ci.org/amireh/happypack.svg)](https://travis-ci.org/amireh/happypack)
+# HappyPack (beta) [![Build Status](https://travis-ci.org/amireh/happypack.svg?branch=master)](https://travis-ci.org/amireh/happypack) [![codecov.io](https://codecov.io/github/amireh/happypack/coverage.svg?branch=master)](https://codecov.io/github/amireh/happypack?branch=master)
 
 Make working with webpack against large code-bases a happier experience.
 
