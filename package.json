@@ -8,6 +8,7 @@
     "test": "node --harmony --harmony_destructuring ./node_modules/.bin/_mocha 'lib/**/*.test.js'",
     "test-examples": "./examples/build-all.sh",
     "coverage": "node --harmony --harmony_destructuring ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha 'lib/**/*.test.js'",
+    "coverage_ci": "npm run coverage && ./node_modules/.bin/codecov",
     "prepublish": "npm run lint && npm run test && npm run test-examples"
   },
   "repository": {
@@ -39,6 +40,7 @@
     "brfs": "^1.4.2",
     "browserify-through": "^2.0.0",
     "chai": "^3.4.1",
+    "codecov": "^1.0.1",
     "coffeeify": "^2.0.1",
     "eslint": "^1.10.3",
     "fs-extra": "^0.26.4",
