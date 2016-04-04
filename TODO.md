@@ -1,2 +1,8 @@
-- [ ] stop serializing options and instead accept webpack config file path and populate fake loader context with that so that worker loaders get access to external options
+- [ ] ~~stop serializing options and instead accept webpack config file path and populate fake loader context with that so that worker loaders get access to external options~~
 - [x] pitching loader applier
+- [ ] pass loader options found on the compiler by the loader name to the loader, like `options.transform` or `options.sassLoader`
+- [ ] accept modified `resourcePath` from pitching phase and re-read the source
+- [ ] delay reading the source file until the very point where we need it; pitch
+- [ ] replay loader RPCs for items cached by loaders like `tslint-loader` where the output is actually RPCs like `this.emitWarning` and `this.emitError`
+- [ ] better coverage for background loader failures
+- [ ] 

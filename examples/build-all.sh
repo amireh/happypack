@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
+#
+# Downstream integration tests.
 
 if [ ! -d examples ]; then
   echo "You must run this from happypack root."
   exit 1
 fi
 
-ROOT=$(pwd)
-WEBPACK_BIN="${ROOT}/node_modules/.bin/webpack"
+WEBPACK_BIN="$(pwd)/node_modules/.bin/webpack"
 
 function run_task {
   task=$@
@@ -26,51 +27,86 @@ function run_task {
   echo -e "[$task] FINISHED $(date)\n"
 }
 
-function install_packages {
-	(cd $@; npm install) 
+function setup_example {
+  EXAMPLE_DIR=$@
+
+  [ -d $EXAMPLE_DIR/dist ] && rm -r $EXAMPLE_DIR/dist
+  [ -f $EXAMPLE_DIR/package.json ] && (cd $EXAMPLE_DIR; npm install)
 }
 
-function single_loader {
-  [ -d examples/single-loader/dist ] && rm -r examples/single-loader/dist
+function babel_loader {
+  echo "Testing HappyPack with babel-loader"
+  echo "-----------------------------------"
 
-  ./node_modules/.bin/webpack \
-    --bail \
-    --config examples/single-loader/webpack.config.js &&
-  grep "success" ./examples/single-loader/dist/main.js
-}
+  setup_example "examples/babel-loader"
 
-function multi_loader {
-  [ -d examples/multi-loader/dist ] && rm -r examples/multi-loader/dist
-
-  ./node_modules/.bin/webpack \
-    --bail \
-    --config examples/multi-loader/webpack.config.js &&
-  grep "success" ./examples/multi-loader/dist/main.js
+  (
+    cd examples/babel-loader;
+    $WEBPACK_BIN --bail &&
+    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
+    diff dist/main.js dist/main.raw.js &&
+    grep "success" dist/main.js
+  )
 }
 
 function sass_loader {
-  [ -d examples/sass-loader/dist ] && rm -r examples/sass-loader/dist
-  [ -f examples/sass-loader/package.json ] && install_packages examples/sass-loader
+  echo "Testing HappyPack using sass + css + style loaders."
+  echo "---------------------------------------------------"
 
-  (cd examples/sass-loader; $ROOT/node_modules/.bin/webpack --bail) &&
-  grep "background-color: yellow" ./examples/sass-loader/dist/main.js
+  setup_example "examples/sass-loader"
+
+  (
+    cd examples/sass-loader;
+    $WEBPACK_BIN --bail &&
+    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
+    diff dist/main.js dist/main.raw.js &&
+    grep "background-color: yellow" dist/main.js
+  )
 }
 
 function tslint_loader {
-  [ -d examples/tslint-loader/dist ] && rm -r examples/tslint-loader/dist
-  [ -f examples/tslint-loader/package.json ] && install_packages examples/tslint-loader
+  echo "Testing HappyPack using ts-linter (typescript linter)"
+  echo "-----------------------------------------------------"
 
-	(cd examples/tslint-loader; $WEBPACK_BIN --bail) | grep "forbidden var keyword"
+  setup_example "examples/tslint-loader"
+
+  (cd examples/tslint-loader; $WEBPACK_BIN --bail) | grep "forbidden var keyword"
 }
 
-echo "Testing HappyPack using a single loader."
-run_task single_loader
+function transform_loader {
+  echo "Testing HappyPack with transform-loader (coffeeify & brfs)"
+  echo "----------------------------------------------------------"
 
-echo "Testing HappyPack using multiple loaders."
-run_task multi_loader
+  setup_example "examples/transform-loader"
 
-echo "Testing HappyPack using sass + css + style loaders."
+	(
+    cd examples/transform-loader;
+    $WEBPACK_BIN --bail &&
+    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
+    diff dist/main.js dist/main.raw.js
+  )
+}
+
+# purge the cache and previous build artifacts
+find examples -maxdepth 2 -type d -name '.happypack' | xargs rm -r
+find examples -maxdepth 2 -type d -name 'dist' | xargs rm -r
+
+export HAPPY_CACHE=1
+
+run_task babel_loader
+run_task sass_loader
+run_task tslint_loader
+run_task transform_loader
+
+echo "Re-running previous examples with cached sources..."
+echo "---------------------------------------------------"
+
+run_task babel_loader
 run_task sass_loader
 
-echo "Testing HappyPack using ts-linter (typescript linter)"
-run_task tslint_loader
+# doesn't work right now, we need to replay all loader RPCs on cache load as
+# this loader simply does emitWarning/emitError calls
+#
+# run_task tslint_loader
+
+run_task transform_loader

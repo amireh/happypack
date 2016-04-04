@@ -1,5 +1,6 @@
 var path = require('path');
 var through = require('browserify-through');
+var HappyPack = require('../../');
 
 module.exports = {
   entry: path.resolve(__dirname, 'lib/index.js'),
@@ -10,27 +11,41 @@ module.exports = {
   },
 
   module: {
-    postLoaders: [
-      {
-        loader: "transform?brfs"
-      }
-    ],
+    // postLoaders: [
+    //   {
+    //     loader: "transform?brfs"
+    //   }
+    // ],
     loaders: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: ["transform?brfs"],
+        loader: path.resolve(__dirname, '../../loader') + '?id=brfs',
+        include: [ path.resolve(__dirname, 'lib') ]
       },
       {
         test: /\.coffee$/,
-        loader: "transform?coffeeify"
+        loader: path.resolve(__dirname, '../../loader') + '?id=coffee',
+        include: [ path.resolve(__dirname, 'lib') ]
       },
-      // {
-      //   test: /\.weirdjs$/,
-      //   loader: "transform?0"
-      // }
     ]
   },
+
+  plugins: [
+    new HappyPack({
+      id: 'coffee',
+      threads: 2,
+      loaders: [ 'transform?coffeeify' ],
+      cache: process.env.HAPPY_CACHE === '1'
+    }),
+
+    new HappyPack({
+      id: 'brfs',
+      threads: 2,
+      loaders: [ 'transform?brfs' ],
+      cache: process.env.HAPPY_CACHE === '1'
+    })
+  ],
+
   transforms: [
     // TODO
     function(file) {
