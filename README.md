@@ -12,8 +12,8 @@ See "How it works" below for more details.
 ## Motivation
 
 - webpack initial build times are horrifying in large codebases (3k+ modules)
-- something that works against both a one-time build (e.g. for a CI) and with 
-  persistent processes (`--watch` during development)
+- something that works against both a one-time build (e.g. for a CI) and 
+  continuous builds (i.e. `--watch` during development)
 
 ## Usage
 
@@ -39,8 +39,8 @@ exports.plugins = [
 ];
 ```
 
-Now you replace your current JS loaders with HappyPack's (possibly use an env
-variable to enable HappyPack):
+Now you replace your current loaders with HappyPack's loader (possibly use an 
+env variable to enable HappyPack):
 
 ```javascript
 exports.module = {
@@ -55,7 +55,7 @@ exports.module = {
 ```
 
 That's it. Now sources that match `.js$` will be handed off to happypack which 
-will use the loaders you specified to transform them.
+will transform them in parallel using the loaders you specified.
 
 ## Configuration
 
