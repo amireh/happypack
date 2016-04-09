@@ -1,0 +1,11 @@
+/coverage
+/doc
+/examples
+/tmp
+/benchmarks.gnumeric
+/.happypack
+/lib/__tests__
+/TODO.md
+/.travis.yml
+/.istanbul.yml
+*.tgz
