@@ -61,35 +61,22 @@ These are the parameters you can pass to the plugin when you instantiate it.
 
 ### `loaders: Array.<String|Object{path: String, query: String}>`
 
-Each loader entry consists of an **absolute** path to the module that would 
-transform the files and an optional query string to pass to it.
+Each loader entry consists of the name or path of loader that would 
+transform the files and an optional query string to pass to it. This looks
+similar to what you'd pass to webpack's `loader` config.
 
-> *NOTE*
+> **NOTE**
 > 
-> HappyPack at this point doesn't work with *all* webpack loaders as the 
-> loader API is not fully ported yet.
+> HappyPack doesn't work with *all* webpack loaders as some loader API are not 
+> supported.
 > 
 > See [this wiki page](https://github.com/amireh/happypack/wiki/Webpack-Loader-API-Support)
-> for more details on current API support.
+> for more details on current Loader API support.
 
-The "synchronous" loader signature is:
+It is possible to omit this value and have HappyPack automatically infer the
+loaders it should use, see "Inferring loaders" below for more information
 
-    (source: String, map: ?) -> String
-
-`source` will be the string contents of the file being transformed. The second
-parameter, `map`, is currently not supported. In the future, it should point to
-the input source map for the file - if any.
-
-You can emit both a source and a map using `this.callback`:
-
-    this.callback(null, code, map);
-
-And you can do it asynchronously by calling `this.async`:
-
-    var callback = this.async();
-    someAsyncRoutine(function() {
-      callback(null, code, map);
-    });
+Defaults to: `null`
 
 ### `id: String`
 
@@ -101,6 +88,14 @@ HappyPack plugin defined, in which case you'll need distinct IDs to tell them
 apart. See "Using multiple instances" below for more information on that.
 
 Defaults to: "1"
+
+### `enabled: Boolean`
+
+Whether the plugin should be activated. This is for convenience when you want
+to conditionally disable HappyPack based on, for example, an environment 
+variable.
+
+Defaults to `true`
 
 ### `tempDir: String`
 
@@ -177,6 +172,40 @@ eventually your chunk.
 mtime so that it can re-use it on successive builds if the contents have not
 changed. This is a fast and somewhat reliable approach, and definitely much 
 faster than re-applying the transformers on every build.
+
+## Inferring loaders
+
+For configuration convenience, we can instruct a HappyPack plugin to use the
+loaders specified in webpack's original `module.loaders` config by defining a
+`happy: ...` option on that specific loader.
+
+For example, the following config will cause HappyPack to work with the `babel`
+loader against all `.js` source files:
+
+```javascript
+// @file: webpack.config.js
+module.exports = {
+  module: {
+    loaders: [{
+      test: /\.js$/,
+      loader: 'babel',
+      happy: { id: 'js' } // <-- see this
+    }]
+  },
+
+  plugins: [
+    new HappyPack({ id: 'js' }) // no need to specify loaders manually, yay!
+  ]
+}
+```
+
+> **Disclaimer**
+> 
+> Using this method to configure loaders will cause HappyPack to **overwrite**
+> webpack's loader options objects to replace the source loaders with happy's
+> loader at run-time (ie, the config will be irreversibly mutated!).
+> 
+> I did not find any way to work around this, so be warned!
 
 ## Using multiple instances
 
