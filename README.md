@@ -151,17 +151,6 @@ as HappyPack will switch into a synchronous mode afterwards (i.e. in `watch`
 mode.) Also, if we're using the cache and the compiled versions are indeed
 cached, the threads will be idle.
 
-### `installExitHandler: Boolean`
-
-Whether we should intercept the process's `SIGINT` and clean up when it is 
-received. This is needed because webpack's CLI does not expose any hook for
-cleaning up when it is going down, so it's a good idea to hook into it.
-
-You can turn this off if you don't want this functionality or it gives you
-trouble.
-
-Defaults to: `true`
-
 ## How it works
 
 ![A diagram showing the flow between HappyPack's components](doc/HappyPack_Workflow.png)

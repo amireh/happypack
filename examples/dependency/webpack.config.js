@@ -1,5 +1,4 @@
 var path = require('path');
-var through = require('browserify-through');
 
 module.exports = {
   entry: path.resolve(__dirname, 'lib/index.js'),
