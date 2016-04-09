@@ -5,4 +5,5 @@
 - [ ] delay reading the source file until the very point where we need it; pitch
 - [ ] replay loader RPCs for items cached by loaders like `tslint-loader` where the output is actually RPCs like `this.emitWarning` and `this.emitError`
 - [ ] better coverage for background loader failures
-- [ ] 
+- [ ] caching test
+- [ ] experiment with not serializing worker output to file and instead shoving things down the process stream (ie `compiledPath` shizzle)

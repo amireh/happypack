@@ -1,7 +1,5 @@
 # HappyPack (beta) [![Build Status](https://travis-ci.org/amireh/happypack.svg?branch=master)](https://travis-ci.org/amireh/happypack) [![codecov.io](https://codecov.io/github/amireh/happypack/coverage.svg?branch=master)](https://codecov.io/github/amireh/happypack?branch=master)
 
-Make working with webpack against large code-bases a happier experience.
-
 _In a nutshell:_
 
 HappyPack makes webpack builds faster by allowing you to transform multiple
@@ -151,6 +149,16 @@ as HappyPack will switch into a synchronous mode afterwards (i.e. in `watch`
 mode.) Also, if we're using the cache and the compiled versions are indeed
 cached, the threads will be idle.
 
+### `threadPool: HappyThreadPool`
+
+A custom thread-pool to use for retrieving worker threads. Normally, this
+is managed internally by each `HappyPlugin` instance, but you may override
+this behavior for better results.
+
+See "Shared thread pools" below for more information about this.
+
+Defaults to: `null`
+
 ## How it works
 
 ![A diagram showing the flow between HappyPack's components](doc/HappyPack_Workflow.png)
@@ -212,6 +220,38 @@ by the second one using the `coffee-loader` as a transformer.
 Note that each plugin will properly use different cache files as the default
 cache file names include the plugin IDs, so you don't need to override them
 manually. Yay!
+
+## Shared thread pools
+
+Normally, each `HappyPlugin` instance you create internally manages its own
+threads which are used to compile sources. However, if you have a number of
+plugins, it can be more optimal to create a thread pool yourself and then
+configure the instances to share that pool, minimizing the idle time of 
+threads within it.
+
+Here's an example of using a custom pool of 5 threads that will be shared
+between loaders for both JS and SCSS/LESS/whatever sources:
+
+```javascript
+// @file: webpack.config.js
+var HappyPack = require('happypack');
+var happyThreadPool = HappyPack.ThreadPool({ size: 5 });
+
+module.exports = {
+  // ...
+  plugins: [
+    new HappyPack({
+      id: 'js',
+      threadPool: happyThreadPool
+    }),
+
+    new HappyPack({
+      id: 'styles',
+      threadPool: happyThreadPool
+    })
+  ]
+};
+```
 
 ## Benchmarks
 
