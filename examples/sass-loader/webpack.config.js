@@ -2,7 +2,7 @@ var path = require('path');
 var HappyPack = require('../../');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'a.js'),
+  entry: path.resolve(__dirname, 'lib/index.scss'),
 
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -11,15 +11,8 @@ module.exports = {
 
   plugins: [
     new HappyPack({
-      loaders: [
-        {
-          path: path.resolve(__dirname, '../../node_modules/babel-loader/index.js'),
-          query: '?presets[]=es2015,presets[]=react'
-        },
-        {
-          path: path.resolve(__dirname, '../identity-loader.js')
-        }
-      ],
+      loaders: [ 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap&' ],
+      cache: process.env.HAPPY_CACHE === '1',
       threads: 2
     })
   ],
@@ -27,7 +20,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.scss$/,
         loader: path.resolve(__dirname, '../../loader')
       }
     ]

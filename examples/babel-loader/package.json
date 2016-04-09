@@ -1,0 +1,12 @@
+{
+  "name": "happypack-examples__babel-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.0"
+  }
+}

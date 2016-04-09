@@ -1,0 +1,1 @@
+const B = require('./b');

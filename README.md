@@ -1,4 +1,4 @@
-# HappyPack (beta) [![Build Status](https://travis-ci.org/amireh/happypack.svg)](https://travis-ci.org/amireh/happypack)
+# HappyPack (beta) [![Build Status](https://travis-ci.org/amireh/happypack.svg?branch=master)](https://travis-ci.org/amireh/happypack) [![codecov.io](https://codecov.io/github/amireh/happypack/coverage.svg?branch=master)](https://codecov.io/github/amireh/happypack?branch=master)
 
 Make working with webpack against large code-bases a happier experience.
 
@@ -12,8 +12,8 @@ See "How it works" below for more details.
 ## Motivation
 
 - webpack initial build times are horrifying in large codebases (3k+ modules)
-- something that works against both a one-time build (e.g. for a CI) and with 
-  persistent processes (`--watch` during development)
+- something that works against both a one-time build (e.g. for a CI) and 
+  continuous builds (i.e. `--watch` during development)
 
 ## Usage
 
@@ -39,8 +39,8 @@ exports.plugins = [
 ];
 ```
 
-Now you replace your current JS loaders with HappyPack's (possibly use an env
-variable to enable HappyPack):
+Now you replace your current loaders with HappyPack's loader (possibly use an 
+env variable to enable HappyPack):
 
 ```javascript
 exports.module = {
@@ -55,7 +55,7 @@ exports.module = {
 ```
 
 That's it. Now sources that match `.js$` will be handed off to happypack which 
-will use the loaders you specified to transform them.
+will transform them in parallel using the loaders you specified.
 
 ## Configuration
 
@@ -150,17 +150,6 @@ Keep in mind that this is only relevant when performing **the initial build**
 as HappyPack will switch into a synchronous mode afterwards (i.e. in `watch`
 mode.) Also, if we're using the cache and the compiled versions are indeed
 cached, the threads will be idle.
-
-### `installExitHandler: Boolean`
-
-Whether we should intercept the process's `SIGINT` and clean up when it is 
-received. This is needed because webpack's CLI does not expose any hook for
-cleaning up when it is going down, so it's a good idea to hook into it.
-
-You can turn this off if you don't want this functionality or it gives you
-trouble.
-
-Defaults to: `true`
 
 ## How it works
 
