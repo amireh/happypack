@@ -306,6 +306,20 @@ _TODO: test against other projects_
 
 ## Changes
 
+**2.0.2**
+
+- Fixed an issue that was causing loaders running in foreground to not receive the compiler options
+
+**2.0.1**
+
+- Package in NPM is now compact
+
+**2.0.0**
+
+- Pitching loader support
+- More complete loader API support
+- More convenient configuration interface
+
 **1.1.4**
 
 - Fixed an issue where the cache was being improperly invalidated due to `cacheContext` not being stored properly (#17, thanks to @blowery)
