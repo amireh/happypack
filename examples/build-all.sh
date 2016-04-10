@@ -79,11 +79,24 @@ function transform_loader {
 
   setup_example "examples/transform-loader"
 
-	(
+  (
     cd examples/transform-loader;
     $WEBPACK_BIN --bail &&
     $WEBPACK_BIN --bail --config webpack.config--raw.js &&
     diff dist/main.js dist/main.raw.js
+  )
+}
+
+function webpack2 {
+  echo "Testing HappyPack with webpack v2"
+  echo "---------------------------------"
+
+  setup_example "examples/webpack2"
+
+	(
+    cd examples/webpack2;
+    $WEBPACK_BIN --bail &&
+    grep "console.log('success')" dist/main.js
   )
 }
 
@@ -97,6 +110,7 @@ run_task babel_loader
 run_task sass_loader
 run_task tslint_loader
 run_task transform_loader
+run_task webpack2
 
 echo "Re-running previous examples with cached sources..."
 echo "---------------------------------------------------"
@@ -110,3 +124,4 @@ run_task sass_loader
 # run_task tslint_loader
 
 run_task transform_loader
+run_task webpack2
