@@ -2,7 +2,7 @@
   "name": "happypack",
   "main": "./lib/HappyPlugin.js",
   "description": "webpack speed booster, makes you happy!",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "scripts": {
     "lint": "./node_modules/.bin/eslint lib",
     "test": "node --harmony --harmony_destructuring ./node_modules/.bin/_mocha 'lib/**/*.test.js'",
@@ -45,7 +45,8 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "async": "^1.5.0",
-    "json-stringify-safe": "^5.0.1"
+    "async": "1.5.0",
+    "json-stringify-safe": "5.0.1",
+    "mkdirp": "0.5.1"
   }
 }

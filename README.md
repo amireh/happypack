@@ -306,6 +306,14 @@ _TODO: test against other projects_
 
 ## Changes
 
+**2.0.5**
+
+- now using [mkdirp](https://github.com/substack/node-mkdirp) for creating the temp directory to support nested ones
+
+**2.0.4**
+
+- fix an issue with cache not being utilized on node v0.10 (`fs.statSync` doesn't exist with that name there - thanks to @XVincentX)
+
 **2.0.2**
 
 - Fixed an issue that was causing loaders running in foreground to not receive the compiler options
