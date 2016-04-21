@@ -10,7 +10,7 @@ See "How it works" below for more details.
 ## Motivation
 
 - webpack initial build times are horrifying in large codebases (3k+ modules)
-- something that works against both a one-time build (e.g. for a CI) and 
+- something that works against both a one-time build (e.g. for a CI) and
   continuous builds (i.e. `--watch` during development)
 
 ## Usage
@@ -28,7 +28,7 @@ at this point.~~
 var HappyPack = require('happypack');
 
 exports.plugins = [
-  new HappyPack({ 
+  new HappyPack({
     // loaders is the only required parameter:
     loaders: [ 'babel?presets[]=es2015' ],
 
@@ -37,7 +37,7 @@ exports.plugins = [
 ];
 ```
 
-Now you replace your current loaders with HappyPack's loader (possibly use an 
+Now you replace your current loaders with HappyPack's loader (possibly use an
 env variable to enable HappyPack):
 
 ```javascript
@@ -52,7 +52,7 @@ exports.module = {
 };
 ```
 
-That's it. Now sources that match `.js$` will be handed off to happypack which 
+That's it. Now sources that match `.js$` will be handed off to happypack which
 will transform them in parallel using the loaders you specified.
 
 ## Configuration
@@ -61,15 +61,15 @@ These are the parameters you can pass to the plugin when you instantiate it.
 
 ### `loaders: Array.<String|Object{path: String, query: String}>`
 
-Each loader entry consists of the name or path of loader that would 
+Each loader entry consists of the name or path of loader that would
 transform the files and an optional query string to pass to it. This looks
 similar to what you'd pass to webpack's `loader` config.
 
 > **NOTE**
-> 
-> HappyPack doesn't work with *all* webpack loaders as some loader API are not 
+>
+> HappyPack doesn't work with *all* webpack loaders as some loader API are not
 > supported.
-> 
+>
 > See [this wiki page](https://github.com/amireh/happypack/wiki/Webpack-Loader-API-Support)
 > for more details on current Loader API support.
 
@@ -83,8 +83,8 @@ Defaults to: `null`
 A unique id for this happy plugin. This is used to generate the default cache
 name and is used by the loader to know which plugin it's supposed to talk to.
 
-Normally, you would not need to specify this unless you have more than one 
-HappyPack plugin defined, in which case you'll need distinct IDs to tell them 
+Normally, you would not need to specify this unless you have more than one
+HappyPack plugin defined, in which case you'll need distinct IDs to tell them
 apart. See "Using multiple instances" below for more information on that.
 
 Defaults to: "1"
@@ -92,14 +92,14 @@ Defaults to: "1"
 ### `enabled: Boolean`
 
 Whether the plugin should be activated. This is for convenience when you want
-to conditionally disable HappyPack based on, for example, an environment 
+to conditionally disable HappyPack based on, for example, an environment
 variable.
 
 Defaults to `true`
 
 ### `tempDir: String`
 
-Path to a folder where happy's cache and junk files will be kept. It's safe to 
+Path to a folder where happy's cache and junk files will be kept. It's safe to
 remove this folder after a run but not during it!
 
 Defaults to: `.happypack/`
@@ -116,7 +116,7 @@ Defaults to: `true`
 
 ### `cachePath: String`
 
-Path to a file where the JSON cache will be saved to disk and read from on 
+Path to a file where the JSON cache will be saved to disk and read from on
 successive webpack runs.
 
 Defaults to `.happypack/cache--[id].json`
@@ -131,6 +131,19 @@ You should provide this if you perform different builds based on some external
 parameters. **THIS OBJECT MUST BE JSON-SERIALIZABLE**.
 
 Defaults to: `{}`
+
+### `cacheSignatureGenerator: Function`
+
+A function that computes a signature for a file. This signature is used by
+the cache to figure out whether the file contents have changed since the
+last time it was compiled.
+
+The function signature is:
+
+    (filePath: String) -> String
+
+Defaults to: a function that yields the `last-modified-at` (mtime) timestamp
+of the given file.
 
 ### `threads: Number`
 
@@ -170,7 +183,7 @@ eventually your chunk.
 
 [1] When HappyPack successfully compiles a source file, it keeps track of its
 mtime so that it can re-use it on successive builds if the contents have not
-changed. This is a fast and somewhat reliable approach, and definitely much 
+changed. This is a fast and somewhat reliable approach, and definitely much
 faster than re-applying the transformers on every build.
 
 ## Inferring loaders
@@ -200,11 +213,11 @@ module.exports = {
 ```
 
 > **Disclaimer**
-> 
+>
 > Using this method to configure loaders will cause HappyPack to **overwrite**
 > webpack's loader options objects to replace the source loaders with happy's
 > loader at run-time (ie, the config will be irreversibly mutated!).
-> 
+>
 > I did not find any way to work around this, so be warned!
 
 ## Using multiple instances
@@ -255,7 +268,7 @@ manually. Yay!
 Normally, each `HappyPlugin` instance you create internally manages its own
 threads which are used to compile sources. However, if you have a number of
 plugins, it can be more optimal to create a thread pool yourself and then
-configure the instances to share that pool, minimizing the idle time of 
+configure the instances to share that pool, minimizing the idle time of
 threads within it.
 
 Here's an example of using a custom pool of 5 threads that will be shared
@@ -284,7 +297,7 @@ module.exports = {
 
 ## Benchmarks
 
-For the main repository I tested on, which had around 3067 modules, the build time went down from 39 seconds to a whopping ~10 seconds when there was yet no 
+For the main repository I tested on, which had around 3067 modules, the build time went down from 39 seconds to a whopping ~10 seconds when there was yet no
 cache. Successive builds now take between 6 and 7 seconds.
 
 Here's a rundown of the various states the build was performed in:
@@ -306,13 +319,17 @@ _TODO: test against other projects_
 
 ## Changes
 
+**2.0.6**
+
+- a new option `cacheSignatureGenerator` to handle use cases such as [#35]
+
 **2.0.5**
 
 - now using [mkdirp](https://github.com/substack/node-mkdirp) for creating the temp directory to support nested ones
 
 **2.0.4**
 
-- fix an issue with cache not being utilized on node v0.10 (`fs.statSync` doesn't exist with that name there - thanks to @XVincentX)
+- fix an issue with cache not being utilized on node v0.10 (`fs.statSync` doesn't exist with that name there - thanks to [@XVincentX])
 
 **2.0.2**
 
