@@ -319,6 +319,10 @@ _TODO: test against other projects_
 
 ## Changes
 
+**2.1.0**
+
+- SourceMap support
+
 **2.0.6**
 
 - a new option `cacheSignatureGenerator` to handle use cases such as [#35]
