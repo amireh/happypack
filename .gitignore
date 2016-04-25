@@ -2,7 +2,9 @@
 node_modules
 .happypack
 /examples/**/dist
+/examples/**/dist--raw
 /tmp
 !/tmp/.gitkeep
 /npm-debug.log
 /coverage
+/scripts/**/dist

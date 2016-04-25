@@ -70,7 +70,10 @@ function tslint_loader {
 
   setup_example "examples/tslint-loader"
 
-  (cd examples/tslint-loader; $WEBPACK_BIN --bail) | grep "forbidden var keyword"
+  (
+    cd examples/tslint-loader
+    $WEBPACK_BIN --bail
+  ) | egrep "forbidden .?var.? keyword"
 }
 
 function transform_loader {
@@ -93,16 +96,33 @@ function webpack2 {
 
   setup_example "examples/webpack2"
 
-	(
+  (
     cd examples/webpack2;
     $WEBPACK_BIN --bail &&
     grep "console.log('success')" dist/main.js
   )
 }
 
+function source_maps {
+  echo "Testing HappyPack for SourceMap support"
+  echo "---------------------------------------"
+
+  EXAMPLE_DIR="examples/source-maps"
+
+  setup_example $EXAMPLE_DIR
+
+	(
+    cd $EXAMPLE_DIR
+    $WEBPACK_BIN --bail &&
+    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
+    diff dist/main.js.map dist--raw/main.js.map
+  )
+}
+
 # purge the cache and previous build artifacts
 find examples -maxdepth 2 -type d -name '.happypack' | xargs rm -r
 find examples -maxdepth 2 -type d -name 'dist' | xargs rm -r
+find examples -maxdepth 2 -type d -name 'dist--raw' | xargs rm -r
 
 export HAPPY_CACHE=1
 
@@ -111,6 +131,7 @@ run_task sass_loader
 run_task tslint_loader
 run_task transform_loader
 run_task webpack2
+run_task source_maps
 
 echo "Re-running previous examples with cached sources..."
 echo "---------------------------------------------------"
@@ -125,3 +146,4 @@ run_task sass_loader
 
 run_task transform_loader
 run_task webpack2
+run_task source_maps
