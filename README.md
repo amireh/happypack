@@ -319,6 +319,10 @@ _TODO: test against other projects_
 
 ## Changes
 
+**2.1.1**
+
+- Fix an issue with loading invalid/corrupt cache or source-map files. Big thanks to @benhughes for providing the patch in #42
+
 **2.1.0**
 
 - SourceMap support
