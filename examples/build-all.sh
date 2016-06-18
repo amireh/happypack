@@ -111,11 +111,28 @@ function source_maps {
 
   setup_example $EXAMPLE_DIR
 
-	(
+  (
     cd $EXAMPLE_DIR
     $WEBPACK_BIN --bail &&
     $WEBPACK_BIN --bail --config webpack.config--raw.js &&
     diff dist/main.js.map dist--raw/main.js.map
+  )
+}
+
+function json_loader {
+  echo "Testing HappyPack with json-loader"
+  echo "----------------------------------"
+
+  EXAMPLE_DIR="examples/json-loader"
+
+  setup_example $EXAMPLE_DIR
+
+	(
+    cd $EXAMPLE_DIR
+    $WEBPACK_BIN --bail &&
+    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
+    diff dist/main.js dist--raw/main.js &&
+    (node dist/main.js | grep "Hello World!" &> /dev/null)
   )
 }
 
@@ -132,6 +149,7 @@ run_task tslint_loader
 run_task transform_loader
 run_task webpack2
 run_task source_maps
+run_task json_loader
 
 echo "Re-running previous examples with cached sources..."
 echo "---------------------------------------------------"
@@ -147,3 +165,4 @@ run_task sass_loader
 run_task transform_loader
 run_task webpack2
 run_task source_maps
+run_task json_loader

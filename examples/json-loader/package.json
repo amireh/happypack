@@ -1,0 +1,11 @@
+{
+  "name": "happypack-examples__json-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "json-loader": "0.5.4"
+  }
+}
