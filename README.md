@@ -44,7 +44,7 @@ env variable to enable HappyPack):
 exports.module = {
   loaders: {
     test: /.js$/,
-    loader: 'happypack/loader',
+    loaders: [ 'happypack/loader' ],
     include: [
       // ...
     ],
@@ -201,7 +201,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loader: 'babel',
+      loaders: [ 'babel' ],
       happy: { id: 'js' } // <-- see this
     }]
   },
@@ -245,12 +245,12 @@ exports.plugins = [
 exports.module.loaders = [
   {
     test: /\.js$/,
-    loaders: 'happypack/loader?id=jsx'
+    loaders: [ 'happypack/loader?id=jsx' ]
   },
 
   {
     test: /\.coffee$/,
-    loader: 'happypack/loader?id=coffeescripts'
+    loaders: [ 'happypack/loader?id=coffeescripts' ]
   },
 ]
 ```
@@ -318,6 +318,11 @@ The builds above were run on Linux over a machine with 12 cores.
 _TODO: test against other projects_
 
 ## Changes
+
+**2.1.2**
+
+- Process argv will no longer be passed to the child processes spawned by HappyPack (#47)
+- Support for the `target` loader context variable. Thanks to @Akkuma (#46)
 
 **2.1.1**
 
