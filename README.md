@@ -167,6 +167,13 @@ See "Shared thread pools" below for more information about this.
 
 Defaults to: `null`
 
+### `verbose: Boolean`
+
+Enable this to log messages from internal HappyPack modules to STDOUT; useful 
+for troubleshooting sometimes.
+
+Defaults to: `false`
+
 ## How it works
 
 ![A diagram showing the flow between HappyPack's components](doc/HappyPack_Workflow.png)
