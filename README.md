@@ -169,10 +169,14 @@ Defaults to: `null`
 
 ### `verbose: Boolean`
 
-Enable this to log messages from internal HappyPack modules to STDOUT; useful 
-for troubleshooting sometimes.
+Enable this to log status messages from HappyPack to STDOUT like start-up
+banner, cache status, etc..
 
-Defaults to: `false`
+**NOTE**: if you also want diagnostic messages to be printed, set `VERBOSE=1` 
+as an environment variable when running webpack. Set `DEBUG=1` for debug 
+messages but be warned that it will litter your screen.
+
+Defaults to: `true`
 
 ## How it works
 
