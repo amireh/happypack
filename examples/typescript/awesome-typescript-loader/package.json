@@ -1,0 +1,12 @@
+{
+  "name": "happypack-examples__awesome-typescript-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "awesome-typescript-loader": "amireh/awesome-typescript-loader#happypack-support",
+    "typescript": "1.8.9"
+  }
+}

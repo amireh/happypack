@@ -1,0 +1,11 @@
+{
+  "name": "happypack-examples__ts-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "1.8.9"
+  }
+}
