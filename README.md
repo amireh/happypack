@@ -330,6 +330,12 @@ _TODO: test against other projects_
 
 ## Changes
 
+**2.1.3**
+
+- Fixed an issue where certain loader configurations with queries weren't being
+  properly recognized by HappyPack. Now, all known configuration variants 
+  should work. (GH-65 and GH-26)
+
 **2.1.2**
 
 - Process argv will no longer be passed to the child processes spawned by HappyPack (#47)

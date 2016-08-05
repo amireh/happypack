@@ -14,4 +14,4 @@ after_success:
   - npm run coverage:ci
 cache:
   directories:
-  - node_modules
+    - node_modules
