@@ -87,7 +87,7 @@ function tslint_loader {
   (
     cd examples/tslint-loader
     $WEBPACK_BIN --bail
-  ) | egrep "forbidden .?var.? keyword"
+  ) | egrep -i "forbidden .?var.? keyword"
 }
 
 function transform_loader {

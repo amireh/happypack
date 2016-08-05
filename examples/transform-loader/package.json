@@ -6,9 +6,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "brfs": "^1.4.2",
-    "browserify-through": "^2.0.0",
-    "coffeeify": "^2.0.1",
-    "transform-loader": "^0.2.3"
+    "brfs": "1.4.2",
+    "browserify-through": "2.0.0",
+    "coffeeify": "2.0.1",
+    "transform-loader": "0.2.3"
   }
 }

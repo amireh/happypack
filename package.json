@@ -37,7 +37,7 @@
   "devDependencies": {
     "chai": "3.5.0",
     "codecov": "1.0.1",
-    "eslint": "3.2.2",
+    "eslint": "2.13.1",
     "fs-extra": "0.30.0",
     "mocha": "3.0.1",
     "multiline-slash": "2.0.0",

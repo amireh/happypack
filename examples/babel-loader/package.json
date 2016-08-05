@@ -6,7 +6,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "^6.3.26",
-    "babel-loader": "^6.2.0"
+    "babel-core": "6.3.26",
+    "babel-loader": "6.2.0"
   }
 }
