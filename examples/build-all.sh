@@ -48,6 +48,20 @@ function babel_loader {
     grep "success" dist/main.js
   )
 }
+function babel_loader--webpack2 {
+  echo "Testing HappyPack with babel-loader (webpack 2)"
+  echo "-----------------------------------------------"
+
+  setup_example "examples/babel-loader--webpack2"
+
+  (
+    cd examples/babel-loader;
+    $WEBPACK_BIN --bail &&
+    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
+    diff dist/main.js dist/main.raw.js &&
+    grep "success" dist/main.js
+  )
+}
 
 function sass_loader {
   echo "Testing HappyPack using sass + css + style loaders."
@@ -144,6 +158,7 @@ find examples -maxdepth 2 -type d -name 'dist--raw' | xargs rm -r
 export HAPPY_CACHE=1
 
 run_task babel_loader
+run_task babel_loader--webpack2
 run_task sass_loader
 run_task tslint_loader
 run_task transform_loader

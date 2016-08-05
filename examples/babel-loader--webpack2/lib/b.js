@@ -1,0 +1,2 @@
+require('./c');
+require('./d');
