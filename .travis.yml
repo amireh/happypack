@@ -10,10 +10,8 @@ install: npm install --ignore-scripts
 script:
   - npm run lint
   - npm run test:coverage
-  - npm run test-examples
 after_success:
   - npm run coverage:ci
 cache:
   directories:
   - node_modules
-  - examples/*/node_modules
