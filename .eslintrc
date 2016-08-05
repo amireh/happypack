@@ -9,9 +9,7 @@
     "indent": [2, 2, {
       "SwitchCase": 1
     }],
-    "curly": 0,
     "eqeqeq": 2,
-    "no-eq-null": 2,
     "quotes": 0,
     "strict": 0,
 
@@ -29,20 +27,9 @@
     "eol-last": 0,
     "no-multi-spaces": 0,
     "no-extra-boolean-cast": 0,
-    "no-use-before-define": 0,
-    "no-extra-bind": 0,
     "no-eq-null": 0,
-    "no-shadow": 0,
-    "no-shadow-restricted-names": 0,
     "no-alert": 0,
-    "no-empty": 0,
-
-    // Bah, this is really useful but we can't turn this on because of chai.
-    //
-    // See https://github.com/eslint/eslint/issues/2102
-    //
-    // Maybe use that chai-lint package someday? so many tests to modify...
-    "no-unused-expressions": 0,
+    "no-unused-expressions": 2,
 
     "no-console": 0,
     "space-return-throw-case": 0,
@@ -85,6 +72,7 @@
     "dot-location": [2, "property"],
     "curly": [2, "multi-line"],
     "no-shadow": 2,
-    "no-extra-bind": 2,
-  },
+    "no-shadow-restricted-names": 0,
+    "no-extra-bind": 2
+  }
 }

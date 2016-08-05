@@ -1,10 +1,11 @@
 *.gnumeric
-node_modules
 .happypack
+node_modules
+/coverage
 /examples/**/dist
 /examples/**/dist--raw
+/npm-debug.log
+/.nyc_output
+/scripts/**/dist
 /tmp
 !/tmp/.gitkeep
-/npm-debug.log
-/coverage
-/scripts/**/dist

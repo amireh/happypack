@@ -4,11 +4,13 @@
   "description": "webpack speed booster, makes you happy!",
   "version": "2.1.1",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint lib",
-    "test": "node --harmony --harmony_destructuring ./node_modules/.bin/_mocha 'lib/**/*.test.js'",
+    "lint": "eslint lib",
+    "test": "mocha 'lib/**/*.test.js'",
+    "test:coverage": "nyc npm test",
     "test-examples": "./examples/build-all.sh",
-    "coverage": "node --harmony --harmony_destructuring ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha 'lib/**/*.test.js'",
-    "coverage_ci": "npm run coverage && ./node_modules/.bin/codecov",
+    "coverage": "nyc report",
+    "coverage:html": "nyc report --reporter html",
+    "coverage:ci": "nyc report --reporter=text-lcov > tmp/coverage.lcov && codecov --disable search -f tmp/coverage.lcov",
     "prepublish": "npm run lint && npm run test && npm run test-examples"
   },
   "repository": {
@@ -33,20 +35,29 @@
   },
   "homepage": "https://github.com/amireh/happypack#readme",
   "devDependencies": {
-    "chai": "^3.4.1",
-    "codecov": "^1.0.1",
-    "eslint": "^1.10.3",
-    "fs-extra": "^0.26.4",
-    "istanbul": "^1.0.0-alpha.2",
-    "mocha": "^2.3.4",
-    "multiline-slash": "^1.0.0",
-    "sinon": "^1.17.2",
-    "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.1"
+    "chai": "3.5.0",
+    "codecov": "1.0.1",
+    "eslint": "3.2.2",
+    "fs-extra": "0.30.0",
+    "mocha": "3.0.1",
+    "multiline-slash": "2.0.0",
+    "nyc": "7.1.0",
+    "sinon": "1.17.5",
+    "webpack": "1.13.1",
+    "webpack-dev-server": "1.14.1"
   },
   "dependencies": {
     "async": "1.5.0",
     "json-stringify-safe": "5.0.1",
     "mkdirp": "0.5.1"
+  },
+  "nyc": {
+    "include": [
+      "lib/*.js"
+    ],
+    "exclude": [
+      "lib/**/*.test.js",
+      "lib/HappyTestUtils.js"
+    ]
   }
 }
