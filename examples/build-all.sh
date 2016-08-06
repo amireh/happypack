@@ -126,7 +126,7 @@ function webpack2ExtractText {
   (
     cd examples/webpack2-extract-react;
     $WEBPACK_BIN --bail &&
-    grep "{ className: 'less scss' }," dist/main.js
+    grep "{ className: 'less scss' }," dist/main.js &&
     grep ".less {" dist/styles.css
   )
 }
