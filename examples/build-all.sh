@@ -117,6 +117,20 @@ function webpack2 {
   )
 }
 
+function webpack2ExtractText {
+  echo "Testing HappyPack with webpack v2 + extract-text-plugins + react"
+  echo "---------------------------------"
+
+  setup_example "examples/webpack2-extracText-react"
+
+  (
+    cd examples/webpack2-extracText-react;
+    $WEBPACK_BIN --bail &&
+    grep "{ className: 'less scss' }," dist/main.js
+    grep ".less {" dist/styles.css
+  )
+}
+
 function source_maps {
   echo "Testing HappyPack for SourceMap support"
   echo "---------------------------------------"
@@ -163,6 +177,7 @@ run_task sass_loader
 run_task tslint_loader
 run_task transform_loader
 run_task webpack2
+run_task webpack2ExtractText
 run_task source_maps
 run_task json_loader
 
@@ -179,5 +194,6 @@ run_task sass_loader
 
 run_task transform_loader
 run_task webpack2
+run_task webpack2ExtractText
 run_task source_maps
 run_task json_loader
