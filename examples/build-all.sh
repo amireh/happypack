@@ -121,10 +121,10 @@ function webpack2ExtractText {
   echo "Testing HappyPack with webpack v2 + extract-text-plugins + react"
   echo "---------------------------------"
 
-  setup_example "examples/webpack2-extracText-react"
+  setup_example "examples/webpack2-extract-react"
 
   (
-    cd examples/webpack2-extracText-react;
+    cd examples/webpack2-extract-react;
     $WEBPACK_BIN --bail &&
     grep "{ className: 'less scss' }," dist/main.js
     grep ".less {" dist/styles.css
