@@ -328,6 +328,12 @@ The builds above were run under Linux on a machine with 12 cores.
 
 ## Changes
 
+**staging (master)**
+
+- Fixed an edge-case issue that was causing happypack to crash when a shared 
+  threadpool is used by a pre-loader and a loader (or post-loader) that are 
+  processing the same file. Refs GH-60
+
 **2.2.0**
 
 - Fixed a regression in scanning loader "string chains" (multiple loaders 
