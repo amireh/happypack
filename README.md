@@ -330,6 +330,10 @@ _TODO: test against other projects_
 
 ## Changes
 
+**master**
+
+- Fixed a regression in parsing loader "string chains" (multiple loaders specified in the same string separated by `!`), refs GH-68
+
 **2.1.3**
 
 - Fixed an issue where certain loader configurations with queries weren't being
