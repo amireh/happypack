@@ -172,11 +172,14 @@ Defaults to: `null`
 Enable this to log status messages from HappyPack to STDOUT like start-up
 banner, cache status, etc..
 
-**NOTE**: if you also want diagnostic messages to be printed, set `VERBOSE=1` 
-as an environment variable when running webpack. Set `DEBUG=1` for debug 
-messages but be warned that it will litter your screen.
-
 Defaults to: `true`
+
+### `debug: Boolean`
+
+Enable this to log diagnostic messages from HappyPack to STDOUT. Useful for
+troubleshooting.
+
+Defaults to: `false`
 
 ## How it works
 
@@ -333,6 +336,9 @@ The builds above were run under Linux on a machine with 12 cores.
 - Fixed an edge-case issue that was causing happypack to crash when a shared 
   threadpool is used by a pre-loader and a loader (or post-loader) that are 
   processing the same file. Refs GH-60
+- Made it possible to completely silence happypack's console output by setting
+  verbose to `false` and introduced the `debug` option to control diagnostic
+  message logging. Refs GH-64
 
 **2.2.0**
 
