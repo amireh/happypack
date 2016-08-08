@@ -326,13 +326,14 @@ Elapsed (ms) | Happy?  | Cache enabled? | Cache present? | Using DLLs? |
 
 The builds above were run on Linux over a machine with 12 cores.
 
-_TODO: test against other projects_
-
 ## Changes
 
-**master**
+**staging (master)**
 
-- Fixed a regression in parsing loader "string chains" (multiple loaders specified in the same string separated by `!`), refs GH-68
+- Fixed a regression in scanning loader "string chains" (multiple loaders 
+  specified in the same string separated by `!`), refs GH-68
+- Added support for the loader API `this.loadModule()` which is used by
+  less-loader, refs GH-66
 
 **2.1.3**
 
@@ -342,32 +343,39 @@ _TODO: test against other projects_
 
 **2.1.2**
 
-- Process argv will no longer be passed to the child processes spawned by HappyPack (#47)
-- Support for the `target` loader context variable. Thanks to @Akkuma (#46)
+- Process argv will no longer be passed to the child processes spawned by 
+  HappyPack (refs GH-47)
+- Support for the `target` loader context variable has been added. Thanks to 
+  @Akkuma (refs GH-46)
 
 **2.1.1**
 
-- Fix an issue with loading invalid/corrupt cache or source-map files. Big thanks to @benhughes for providing the patch in #42
+- Fixed an issue where happypack would crash when loading invalid/corrupt 
+  cache or source-map files. Big thanks to @benhughes for providing the patch in GH-42
 
 **2.1.0**
 
-- SourceMap support
+- Introduced SourceMap support
 
 **2.0.6**
 
-- a new option `cacheSignatureGenerator` to handle use cases such as [#35]
+- Introduced a new option `cacheSignatureGenerator` to handle use cases such
+  as [GH-35]
 
 **2.0.5**
 
-- now using [mkdirp](https://github.com/substack/node-mkdirp) for creating the temp directory to support nested ones
+- Now using [mkdirp](https://github.com/substack/node-mkdirp) for creating the 
+  temp directory to support nested ones
 
 **2.0.4**
 
-- fix an issue with cache not being utilized on node v0.10 (`fs.statSync` doesn't exist with that name there - thanks to [@XVincentX])
+- Fixed an issue where the cache was not being utilized on node v0.10 (since 
+  `fs.statSync` doesn't exist with that name there) - thanks to [@XVincentX]
 
 **2.0.2**
 
-- Fixed an issue that was causing loaders running in foreground to not receive the compiler options
+- Fixed an issue that was causing loaders running in foreground to not receive 
+  the compiler options
 
 **2.0.1**
 
@@ -381,7 +389,8 @@ _TODO: test against other projects_
 
 **1.1.4**
 
-- Fixed an issue where the cache was being improperly invalidated due to `cacheContext` not being stored properly (#17, thanks to @blowery)
+- Fixed an issue where the cache was being improperly invalidated due to 
+  `cacheContext` not being stored properly (refs GH-17, thanks to @blowery)
 
 **1.1.3**
 
@@ -389,23 +398,24 @@ _TODO: test against other projects_
 
 **1.1.2**
 
-- Fixed an issue on old node versions (0.10) with the EventEmitter API (#10)
+- Fixed an issue on old node versions (0.10) with the EventEmitter API (GH-10)
 - Fixed an issue that was breaking the compiler if an invalid `threads` option
   was passed (evaluating to `NaN`)
 
 **1.1.1**
 
-- Unrecognized and invalid config parameters will cause the process to abort.
-- The active version is logged on launch.
+- Unrecognized and invalid config parameters will now cause the process to
+  abort
+- The active version is logged on launch
 
 **1.1.0**
 
-- now supporting basic webpack loaders
-- dropped the `transformer` parameter as it's no longer needed
+- Now supporting basic webpack loaders
+- Dropped the `transformer` parameter as it's no longer needed
 - `cache` now defaults to `true`
-- now using a forking model utilizing node.js's `process.fork()` for cleaner
+- Now using a forking model utilizing node.js's `process.fork()` for cleaner
   threading code
 
 **1.0.2**
 
-- the loader will now accept IDs that aren't just numbers
+- Loader will now accept IDs that aren't just numbers

@@ -48,6 +48,7 @@ function babel_loader {
     grep "success" dist/main.js
   )
 }
+
 function babel_loader--webpack2 {
   echo "Testing HappyPack with babel-loader (webpack 2)"
   echo "-----------------------------------------------"
@@ -55,10 +56,10 @@ function babel_loader--webpack2 {
   setup_example "examples/babel-loader--webpack2"
 
   (
-    cd examples/babel-loader;
-    $WEBPACK_BIN --bail &&
-    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
-    diff dist/main.js dist/main.raw.js &&
+    cd examples/babel-loader--webpack2;
+    ./node_modules/.bin/webpack --bail &&
+    ./node_modules/.bin/webpack --bail --config webpack.config--raw.js &&
+    diff dist/main.js dist--raw/main.js &&
     grep "success" dist/main.js
   )
 }
@@ -112,12 +113,12 @@ function webpack2 {
 
   (
     cd examples/webpack2;
-    $WEBPACK_BIN --bail &&
+    ./node_modules/.bin/webpack --bail &&
     grep "console.log('success')" dist/main.js
   )
 }
 
-function webpack2ExtractText {
+function webpack2-extract-text {
   echo "Testing HappyPack with webpack v2 + extract-text-plugins + react"
   echo "---------------------------------"
 
@@ -125,7 +126,9 @@ function webpack2ExtractText {
 
   (
     cd examples/webpack2-extract-react;
-    $WEBPACK_BIN --bail &&
+    ./node_modules/.bin/webpack --bail --config webpack.config.js &&
+    ./node_modules/.bin/webpack --bail --config webpack.config--raw.js &&
+    diff dist/styles.css dist--raw/styles.css &&
     grep "{ className: 'less scss' }," dist/main.js &&
     grep ".less {" dist/styles.css
   )
@@ -177,7 +180,7 @@ run_task sass_loader
 run_task tslint_loader
 run_task transform_loader
 run_task webpack2
-run_task webpack2ExtractText
+run_task webpack2-extract-text
 run_task source_maps
 run_task json_loader
 
@@ -194,6 +197,6 @@ run_task sass_loader
 
 run_task transform_loader
 run_task webpack2
-run_task webpack2ExtractText
+run_task webpack2-extract-text
 run_task source_maps
 run_task json_loader

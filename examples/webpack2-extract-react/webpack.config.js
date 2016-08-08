@@ -31,6 +31,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin('styles.css'),
     createHappyPlugin('js', ['babel']),
     createHappyPlugin('less', ['css!less']),
