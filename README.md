@@ -174,6 +174,15 @@ banner, cache status, etc..
 
 Defaults to: `true`
 
+### `verboseWhenProfiling: Boolean`
+
+Enable this if you want happypack to still produce its output even when you're
+doing a `webpack --profile` run. Since this variable was introduced, happypack
+will be silent when doing a profile build in order not to corrupt any JSON
+output by webpack (i.e. when using `--json` as well.)
+
+Defaults to: `false`
+
 ### `debug: Boolean`
 
 Enable this to log diagnostic messages from HappyPack to STDOUT. Useful for
@@ -340,6 +349,13 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Changes
+
+**staging (master)**
+
+- HappyPack will no longer output anything to the console if webpack is running
+  in profiling mode (`--profile`) in order not to corrupt any JSON output. You
+  can restore the previous behavior by setting the new option
+  `verboseWhenProfiling` to `true`. Refs GH-76
 
 **2.2.1**
 
