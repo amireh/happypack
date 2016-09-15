@@ -1,17 +1,23 @@
 language: node_js
+
 env:
   - HAPPY_TEST_TIMEOUT=60000
+
 node_js:
-  - "6.3.1"
-  - "5.12.0"
-  - "4.4.7"
-  - "0.12.15"
+  - 6
+  - 5
+  - 4
+  - '0.12'
+
 install: npm install --ignore-scripts
+
 script:
   - npm run lint
   - npm run test:coverage
+
 after_success:
   - npm run coverage:ci
+
 cache:
   directories:
     - node_modules
