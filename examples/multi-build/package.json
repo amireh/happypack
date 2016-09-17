@@ -1,0 +1,10 @@
+{
+  "name": "happypack-examples__multi-build",
+  "version": "1.0.0",
+  "description": "",
+  "main": "a.js",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+  }
+}
