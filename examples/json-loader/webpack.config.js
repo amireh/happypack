@@ -12,7 +12,7 @@ module.exports = {
 
   plugins: [
     new HappyPack({
-      cache: false,
+      cache: process.env.HAPPY_CACHE === '1',
       threads: 2,
       loaders: [
         'json'
