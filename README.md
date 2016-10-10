@@ -130,6 +130,14 @@ for example.
 You should provide this if you perform different builds based on some external
 parameters. **THIS OBJECT MUST BE JSON-SERIALIZABLE**.
 
+E.g. 
+
+```
+cacheContext: {
+  env: process.env.NODE_ENV
+}
+```
+
 Defaults to: `{}`
 
 ### `cacheSignatureGenerator: Function`
