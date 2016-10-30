@@ -348,7 +348,7 @@ The builds above were run under Linux on a machine with 12 cores.
 
 ## Changes
 
-See [./CHANGELOG.md].
+See [./CHANGELOG.md](./CHANGELOG.md).
 
 ## License (MIT)
 
