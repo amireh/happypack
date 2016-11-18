@@ -1,4 +1,4 @@
-# HappyPack (beta) [![Build Status](https://travis-ci.org/amireh/happypack.svg?branch=master)](https://travis-ci.org/amireh/happypack) [![codecov.io](https://codecov.io/github/amireh/happypack/coverage.svg?branch=master)](https://codecov.io/github/amireh/happypack?branch=master)
+# HappyPack [![Build Status](https://travis-ci.org/amireh/happypack.svg?branch=master)](https://travis-ci.org/amireh/happypack) [![codecov.io](https://codecov.io/github/amireh/happypack/coverage.svg?branch=master)](https://codecov.io/github/amireh/happypack?branch=master)
 
 _In a nutshell:_
 
@@ -73,10 +73,11 @@ similar to what you'd pass to webpack's `loader` config.
 > See [this wiki page](https://github.com/amireh/happypack/wiki/Webpack-Loader-API-Support)
 > for more details on current Loader API support.
 
-It is possible to omit this value and have HappyPack automatically infer the
-loaders it should use, see "Inferring loaders" below for more information
-
-Defaults to: `null`
+~~It is possible to omit this value and have HappyPack automatically infer the
+loaders it should use, see "Inferring loaders" below for more information~~ 
+Inferring loaders has been officially removed as of HappyPack 3.0 and will not
+be re-introduced (in its previous form, at least) as it has proven to be too 
+costly for the gain it provided.
 
 ### `id: String`
 
@@ -217,40 +218,6 @@ mtime so that it can re-use it on successive builds if the contents have not
 changed. This is a fast and somewhat reliable approach, and definitely much
 faster than re-applying the transformers on every build.
 
-## Inferring loaders
-
-For configuration convenience, we can instruct a HappyPack plugin to use the
-loaders specified in webpack's original `module.loaders` config by defining a
-`happy: ...` option on that specific loader.
-
-For example, the following config will cause HappyPack to work with the `babel`
-loader against all `.js` source files:
-
-```javascript
-// @file: webpack.config.js
-module.exports = {
-  module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: [ 'babel' ],
-      happy: { id: 'js' } // <-- see this
-    }]
-  },
-
-  plugins: [
-    new HappyPack({ id: 'js' }) // no need to specify loaders manually, yay!
-  ]
-}
-```
-
-> **Disclaimer**
->
-> Using this method to configure loaders will cause HappyPack to **overwrite**
-> webpack's loader options objects to replace the source loaders with happy's
-> loader at run-time (ie, the config will be irreversibly mutated!).
->
-> I did not find any way to work around this, so be warned!
-
 ## Using multiple instances
 
 It's possible to define multiple HappyPack plugins for different types of
@@ -349,6 +316,29 @@ The builds above were run under Linux on a machine with 12 cores.
 ## Changes
 
 See [./CHANGELOG.md](./CHANGELOG.md).
+
+## FAQ
+
+### Does it work with webpack 2?
+
+It may, and it may not! Official support for webpack 2 will not land until 
+webpack 2 is out of beta status. Until then, IT wouldn't hurt to try but YMMV.
+
+### Does it work with loader X or Y?
+
+We're keeping track of known loader support in [this wiki page](https://github.com/amireh/happypack/wiki/Loader-Compatibility-List). Some loaders 
+may require extra configuration to make them work.
+
+If the loader you're trying to use isn't listed there, you can refer to [this](https://github.com/amireh/happypack/wiki/Webpack-Loader-API-Support) wiki page
+to see which loader APIs are supported. If your loader uses any API that is NOT
+supported, chances are that it will not work with HappyPack.
+
+## Does it work under Windows?
+
+There have been a few reports (e.g [GH-99](https://github.com/amireh/happypack/issues/99) and [GH-70](https://github.com/amireh/happypack/issues/70)) that it does not.
+
+It's difficult for me to confirm or to troubleshoot as I have no access to 
+such an environment. If you do and are willing to help, please do!
 
 ## License (MIT)
 
