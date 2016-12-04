@@ -1,5 +1,11 @@
 ## HappyPack Changelog
 
+### 3.0.1
+
+- The temporary file path used for writing a loader's output is now suffixed
+  with a random identifier to work around an edge case reported in GH-92. 
+  Big thanks to @frankLife for the effort.
+
 ### 3.0.0
 
 This release, although it's a major one, was mostly concerned with internal
