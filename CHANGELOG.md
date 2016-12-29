@@ -1,5 +1,11 @@
 ## HappyPack Changelog
 
+### 3.0.2
+
+- Accept "this.plugins" as a function in the loader context since webpack2
+  now allows it to either be an object or a function. Thanks to @grigory51,
+  refs GH-106
+
 ### 3.0.1
 
 - The temporary file path used for writing a loader's output is now suffixed
