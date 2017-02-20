@@ -9,10 +9,24 @@ module.exports = {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loader: path.resolve(__dirname, 'identity-loader.js')
+        loaders: [{
+          loader: path.resolve(__dirname, 'identity-loader.js'),
+          options: { foo: 'bar' }
+        }, {
+          loader: 'babel-loader',
+          options: {
+            presets: [[ 'es2015', { modules: false }], 'react' ],
+            plugins: [
+              ['transform-runtime', {
+                polyfill: false,
+                regenerator: false
+              }],
+            ]
+          }
+        }],
       }
     ]
   }

@@ -12,16 +12,30 @@ module.exports = {
   plugins: [
     new HappyPack({
       cache: process.env.HAPPY_CACHE === '1',
-      loaders: [{ path: path.resolve(__dirname, 'identity-loader.js') }],
+      loaders: [{
+        loader: path.resolve(__dirname, 'identity-loader.js'),
+        options: { foo: 'bar' }
+      }, {
+        loader: 'babel-loader',
+        options: {
+          presets: [[ 'es2015', { modules: false }], 'react' ],
+          plugins: [
+            ['transform-runtime', {
+              polyfill: false,
+              regenerator: false
+            }],
+          ]
+        }
+      }],
       threads: 2
     })
   ],
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loader: path.resolve(__dirname, '../../loader')
+        use: path.resolve(__dirname, '../../loader')
       }
     ]
   }
