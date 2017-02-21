@@ -1,5 +1,11 @@
 ## HappyPack Changelog
 
+### 3.0.3
+
+- Added more webpack2 compatibility fixes
+- Fixed an issue that was causing cached files to be ignored. Thanks to
+  @lijianzhang, refs GH-115
+
 ### 3.0.2
 
 - Accept "this.plugins" as a function in the loader context since webpack2
