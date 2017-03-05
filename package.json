@@ -49,7 +49,6 @@
   },
   "dependencies": {
     "async": "1.5.0",
-    "deserialize-error": "0.0.3",
     "json-stringify-safe": "5.0.1",
     "loader-utils": "0.2.16",
     "mkdirp": "0.5.1",
