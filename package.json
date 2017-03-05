@@ -52,7 +52,7 @@
     "json-stringify-safe": "5.0.1",
     "loader-utils": "0.2.16",
     "mkdirp": "0.5.1",
-    "serializerr": "^1.0.3"
+    "serialize-error": "^2.1.0"
   },
   "nyc": {
     "include": [
