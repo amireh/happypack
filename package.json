@@ -22,7 +22,7 @@
     "plugin",
     "fast",
     "speed",
-		"performance",
+    "performance",
     "compilation",
     "transformer",
     "loader",
@@ -49,9 +49,11 @@
   },
   "dependencies": {
     "async": "1.5.0",
+    "deserialize-error": "0.0.3",
     "json-stringify-safe": "5.0.1",
     "loader-utils": "0.2.16",
-    "mkdirp": "0.5.1"
+    "mkdirp": "0.5.1",
+    "serializerr": "^1.0.3"
   },
   "nyc": {
     "include": [
