@@ -166,6 +166,8 @@ as HappyPack will switch into a synchronous mode afterwards (i.e. in `watch`
 mode.) Also, if we're using the cache and the compiled versions are indeed
 cached, the threads will be idle.
 
+Defaults to: `3`
+
 ### `threadPool: HappyThreadPool`
 
 A custom thread-pool to use for retrieving worker threads. Normally, this
