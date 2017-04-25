@@ -29,7 +29,7 @@ module.exports = {
   ],
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         include: [ path.resolve(__dirname, 'lib') ],
