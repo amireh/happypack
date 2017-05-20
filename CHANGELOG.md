@@ -1,5 +1,11 @@
 ## HappyPack Changelog
 
+### 3.1.0
+
+- Fixed an edge race condition re cache signatures. Thanks to @saifelse, refs GH-159
+- Now propagating loader errors correctly to webpack from background processes. Thanks to @zinserjan, refs GH-14
+- Now exposing "minimize" to loader contexts. Thanks to @adventure-yunfei, refs GH-139
+
 ### 3.0.3
 
 - Added more webpack2 compatibility fixes
