@@ -14,7 +14,7 @@ module.exports = {
       cache: process.env.HAPPY_CACHE === '1',
       loaders: [
         {
-          path: 'babel',
+          path: 'babel-loader',
           query: {
             plugins: [
               'transform-runtime',

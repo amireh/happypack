@@ -15,7 +15,7 @@ module.exports = {
         include: [ path.resolve(__dirname, 'lib') ],
         loaders: [
           {
-            loader: 'babel',
+            loader: 'babel-loader',
             query: {
               plugins: [
                 'transform-runtime',
