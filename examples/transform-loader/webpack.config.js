@@ -35,14 +35,12 @@ module.exports = {
       id: 'coffee',
       threads: 2,
       loaders: [ 'transform?coffeeify' ],
-      cache: process.env.HAPPY_CACHE === '1'
     }),
 
     new HappyPack({
       id: 'brfs',
       threads: 2,
       loaders: [ 'transform?brfs' ],
-      cache: process.env.HAPPY_CACHE === '1'
     })
   ],
 

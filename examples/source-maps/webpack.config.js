@@ -12,7 +12,6 @@ module.exports = {
 
   plugins: [
     new HappyPack({
-      cache: process.env.HAPPY_CACHE === '1',
       loaders: [
         require.resolve('./identity-loader.js'),
         'babel',

@@ -11,7 +11,6 @@ module.exports = {
 
   plugins: [
     new HappyPack({
-      cache: process.env.HAPPY_CACHE === '1',
       loaders: [{ path: path.resolve(__dirname, 'identity-loader.js') }],
       threads: 2
     })

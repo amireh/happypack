@@ -15,7 +15,6 @@ module.exports = [
       new HappyPack({
         id: 'client',
         compilerId: '1',
-        cache: process.env.HAPPY_CACHE === '1',
         loaders: [{ path: path.resolve(__dirname, 'identity-loader.js') }],
         threadPool: happyThreadPool,
       })
@@ -42,7 +41,6 @@ module.exports = [
       new HappyPack({
         id: 'server',
         compilerId: '2',
-        cache: process.env.HAPPY_CACHE === '1',
         loaders: [{ path: path.resolve(__dirname, 'identity-loader.js') }],
         threadPool: happyThreadPool,
       })

@@ -45,9 +45,6 @@ function createHappyPlugin(id, loaders) {
     loaders: loaders,
     threadPool: happyThreadPool,
 
-    // disable happy caching with HAPPY_CACHE=0
-    cache: process.env.HAPPY_CACHE === '1',
-
     // make happy more verbose with HAPPY_VERBOSE=1
     verbose: process.env.HAPPY_VERBOSE === '1',
   });
