@@ -172,29 +172,10 @@ find examples -maxdepth 2 -type d -name '.happypack' | xargs rm -r
 find examples -maxdepth 2 -type d -name 'dist' | xargs rm -r
 find examples -maxdepth 2 -type d -name 'dist--raw' | xargs rm -r
 
-export HAPPY_CACHE=1
-
 run_task babel_loader
 run_task babel_loader--webpack2
 run_task sass_loader
 run_task tslint_loader
-run_task transform_loader
-run_task webpack2
-run_task webpack2-extract-text
-run_task source_maps
-run_task json_loader
-
-echo "Re-running previous examples with cached sources..."
-echo "---------------------------------------------------"
-
-run_task babel_loader
-run_task sass_loader
-
-# doesn't work right now, we need to replay all loader RPCs on cache load as
-# this loader simply does emitWarning/emitError calls
-#
-# run_task tslint_loader
-
 run_task transform_loader
 run_task webpack2
 run_task webpack2-extract-text
