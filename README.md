@@ -322,9 +322,8 @@ See [./CHANGELOG.md](./CHANGELOG.md).
 ## FAQ
 
 ### Does it work with webpack 2?
-
-It may, and it may not! Official support for webpack 2 will not land until 
-webpack 2 is out of beta status. Until then, IT wouldn't hurt to try but YMMV.
+Since the Version 3.0.3, the happypack works with webpack 2.
+If anyone come across webpack2 related problems, please report it with enough details.
 
 ### Does it work with loader X or Y?
 
