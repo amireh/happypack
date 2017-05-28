@@ -4,10 +4,8 @@ env:
   - HAPPY_TEST_TIMEOUT=60000
 
 node_js:
-  - 6
-  - 5
+  - stable
   - 4
-  - '0.12'
 
 install: npm install --ignore-scripts
 
