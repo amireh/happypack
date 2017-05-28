@@ -88,14 +88,6 @@ apart. See "Using multiple instances" below for more information on that.
 
 Defaults to: "1"
 
-### `enabled: Boolean`
-
-Whether the plugin should be activated. This is for convenience when you want
-to conditionally disable HappyPack based on, for example, an environment
-variable.
-
-Defaults to `true`
-
 ### `threads: Number`
 
 This number indicates how many Node VMs HappyPack will spawn for compiling

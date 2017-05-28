@@ -14,6 +14,10 @@
   - `cachePath`
   - `cacheContext`
   - `cacheSignatureGenerator`
+- The `enabled` option has been deprecated and will be removed in a future
+  version. As disabling the plugin already requires the user to modify their
+  config (e.g. to adjust the loader listings) this option had very little
+  value.
 
 ### 3.1.0
 
