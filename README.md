@@ -79,8 +79,8 @@ costly for the gain it provided.
 
 ### `id: String`
 
-A unique id for this happy plugin. This is used to generate the default cache
-name and is used by the loader to know which plugin it's supposed to talk to.
+A unique id for this happy plugin. This is used by the loader to know which
+plugin it's supposed to talk to.
 
 Normally, you would not need to specify this unless you have more than one
 HappyPack plugin defined, in which case you'll need distinct IDs to tell them
@@ -96,62 +96,6 @@ variable.
 
 Defaults to `true`
 
-### `tempDir: String`
-
-Path to a folder where happy's cache and junk files will be kept. It's safe to
-remove this folder after a run but not during it!
-
-Defaults to: `.happypack/`
-
-### `cache: Boolean`
-
-Whether HappyPack should re-use the compiled version of source files if their
-contents have not changed since the last compilation time (assuming they have
-been compiled, of course.)
-
-Recommended!
-
-Defaults to: `true`
-
-### `cachePath: String`
-
-Path to a file where the JSON cache will be saved to disk and read from on
-successive webpack runs.
-
-Defaults to `.happypack/cache--[id].json`
-
-### `cacheContext: Object`
-
-An object that is used to invalidate the cache between runs based on whatever
-variables that might affect the transformation of your sources, like `NODE_ENV`
-for example.
-
-You should provide this if you perform different builds based on some external
-parameters. **THIS OBJECT MUST BE JSON-SERIALIZABLE**.
-
-E.g. 
-
-```
-cacheContext: {
-  env: process.env.NODE_ENV
-}
-```
-
-Defaults to: `{}`
-
-### `cacheSignatureGenerator: Function`
-
-A function that computes a signature for a file. This signature is used by
-the cache to figure out whether the file contents have changed since the
-last time it was compiled.
-
-The function signature is:
-
-    (filePath: String) -> String
-
-Defaults to: a function that yields the `last-modified-at` (mtime) timestamp
-of the given file.
-
 ### `threads: Number`
 
 This number indicates how many Node VMs HappyPack will spawn for compiling
@@ -161,8 +105,7 @@ beyond 8 actually slowed things down for me.
 
 Keep in mind that this is only relevant when performing **the initial build**
 as HappyPack will switch into a synchronous mode afterwards (i.e. in `watch`
-mode.) Also, if we're using the cache and the compiled versions are indeed
-cached, the threads will be idle.
+mode.)
 
 Defaults to: `3`
 
@@ -179,7 +122,7 @@ Defaults to: `null`
 ### `verbose: Boolean`
 
 Enable this to log status messages from HappyPack to STDOUT like start-up
-banner, cache status, etc..
+banner, etc..
 
 Defaults to: `true`
 
@@ -257,10 +200,6 @@ Now `.js` files will be handled by the first Happy plugin which will use
 `babel-loader` to transform them, while `.coffee` files will be handled
 by the second one using the `coffee-loader` as a transformer.
 
-Note that each plugin will properly use different cache files as the default
-cache file names include the plugin IDs, so you don't need to override them
-manually. Yay!
-
 ## Shared thread pools
 
 Normally, each `HappyPlugin` instance you create internally manages its own
@@ -295,21 +234,20 @@ module.exports = {
 
 ## Benchmarks
 
-For the main repository I tested on, which had around 3067 modules, the build time went down from 39 seconds to a whopping ~10 seconds when there was yet no
-cache. Successive builds now take between 6 and 7 seconds.
+For the main repository I tested on, which had around 3067 modules, the build time went down from 39 seconds to a whopping ~10 seconds.
 
 Here's a rundown of the various states the build was performed in:
 
-Elapsed (ms) | Happy?  | Cache enabled? | Cache present? | Using DLLs? |
------------- | ------- | -------------- | -------------- | ----------- |
-39851        | NO      | N/A            | N/A            | NO          |
-37393        | NO      | N/A            | N/A            | YES         |
-14605        | YES     | NO             | N/A            | NO          |
-13925        | YES     | YES            | NO             | NO          |
-11877        | YES     | YES            | YES            | NO          |
-9228         | YES     | NO             | N/A            | YES         |
-9597         | YES     | YES            | NO             | YES         |
-6975         | YES     | YES            | YES            | YES         |
+Elapsed (ms) | Happy?  | Using DLLs? |
+------------ | ------- | ----------- |
+39851        | NO      | NO          |
+37393        | NO      | YES         |
+14605        | YES     | NO          |
+13925        | YES     | NO          |
+11877        | YES     | NO          |
+9228         | YES     | YES         |
+9597         | YES     | YES         |
+6975         | YES     | YES         |
 
 The builds above were run under Linux on a machine with 12 cores.
 

@@ -1,5 +1,20 @@
 ## HappyPack Changelog
 
+### 4.0.0
+
+- Support for file-system caching has been dropped. Use [cache-
+  loader](https://github.com/webpack-contrib/cache-loader) if you're after this
+  functionality.
+- In the light of the caching change, the following options have lost their
+  meaning and instead wish you a very happy life. Please note that as of this
+  version configuring them will cause a warning to be logged to the console
+  while in the future they will cause an exception to be thrown:
+  - `tempDir`
+  - `cache`
+  - `cachePath`
+  - `cacheContext`
+  - `cacheSignatureGenerator`
+
 ### 3.1.0
 
 - Fixed an edge race condition re cache signatures. Thanks to @saifelse, refs GH-159
