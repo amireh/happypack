@@ -322,8 +322,7 @@ See [./CHANGELOG.md](./CHANGELOG.md).
 ### Does it work with webpack 2?
 
 As of version 3.0.3, it does to a certain extent. You can look at
-the [pending issues](https://github.com/amireh/happypack/issues?
-q=is%3Aopen+is%3Aissue+label%3Awebpack2) to see if any of those
+the [pending issues](https://github.com/amireh/happypack/issues?q=is%3Aopen+is%3Aissue+label%3Awebpack2) to see if any of those
 affect you.
 
 If you come across an issue that is exclusive to webpack 2, a fix has
