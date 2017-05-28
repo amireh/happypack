@@ -1,7 +1,5 @@
 # HappyPack [![Build Status](https://travis-ci.org/amireh/happypack.svg?branch=master)](https://travis-ci.org/amireh/happypack) [![codecov.io](https://codecov.io/github/amireh/happypack/coverage.svg?branch=master)](https://codecov.io/github/amireh/happypack?branch=master)
 
-_In a nutshell:_
-
 HappyPack makes webpack builds faster by allowing you to transform multiple
 files _in parallel_.
 
@@ -323,8 +321,14 @@ See [./CHANGELOG.md](./CHANGELOG.md).
 
 ### Does it work with webpack 2?
 
-It may, and it may not! Official support for webpack 2 will not land until 
-webpack 2 is out of beta status. Until then, IT wouldn't hurt to try but YMMV.
+As of version 3.0.3, it does to a certain extent. You can look at
+the [pending issues](https://github.com/amireh/happypack/issues?
+q=is%3Aopen+is%3Aissue+label%3Awebpack2) to see if any of those
+affect you.
+
+If you come across an issue that is exclusive to webpack 2, a fix has
+to be provided by the community (or you) as the author currently has no
+plans for providing webpack 2 support.
 
 ### Does it work with loader X or Y?
 
