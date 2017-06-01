@@ -91,6 +91,21 @@ function tslint_loader {
   ) | egrep -i "forbidden .?var.? keyword"
 }
 
+function ts_loader--webpack2 {
+  echo "Testing HappyPack with ts-loader (webpack 2)"
+  echo "-----------------------------------------------"
+
+  setup_example "examples/ts-loader--webpack2"
+
+  (
+    cd examples/ts-loader--webpack2;
+    ./node_modules/.bin/webpack --bail &&
+    ./node_modules/.bin/webpack --bail --config webpack.config--raw.js &&
+    diff dist/main.js dist--raw/main.js &&
+    grep "success" dist/main.js
+  )
+}
+
 function transform_loader {
   echo "Testing HappyPack with transform-loader (coffeeify & brfs)"
   echo "----------------------------------------------------------"
@@ -179,5 +194,6 @@ run_task tslint_loader
 run_task transform_loader
 run_task webpack2
 run_task webpack2-extract-text
+run_task ts_loader--webpack2
 run_task source_maps
 run_task json_loader

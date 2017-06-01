@@ -1,0 +1,14 @@
+{
+  "name": "happypack-examples__ts-loader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "John Reilly <johnny_reilly@hotmail.com> ",
+  "license": "ISC",
+  "devDependencies": {
+    "fork-ts-checker-webpack-plugin": "^0.1.2",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.2.2",
+    "webpack": "^2.2.0"
+  }
+}
