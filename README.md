@@ -245,12 +245,11 @@ plans for providing webpack 2 support.
 
 ### Does it work with TypeScript?
 
-The short answer is: yes it finally does! The longer answer is that you need
+The short answer is: yes, it finally does! The longer answer is that you need
 to use [ts-loader](https://github.com/TypeStrong/ts-loader) in 
-"transpiling-only" mode then use another loader to perform static type 
-checking via the [fork-ts-checker-notifier-webpack-plugin](https://github.com/johnnyreilly/fork-ts-checker-notifier-webpack-plugin) plugin.
+"transpiling-only" mode then use the special plugin [fork-ts-checker-notifier-webpack-plugin](https://github.com/johnnyreilly/fork-ts-checker-notifier-webpack-plugin) to perform static type checking.
 
-More information can be found in this [wiki article](https://github.com/amireh/happypack/wiki/TypeScript) and there's an [example](./examples/ts-loader--webpack2) that shows this in action.
+More information can be found in [this wiki article](https://github.com/amireh/happypack/wiki/TypeScript), in the [ts-loader "happypack mode" section](https://github.com/TypeStrong/ts-loader#happypackmode-boolean-defaultfalse) and you can refer to the [example](./examples/ts-loader--webpack2) that shows this in action.
 
 Huge thanks to @johnnyreilly, @aindlq, @piotr-oles, @abergs and many others for
 making this work.
