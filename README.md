@@ -243,6 +243,18 @@ If you come across an issue that is exclusive to webpack 2, a fix has
 to be provided by the community (or you) as the author currently has no
 plans for providing webpack 2 support.
 
+### Does it work with TypeScript?
+
+The short answer is: yes it finally does! The longer answer is that you need
+to use [ts-loader](https://github.com/TypeStrong/ts-loader) in 
+"transpiling-only" mode then use another loader to perform static type 
+checking via the [fork-ts-checker-notifier-webpack-plugin](https://github.com/johnnyreilly/fork-ts-checker-notifier-webpack-plugin) plugin.
+
+More information can be found in this [wiki article](https://github.com/amireh/happypack/wiki/TypeScript) and there's an [example](./examples/ts-loader--webpack2) that shows this in action.
+
+Huge thanks to @johnnyreilly, @aindlq, @piotr-oles, @abergs and many others for
+making this work.
+
 ### Does it work with loader X or Y?
 
 We're keeping track of known loader support in [this wiki page](https://github.com/amireh/happypack/wiki/Loader-Compatibility-List). Some loaders 
