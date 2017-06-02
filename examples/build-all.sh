@@ -101,7 +101,7 @@ function ts_loader--webpack2 {
     cd examples/ts-loader--webpack2;
     ./node_modules/.bin/webpack --bail &&
     ./node_modules/.bin/webpack --bail --config webpack.config--raw.js &&
-    diff dist/main.js dist--raw/main.js &&
+    diff dist/main.js dist/main.raw.js &&
     grep "success" dist/main.js
   )
 }
