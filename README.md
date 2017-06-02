@@ -8,8 +8,8 @@ See "How it works" below for more details.
 ## Motivation
 
 - webpack initial build times are horrifying in large codebases (3k+ modules)
-- something that works against both a one-time build (e.g. for a CI) and
-  continuous builds (i.e. `--watch` during development)
+- something that works for one-time builds (e.g. CI) and for continuous ones
+  (i.e. `--watch` during development)
 
 ## Usage
 
@@ -18,9 +18,7 @@ npm install --save-dev happypack
 ```
 
 In your `webpack.config.js`, you need to use the plugin and tell it of the
-loaders it should use to transform the sources. ~~Note that you must specify
-the absolute paths for these loaders as we do not use webpack's loader resolver
-at this point.~~
+loaders it should use to transform the sources.
 
 ```javascript
 var HappyPack = require('happypack');
@@ -35,8 +33,7 @@ exports.plugins = [
 ];
 ```
 
-Now you replace your current loaders with HappyPack's loader (possibly use an
-env variable to enable HappyPack):
+Now you replace your current loaders with HappyPack's loader:
 
 ```javascript
 exports.module = {
@@ -63,19 +60,13 @@ Each loader entry consists of the name or path of loader that would
 transform the files and an optional query string to pass to it. This looks
 similar to what you'd pass to webpack's `loader` config.
 
-> **NOTE**
+> **Heads up!**
 >
 > HappyPack doesn't work with *all* webpack loaders as some loader API are not
 > supported.
 >
-> See [this wiki page](https://github.com/amireh/happypack/wiki/Webpack-Loader-API-Support)
-> for more details on current Loader API support.
-
-~~It is possible to omit this value and have HappyPack automatically infer the
-loaders it should use, see "Inferring loaders" below for more information~~ 
-Inferring loaders has been officially removed as of HappyPack 3.0 and will not
-be re-introduced (in its previous form, at least) as it has proven to be too 
-costly for the gain it provided.
+> See [this wiki page](https://github.com/amireh/happypack/wiki/Webpack-Loader-
+> API-Support) for more details on current Loader API support.
 
 ### `id: String`
 
@@ -139,19 +130,13 @@ Defaults to: `false`
 ![A diagram showing the flow between HappyPack's components](doc/HappyPack_Workflow.png)
 
 HappyPack sits between webpack and your primary source files (like JS sources)
-where the bulk of loader transformations happen. Every time webpack resolves
-a module, HappyPack will take it and all its dependencies, find out if they
-need to be compiled[1], and if they do, it distributes those files to multiple
-worker "threads".
+where the bulk of loader transformations happen. Every time webpack resolves a
+module, HappyPack will take it and all its dependencies and distributes those
+files to multiple worker "threads".
 
 Those threads are actually simple node processes that invoke your transformer.
 When the compiled version is retrieved, HappyPack serves it to its loader and
 eventually your chunk.
-
-[1] When HappyPack successfully compiles a source file, it keeps track of its
-mtime so that it can re-use it on successive builds if the contents have not
-changed. This is a fast and somewhat reliable approach, and definitely much
-faster than re-applying the transformers on every build.
 
 ## Using multiple instances
 
@@ -213,12 +198,14 @@ module.exports = {
   plugins: [
     new HappyPack({
       id: 'js',
-      threadPool: happyThreadPool
+      threadPool: happyThreadPool,
+      loaders: [ 'babel-loader' ]
     }),
 
     new HappyPack({
       id: 'styles',
-      threadPool: happyThreadPool
+      threadPool: happyThreadPool,
+      loaders: [ 'style-loader', 'css-loader', 'less-loader' ]
     })
   ]
 };
@@ -238,8 +225,6 @@ Elapsed (ms) | Happy?  | Using DLLs? |
 13925        | YES     | NO          |
 11877        | YES     | NO          |
 9228         | YES     | YES         |
-9597         | YES     | YES         |
-6975         | YES     | YES         |
 
 The builds above were run under Linux on a machine with 12 cores.
 
