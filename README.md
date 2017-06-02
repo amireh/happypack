@@ -65,8 +65,7 @@ similar to what you'd pass to webpack's `loader` config.
 > HappyPack doesn't work with *all* webpack loaders as some loader API are not
 > supported.
 >
-> See [this wiki page](https://github.com/amireh/happypack/wiki/Webpack-Loader-
-> API-Support) for more details on current Loader API support.
+> See [this wiki page](https://github.com/amireh/happypack/wiki/Webpack-Loader-API-Support) for more details on current Loader API support.
 
 ### `id: String`
 
