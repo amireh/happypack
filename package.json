@@ -5,11 +5,11 @@
   "version": "4.0.0-beta.1",
   "scripts": {
     "lint": "eslint lib",
-    "test": "mocha 'lib/**/*.test.js'",
-    "test:webpack1": "NODE_PATH=upstream/webpack1/node_modules mocha -r lib/__tests__/index 'lib/**/*.test.js'",
-    "test:webpack2": "NODE_PATH=upstream/webpack2/node_modules mocha -r lib/__tests__/index 'lib/**/*.test.js'",
-    "test:webpack3": "NODE_PATH=upstream/webpack3/node_modules mocha -r lib/__tests__/index 'lib/**/*.test.js'",
-    "test:coverage": "nyc npm run test:webpack1",
+    "test": "npm run test:webpack1",
+    "test:webpack1": "NODE_PATH=upstream/webpack1/node_modules mocha",
+    "test:webpack2": "NODE_PATH=upstream/webpack2/node_modules mocha",
+    "test:webpack3": "NODE_PATH=upstream/webpack3/node_modules mocha",
+    "test:coverage": "nyc npm test",
     "test:examples": "./examples/build-all.sh",
     "coverage": "nyc report",
     "coverage:html": "nyc report --reporter html",
@@ -43,6 +43,7 @@
     "codecov": "1.0.1",
     "eslint": "2.13.1",
     "fs-extra": "0.30.0",
+    "happypack-test-utils": "file:packages/happypack-test-utils",
     "invariant": "2.2.2",
     "mocha": "3.0.1",
     "multiline-slash": "2.0.0",
@@ -60,8 +61,7 @@
       "lib/*.js"
     ],
     "exclude": [
-      "lib/**/*.test.js",
-      "lib/HappyTestUtils.js"
+      "lib/**/*.test.js"
     ]
   }
 }

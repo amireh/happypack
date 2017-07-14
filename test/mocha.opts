@@ -1,0 +1,1 @@
+--require test/index.js --reporter dot lib/**/*.test.js

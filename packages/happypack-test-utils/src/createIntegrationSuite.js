@@ -1,72 +1,10 @@
 var path = require('path');
 var fs = require('fs-extra');
 var sinon = require('sinon');
-var chai = require('chai');
 var multiline = require('multiline-slash');
-var HappyRPCHandler = require('./HappyRPCHandler');
-var CACHE_DIR = path.resolve(__dirname, '../.happypack');
-var cleanups = [];
-var gid = 0;
-
-sinon.assert.expose(chai.assert, { prefix: "" });
-
-afterEach(function() {
-  cleanups.forEach(function(callback) {
-    callback();
-  });
-
-  cleanups = [];
-});
-
-exports.HAPPY_LOADER_PATH = path.resolve(__dirname, 'HappyLoader.js');
-exports.assert = chai.assert;
-exports.fixturePath = function(fileName) {
-  return path.resolve(__dirname, '__tests__', 'fixtures', fileName);
-};
-
-exports.fixture = function(fileName) {
-  return fs.readFileSync(exports.fixturePath(fileName), 'utf-8');
-};
-
-exports.assertNoWebpackErrors = function(err, rawStats, done) {
-  if (err) {
-    done(err);
-    return true;
-  }
-
-  var stats = rawStats.toJson();
-
-  if (stats.errors.length) {
-    done(stats.errors);
-    return true;
-  }
-
-  if (stats.warnings.length) {
-    done(stats.warnings);
-    return true;
-  }
-};
-
-// courtesy of http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-    s4() + '-' + s4() + s4() + s4();
-}
-
-function interpolateGUID(string) {
-  return string
-    .replace(/\[guid\]/g, function() {
-      return guid();
-    }).replace(/\[gid\]/g, function() {
-      return ++gid;
-    })
-  ;
-}
+var RPCHandlerShim = require('./RPCHandlerShim');
+var interpolateGUID = require('./interpolateGUID');
+var root = require('./root');
 
 /**
  * @module TestUtils.IntegrationSuite
@@ -75,10 +13,11 @@ function interpolateGUID(string) {
  * @param {Object} suiteOptions
  * @param {Number} [suiteOptions.timeout=2000]
  */
-function IntegrationSuite2(mochaSuite, suiteOptions) {
+module.exports = function createIntegrationSuite(mochaSuite, suiteOptions) {
   var sandbox;
   var testSuite = {};
-  var suiteRoot = interpolateGUID(path.join(__dirname, '../tmp/test-repo__[gid]-[guid]'));
+  var suiteRoot = interpolateGUID(root.join('tmp/test-repo__[gid]-[guid]'));
+  var cleanups = [];
 
   suiteOptions = suiteOptions || {};
 
@@ -92,7 +31,6 @@ function IntegrationSuite2(mochaSuite, suiteOptions) {
   mochaSuite.beforeEach(function() {
     sandbox = sinon.sandbox.create({ useFakeTimers: false, useFakeServer: false });
 
-    fs.removeSync(CACHE_DIR);
     fs.ensureDirSync(suiteRoot);
   });
 
@@ -102,11 +40,15 @@ function IntegrationSuite2(mochaSuite, suiteOptions) {
       sandbox = null;
     }
 
-    fs.removeSync(CACHE_DIR);
-
     if (process.env.HAPPY_TEST_ARTIFACTS !== '1') {
       fs.removeSync(suiteRoot);
     }
+
+    cleanups.forEach(function(callback) {
+      callback();
+    });
+
+    cleanups.splice(0);
   });
 
   /**
@@ -168,6 +110,7 @@ function IntegrationSuite2(mochaSuite, suiteOptions) {
   // @return {Function}
   //   Returns the latest active loader instance, if any.
   testSuite.spyOnActiveLoader = function(fn) {
+    var HappyRPCHandler = RPCHandlerShim.get();
     var registerActiveLoader = HappyRPCHandler.prototype.registerActiveLoader;
     var happyLoader;
 
@@ -198,5 +141,3 @@ function IntegrationSuite2(mochaSuite, suiteOptions) {
 
   return testSuite;
 };
-
-exports.IntegrationSuite2 = IntegrationSuite2;

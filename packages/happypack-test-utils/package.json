@@ -1,0 +1,6 @@
+{
+  "name": "happypack-test-utils",
+  "private": true,
+  "version": "1.0.0",
+  "main": "src/index.js"
+}
