@@ -7,11 +7,17 @@ node_js:
   - stable
   - 4
 
-install: npm install --ignore-scripts
+install:
+  - npm install --ignore-scripts
+  - (cd upstream/webpack1; npm install)
+  - (cd upstream/webpack2; npm install)
+  - (cd upstream/webpack3; npm install)
 
 script:
   - npm run lint
   - npm run test:coverage
+  - npm run test:webpack2
+  - npm run test:webpack3
 
 after_success:
   - npm run coverage:ci
@@ -19,3 +25,6 @@ after_success:
 cache:
   directories:
     - node_modules
+    - upstream/webpack1/node_modules
+    - upstream/webpack2/node_modules
+    - upstream/webpack3/node_modules

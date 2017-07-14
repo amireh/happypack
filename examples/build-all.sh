@@ -7,7 +7,7 @@ if [ ! -d examples ]; then
   exit 1
 fi
 
-WEBPACK_BIN="$(pwd)/node_modules/.bin/webpack"
+WEBPACK_BIN="$(pwd)/upstream/webpack1/node_modules/.bin/webpack"
 
 function run_task {
   task=$@
@@ -183,9 +183,8 @@ function json_loader {
 }
 
 # purge the cache and previous build artifacts
-find examples -maxdepth 2 -type d -name '.happypack' | xargs rm -r
-find examples -maxdepth 2 -type d -name 'dist' | xargs rm -r
-find examples -maxdepth 2 -type d -name 'dist--raw' | xargs rm -r
+find examples -maxdepth 2 -type d -name 'dist' | xargs rm -r &> /dev/null
+find examples -maxdepth 2 -type d -name 'dist--raw' | xargs rm -r &> /dev/null
 
 run_task babel_loader
 run_task babel_loader--webpack2
