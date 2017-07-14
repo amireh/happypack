@@ -1,0 +1,10 @@
+{
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+}

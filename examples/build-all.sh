@@ -7,192 +7,210 @@ if [ ! -d examples ]; then
   exit 1
 fi
 
-WEBPACK_BIN="$(pwd)/upstream/webpack1/node_modules/.bin/webpack"
+. "examples/build/director.sh"
 
-function run_task {
-  task=$@
-  echo -e "\n[$task] STARTING $(date)"
+function babel-loader {
+  set -e
 
-  $task 2>&1 | while IFS="" read line; do echo -e "[$task] $line"; done
-
-  exit_status=${PIPESTATUS[0]}
-
-  if [[ $exit_status != 0 ]]; then
-    echo -e "[$task] \033[31mFAILED!\033[0m (exit code $exit_status)"
-    exit 1
-  else
-    echo -e "[$task] \033[32mOK\033[0m"
-  fi
-
-  echo -e "[$task] FINISHED $(date)\n"
-}
-
-function setup_example {
-  EXAMPLE_DIR=$@
-
-  [ -d $EXAMPLE_DIR/dist ] && rm -r $EXAMPLE_DIR/dist
-  [ -f $EXAMPLE_DIR/package.json ] && (cd $EXAMPLE_DIR; npm install)
-}
-
-function babel_loader {
   echo "Testing HappyPack with babel-loader"
   echo "-----------------------------------"
 
-  setup_example "examples/babel-loader"
+  local example="examples/babel-loader"
+  setup_example $example
 
-  (
-    cd examples/babel-loader;
-    $WEBPACK_BIN --bail &&
-    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
-    diff dist/main.js dist/main.raw.js &&
-    grep "success" dist/main.js
-  )
+  $WEBPACK_BIN --bail --config $example/webpack.config.js
+  $WEBPACK_BIN --bail --config $example/webpack.config--raw.js
+
+  diff \
+    $example/dist/main.js \
+    $example/dist/main.raw.js
+
+  grep "success" $example/dist/main.js
 }
 
-function babel_loader--webpack2 {
-  echo "Testing HappyPack with babel-loader (webpack 2)"
-  echo "-----------------------------------------------"
+function sass-loader {
+  set -e
 
-  setup_example "examples/babel-loader--webpack2"
+  echo "Testing HappyPack using sass + css + style loaders"
+  echo "--------------------------------------------------"
 
-  (
-    cd examples/babel-loader--webpack2;
-    ./node_modules/.bin/webpack --bail &&
-    ./node_modules/.bin/webpack --bail --config webpack.config--raw.js &&
-    diff dist/main.js dist--raw/main.js &&
-    grep "success" dist/main.js
-  )
+  local example="examples/sass-loader"
+  setup_example $example
+
+  $WEBPACK_BIN --bail --config $example/webpack.config.js
+  $WEBPACK_BIN --bail --config $example/webpack.config--raw.js
+
+  diff \
+    $example/dist/main.js \
+    $example/dist/main.raw.js
+
+  grep "background-color: yellow" $example/dist/main.js
 }
 
-function sass_loader {
-  echo "Testing HappyPack using sass + css + style loaders."
-  echo "---------------------------------------------------"
+function tslint-loader {
+  set -e
 
-  setup_example "examples/sass-loader"
+  echo "Testing HappyPack using tslint-loader"
+  echo "-------------------------------------"
 
-  (
-    cd examples/sass-loader;
-    $WEBPACK_BIN --bail &&
-    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
-    diff dist/main.js dist/main.raw.js &&
-    grep "background-color: yellow" dist/main.js
-  )
-}
-
-function tslint_loader {
-  echo "Testing HappyPack using ts-linter (typescript linter)"
-  echo "-----------------------------------------------------"
-
+  local example="examples/tslint-loader"
   setup_example "examples/tslint-loader"
 
-  (
-    cd examples/tslint-loader
-    $WEBPACK_BIN --bail
-  ) | egrep -i "forbidden .?var.? keyword"
+  # this doesn't work if outside of node_modules/ where tslint is installed so
+  # we must `cd`
+  (cd $example && $WEBPACK_BIN --bail) | egrep -i "forbidden .?var.? keyword"
 }
 
-function ts_loader--webpack2 {
-  echo "Testing HappyPack with ts-loader (webpack 2)"
-  echo "-----------------------------------------------"
+function ts-loader {
+  set -e
 
-  setup_example "examples/ts-loader--webpack2"
+  echo "Testing HappyPack with ts-loader"
+  echo "--------------------------------"
 
-  (
-    cd examples/ts-loader--webpack2;
-    ./node_modules/.bin/webpack --bail &&
-    ./node_modules/.bin/webpack --bail --config webpack.config--raw.js &&
-    diff dist/main.js dist/main.raw.js &&
-    grep "success" dist/main.js
-  )
+  local example="examples/ts-loader"
+  setup_example $example
+
+  $WEBPACK_BIN --config $example/webpack.config.js
+  $WEBPACK_BIN --config $example/webpack.config--raw.js
+
+  diff \
+    $example/dist/main.js \
+    $example/dist/main.raw.js
+
+  grep "success" $example/dist/main.js
 }
 
-function transform_loader {
+function transform-loader {
+  set -e
+
   echo "Testing HappyPack with transform-loader (coffeeify & brfs)"
   echo "----------------------------------------------------------"
 
-  setup_example "examples/transform-loader"
+  local example="examples/transform-loader"
+  setup_example $example
 
-  (
-    cd examples/transform-loader;
-    $WEBPACK_BIN --bail &&
-    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
-    diff dist/main.js dist/main.raw.js
-  )
+  $WEBPACK_BIN --bail --config $example/webpack.config.js
+  $WEBPACK_BIN --bail --config $example/webpack.config--raw.js
+
+  diff \
+    $example/dist/main.js \
+    $example/dist/main.raw.js
 }
 
-function webpack2 {
-  echo "Testing HappyPack with webpack v2"
-  echo "---------------------------------"
+function extract-text-webpack-plugin {
+  set -e
 
-  setup_example "examples/webpack2"
+  echo "Testing HappyPack with ExtractTextPlugin"
+  echo "----------------------------------------"
 
-  (
-    cd examples/webpack2;
-    ./node_modules/.bin/webpack --bail &&
-    grep "console.log('success')" dist/main.js
-  )
+  local example="examples/extract-text-webpack-plugin"
+  setup_example $example
+
+  $WEBPACK_BIN --bail --config $example/webpack.config.js
+  $WEBPACK_BIN --bail --config $example/webpack.config--raw.js
+
+  diff \
+    $example/dist/styles.css \
+    $example/dist--raw/styles.css
+
+  grep "{ className: 'less scss' },"  $example/dist/main.js
+  grep ".less {"                      $example/dist/styles.css
 }
 
-function webpack2-extract-text {
-  echo "Testing HappyPack with webpack v2 + extract-text-plugins + react"
-  echo "---------------------------------"
+function source-maps {
+  set -e
 
-  setup_example "examples/webpack2-extract-react"
-
-  (
-    cd examples/webpack2-extract-react;
-    ./node_modules/.bin/webpack --bail --config webpack.config.js &&
-    ./node_modules/.bin/webpack --bail --config webpack.config--raw.js &&
-    diff dist/styles.css dist--raw/styles.css &&
-    grep "{ className: 'less scss' }," dist/main.js &&
-    grep ".less {" dist/styles.css
-  )
-}
-
-function source_maps {
   echo "Testing HappyPack for SourceMap support"
   echo "---------------------------------------"
 
-  EXAMPLE_DIR="examples/source-maps"
+  local example="examples/source-maps"
+  setup_example $example
 
-  setup_example $EXAMPLE_DIR
+  $WEBPACK_BIN --bail --config $example/webpack.config.js
+  $WEBPACK_BIN --bail --config $example/webpack.config--raw.js
 
-  (
-    cd $EXAMPLE_DIR
-    $WEBPACK_BIN --bail &&
-    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
-    diff dist/main.js.map dist--raw/main.js.map
-  )
+  diff \
+    $example/dist/main.js.map \
+    $example/dist--raw/main.js.map
 }
 
-function json_loader {
+function json-loader {
+  set -e
+
   echo "Testing HappyPack with json-loader"
   echo "----------------------------------"
 
-  EXAMPLE_DIR="examples/json-loader"
+  local example="examples/json-loader"
+  setup_example $example
 
-  setup_example $EXAMPLE_DIR
+  $WEBPACK_BIN --bail --config $example/webpack.config.js
+  $WEBPACK_BIN --bail --config $example/webpack.config--raw.js
 
-	(
-    cd $EXAMPLE_DIR
-    $WEBPACK_BIN --bail &&
-    $WEBPACK_BIN --bail --config webpack.config--raw.js &&
-    diff dist/main.js dist--raw/main.js &&
-    (node dist/main.js | grep "Hello World!" &> /dev/null)
-  )
+  diff \
+    $example/dist/main.js \
+    $example/dist--raw/main.js
+
+  (node $example/dist/main.js | grep "Hello World!" &> /dev/null)
 }
 
-# purge the cache and previous build artifacts
-find examples -maxdepth 2 -type d -name 'dist' | xargs rm -r &> /dev/null
-find examples -maxdepth 2 -type d -name 'dist--raw' | xargs rm -r &> /dev/null
+function multi-build {
+  set -e
 
-run_task babel_loader
-run_task babel_loader--webpack2
-run_task sass_loader
-run_task tslint_loader
-run_task transform_loader
-run_task webpack2
-run_task webpack2-extract-text
-run_task ts_loader--webpack2
-run_task source_maps
-run_task json_loader
+  echo "Testing HappyPack with multiple builds"
+  echo "--------------------------------------"
+
+  local example="examples/multi-build"
+  setup_example $example
+
+  $WEBPACK_BIN --config $example/webpack.config.js
+  $WEBPACK_BIN --config $example/webpack.config--raw.js
+
+  diff \
+    $example/dist/client.js \
+    $example/dist/client.raw.js
+
+  diff \
+    $example/dist/server.js \
+    $example/dist/server.raw.js
+
+  grep "success" $example/dist/client.js
+  grep "success" $example/dist/server.js
+}
+
+purge_artifacts
+
+with_webpack "1" run_example babel-loader
+with_webpack "2" run_example babel-loader
+with_webpack "3" run_example babel-loader
+
+with_webpack "1" run_example extract-text-webpack-plugin
+with_webpack "2" run_example extract-text-webpack-plugin
+with_webpack "3" run_example extract-text-webpack-plugin
+
+with_webpack "1" run_example json-loader
+with_webpack "2" run_example json-loader
+with_webpack "3" run_example json-loader
+
+with_webpack "1" run_example multi-build
+with_webpack "2" run_example multi-build
+with_webpack "3" run_example multi-build
+
+with_webpack "1" run_example sass-loader
+with_webpack "2" run_example sass-loader
+with_webpack "3" run_example sass-loader
+
+with_webpack "1" run_example source-maps
+with_webpack "2" run_example source-maps
+with_webpack "3" run_example source-maps
+
+with_webpack "1" run_example transform-loader
+with_webpack "2" run_example transform-loader
+with_webpack "3" run_example transform-loader
+
+with_webpack "1" run_example ts-loader
+with_webpack "2" run_example ts-loader
+with_webpack "3" run_example ts-loader
+
+with_webpack "1" run_example tslint-loader
+with_webpack "2" run_example tslint-loader
+with_webpack "3" run_example tslint-loader

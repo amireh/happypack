@@ -1,0 +1,17 @@
+{
+  "name": "webpack-config-composer",
+  "private": true,
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha 'src/__tests__/*.test.js'"
+  },
+  "dependencies": {
+    "invariant": "2.2.2",
+    "lodash": "4.17.4"
+  },
+  "devDependencies": {
+    "chai": "4.1.0",
+    "mocha": "3.4.2"
+  }
+}

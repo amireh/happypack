@@ -1,9 +1,11 @@
 var path = require('path');
 var HappyPack = require('../../');
 var happyThreadPool = HappyPack.ThreadPool({ size: 2 });
+var composeWebpackConfig = require('../composeWebpackConfig')
 
 module.exports = [
-  {
+  composeWebpackConfig({
+    context: path.resolve(__dirname),
     entry: { client: path.resolve(__dirname, 'lib/a.js') },
 
     output: {
@@ -28,8 +30,9 @@ module.exports = [
         }
       ]
     }
-  },
-  {
+  }),
+  composeWebpackConfig({
+    context: path.resolve(__dirname),
     entry: { server: path.resolve(__dirname, 'lib/b.js') },
 
     output: {
@@ -54,6 +57,5 @@ module.exports = [
         }
       ]
     }
-  },
-
+  }),
 ]

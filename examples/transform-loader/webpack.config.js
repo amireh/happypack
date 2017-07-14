@@ -1,8 +1,9 @@
 var path = require('path');
-var through = require('browserify-through');
 var HappyPack = require('../../');
+var composeWebpackConfig = require('../composeWebpackConfig');
 
-module.exports = {
+module.exports = composeWebpackConfig({
+  context: path.resolve(__dirname),
   entry: path.resolve(__dirname, 'lib/index.js'),
 
   output: {
@@ -11,11 +12,6 @@ module.exports = {
   },
 
   module: {
-    // postLoaders: [
-    //   {
-    //     loader: "transform?brfs"
-    //   }
-    // ],
     loaders: [
       {
         test: /\.js$/,
@@ -42,11 +38,5 @@ module.exports = {
       threads: 2,
       loaders: [ 'transform?brfs' ],
     })
-  ],
-
-  transforms: [
-    // TODO
-    function(file) {
-    }
   ]
-};
+});

@@ -6,9 +6,9 @@
   "scripts": {
     "lint": "eslint lib",
     "test": "npm run test:webpack1",
-    "test:webpack1": "NODE_PATH=upstream/webpack1/node_modules mocha",
-    "test:webpack2": "NODE_PATH=upstream/webpack2/node_modules mocha",
-    "test:webpack3": "NODE_PATH=upstream/webpack3/node_modules mocha",
+    "test:webpack1": "NODE_PATH=upstream/webpack1/node_modules mocha --opts .mocha",
+    "test:webpack2": "NODE_PATH=upstream/webpack2/node_modules mocha --opts .mocha",
+    "test:webpack3": "NODE_PATH=upstream/webpack3/node_modules mocha --opts .mocha",
     "test:coverage": "nyc npm test",
     "test:examples": "./examples/build-all.sh",
     "coverage": "nyc report",
@@ -44,7 +44,8 @@
     "happypack-test-utils": "file:packages/happypack-test-utils",
     "mocha": "3.0.1",
     "multiline-slash": "2.0.0",
-    "nyc": "7.1.0"
+    "nyc": "7.1.0",
+    "webpack-config-composer": "file:packages/webpack-config-composer"
   },
   "dependencies": {
     "async": "1.5.0",

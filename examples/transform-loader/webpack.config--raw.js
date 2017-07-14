@@ -1,7 +1,8 @@
 var path = require('path');
-var through = require('browserify-through');
+var composeWebpackConfig = require('../composeWebpackConfig');
 
-module.exports = {
+module.exports = composeWebpackConfig({
+  context: path.resolve(__dirname),
   entry: path.resolve(__dirname, 'lib/index.js'),
 
   output: {
@@ -26,15 +27,6 @@ module.exports = {
         include: [ path.resolve(__dirname, 'lib') ],
         loader: "transform?coffeeify"
       },
-      // {
-      //   test: /\.weirdjs$/,
-      //   loader: "transform?0"
-      // }
     ]
-  },
-  transforms: [
-    // TODO
-    function(file) {
-    }
-  ]
-};
+  }
+});

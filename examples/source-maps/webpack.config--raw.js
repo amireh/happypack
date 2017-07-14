@@ -1,7 +1,8 @@
 var path = require('path');
-var HappyPack = require('../../');
+var composeWebpackConfig = require('../composeWebpackConfig');
 
-module.exports = {
+module.exports = composeWebpackConfig({
+  context: path.resolve(__dirname),
   entry: path.resolve(__dirname, 'lib/a.js'),
   devtool: 'source-map',
 
@@ -21,4 +22,4 @@ module.exports = {
       }
     ]
   }
-};
+});

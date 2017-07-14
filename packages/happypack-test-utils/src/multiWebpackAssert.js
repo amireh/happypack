@@ -1,4 +1,4 @@
-var getWebpackVersion = require('./getWebpackVersion');
+var getWebpackVersion = require('webpack-config-composer').getWebpackVersion;
 
 module.exports = function multiWebpackAssert(specs) {
   var webpackVersion = getWebpackVersion();

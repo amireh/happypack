@@ -1,2 +1,0 @@
-// index.js
-require('./b');

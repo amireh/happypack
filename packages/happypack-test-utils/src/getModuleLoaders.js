@@ -1,4 +1,4 @@
-var getWebpackVersion = require('./getWebpackVersion');
+var getWebpackVersion = require('webpack-config-composer').getWebpackVersion;
 var VERSION_ANY = '*';
 var VERSION_1 = /^1/;
 var VERSION_2 = /^2/;

@@ -1,5 +1,6 @@
 var sinon = require('sinon');
 var chai = require('chai');
+var composer = require('webpack-config-composer');
 
 sinon.assert.expose(chai.assert, { prefix: "" });
 
@@ -15,8 +16,12 @@ exports.fixturePath = require('./fixturePath');
 exports.fixture = require('./fixture');
 exports.assertNoWebpackErrors = require('./assertNoWebpackErrors');
 exports.createIntegrationSuite = require('./createIntegrationSuite');
-exports.composeWebpackConfig = require('./composeWebpackConfig');
-exports.getWebpackVersion = require('./getWebpackVersion');
+
+exports.composeWebpackConfig = function(config) {
+  return composer.composeWebpackConfig(composer.getWebpackVersion())(config);
+};
+
+exports.getWebpackVersion = composer.getWebpackVersion;
 exports.getModuleLoaders = require('./getModuleLoaders');
 exports.multiWebpackAssert = require('./multiWebpackAssert');
 

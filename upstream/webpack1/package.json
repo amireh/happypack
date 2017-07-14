@@ -2,6 +2,7 @@
   "name": "happypack-test-vendor__webpack1",
   "version": "1.0.0",
   "dependencies": {
+    "extract-text-webpack-plugin": "1.0.1",
     "webpack": "1.15.0"
   }
 }
