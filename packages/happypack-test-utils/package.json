@@ -2,5 +2,11 @@
   "name": "happypack-test-utils",
   "private": true,
   "version": "1.0.0",
-  "main": "src/index.js"
+  "main": "src/index.js",
+  "dependencies": {
+    "fs-extra": "3.0.1",
+    "invariant": "2.2.2",
+    "lodash": "4.17.4",
+    "sinon": "1.17.7"
+  }
 }

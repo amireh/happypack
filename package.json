@@ -42,13 +42,10 @@
     "chai": "3.5.0",
     "codecov": "1.0.1",
     "eslint": "2.13.1",
-    "fs-extra": "0.30.0",
     "happypack-test-utils": "file:packages/happypack-test-utils",
-    "invariant": "2.2.2",
     "mocha": "3.0.1",
     "multiline-slash": "2.0.0",
-    "nyc": "7.1.0",
-    "sinon": "1.17.5"
+    "nyc": "7.1.0"
   },
   "dependencies": {
     "async": "1.5.0",

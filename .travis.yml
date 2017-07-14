@@ -15,7 +15,7 @@ install:
 
 script:
   - npm run lint
-  - npm run test:coverage
+  - npm run test:coverage # this will run the webpack1 suite
   - npm run test:webpack2
   - npm run test:webpack3
 
