@@ -14,7 +14,7 @@
     "coverage": "nyc report",
     "coverage:html": "nyc report --reporter html",
     "coverage:ci": "nyc report --reporter=text-lcov > tmp/coverage.lcov && codecov --disable search -f tmp/coverage.lcov",
-    "prepublish": "npm run lint && npm run test && npm run test-examples"
+    "prepublish": "npm run lint && npm run test && npm run test:examples"
   },
   "repository": {
     "type": "git",
