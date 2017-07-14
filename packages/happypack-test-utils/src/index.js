@@ -1,3 +1,8 @@
+var sinon = require('sinon');
+var chai = require('chai');
+
+sinon.assert.expose(chai.assert, { prefix: "" });
+
 exports.VERSION_1 = /^1/;
 exports.VERSION_2 = /^2/;
 exports.VERSION_3 = /^3/;
@@ -14,3 +19,4 @@ exports.composeWebpackConfig = require('./composeWebpackConfig');
 exports.getWebpackVersion = require('./getWebpackVersion');
 exports.getModuleLoaders = require('./getModuleLoaders');
 exports.multiWebpackAssert = require('./multiWebpackAssert');
+

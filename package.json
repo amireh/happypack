@@ -39,7 +39,6 @@
   },
   "homepage": "https://github.com/amireh/happypack#readme",
   "devDependencies": {
-    "chai": "3.5.0",
     "codecov": "1.0.1",
     "eslint": "2.13.1",
     "happypack-test-utils": "file:packages/happypack-test-utils",
