@@ -1,3 +1,4 @@
+/.local
 /coverage
 /doc
 /examples
@@ -7,6 +8,7 @@
 /test
 /tmp
 /upstream
+/.nyc_output
 
 /.travis.yml
 /TODO.md
