@@ -1,5 +1,10 @@
 ## HappyPack Changelog
 
+### 4.0.0-beta.4
+
+- Default to buffered messaging mode when using standalone thread pools on
+  Windows.
+
 ### 4.0.0-beta.3
 
 Fixed bug around the use of `process.send()` that was causing a hang on
