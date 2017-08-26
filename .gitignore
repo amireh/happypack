@@ -9,3 +9,4 @@ node_modules
 /scripts/**/dist
 /tmp
 !/tmp/.gitkeep
+.cache-loader

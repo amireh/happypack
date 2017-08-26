@@ -56,6 +56,7 @@ webpack({
   var happypackLoaderContext = require(statPaths.happypack);
   var stats = {
     missing: [],
+    extraneous: [],
     mismatch: [],
     supported: []
   };
@@ -69,6 +70,12 @@ webpack({
     }
     else {
       stats.supported.push(key);
+    }
+  });
+
+  Object.keys(happypackLoaderContext).forEach(function(key) {
+    if (!webpackLoaderContext.hasOwnProperty(key)) {
+      stats.extraneous.push(key);
     }
   });
 
@@ -99,6 +106,20 @@ webpack({
     console.log(Array(72).join('-'));
 
     stats.mismatch.sort().forEach(function(key, index) {
+      console.warn('%d. "%s" is of type "%s" in webpack, but "%s" in happypack.',
+        index+1,
+        key,
+        webpackLoaderContext[key],
+        happypackLoaderContext[key]
+      );
+    });
+  }
+
+  if (stats.extraneous.length) {
+    console.log('Extraneous properties (possibly deprecated?):');
+    console.log(Array(72).join('-'));
+
+    stats.extraneous.sort().forEach(function(key, index) {
       console.warn('%d. "%s" is of type "%s" in webpack, but "%s" in happypack.',
         index+1,
         key,

@@ -28,6 +28,30 @@ function babel-loader {
   grep "success" $example/dist/main.js
 }
 
+function cache-loader {
+  set -e
+
+  echo "Testing HappyPack with cache-loader"
+  echo "-----------------------------------"
+
+  local example="examples/cache-loader"
+  setup_example $example
+
+  # we need to do this twice to make use of the cache
+  for i in {0..1}; do
+    [ -d $example/dist ] && rm -r $example/dist
+
+    $WEBPACK_BIN --bail --config $example/webpack.config.js
+    $WEBPACK_BIN --bail --config $example/webpack.config--raw.js
+
+    diff \
+      $example/dist/main.js \
+      $example/dist/main.raw.js
+
+    grep "success" $example/dist/main.js
+  done
+}
+
 function sass-loader {
   set -e
 
@@ -182,6 +206,9 @@ purge_artifacts
 with_webpack "1" run_example babel-loader
 with_webpack "2" run_example babel-loader
 with_webpack "3" run_example babel-loader
+
+with_webpack "2" run_example cache-loader
+with_webpack "3" run_example cache-loader
 
 with_webpack "1" run_example extract-text-webpack-plugin
 with_webpack "2" run_example extract-text-webpack-plugin

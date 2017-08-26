@@ -1,5 +1,11 @@
 ## HappyPack Changelog
 
+### 4.0.0-beta.5
+
+- Support for webpack{2,3} loader context API `this.getDependencies`
+- Support for webpack{2,3} loader context API `this.getContextDependencies`
+- Now interoperable with `cache-loader`
+
 ### 4.0.0-beta.4
 
 - Default to buffered messaging mode when using standalone thread pools on
