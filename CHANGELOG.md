@@ -1,6 +1,54 @@
 ## HappyPack Changelog
 
-### 4.0.0
+### 4.0.0-beta.3
+
+Fixed bug around the use of `process.send()` that was causing a hang on
+Windows with sufficiently large number of modules (and message length.)
+
+The following parse (on Linux) shows the penalty in buffered vs non-buffered
+modes and implementations:
+
+elapsed (ms) | buffering | mean (ms) | penalty (ms)
+------------ | --------- | --------- | ------------
+22211        | none
+21816
+22572
+21179
+21035        |           | 21762.6   | 0
+21723        | basic
+22585
+23372
+22500
+22693        |           | 22574.6   | 812
+24865        | async.queue
+23010
+22717
+23530
+23732        |           | 23570.8   | 1808
+21363        | basic + process.nextTick
+22220
+21901
+21871
+22306        |           | 21932.2   | 170
+23349        | basic (again)
+22043
+21904
+23435
+23508        |           | 22847.8   | 1085
+22735        | basic + process.nextTick (again)
+21793
+22412
+21900
+22656        |           | 22299.2   | 537
+
+### 4.0.0-beta.2
+
+- Errors are now property serialized in `emitWarning` and `emitError` loader
+  APIs. Refs GH-161
+- Deprecation upgrade: now using `loaderUtils.getOptions` instead of
+  `.parseQuery`, refs GH-140
+
+### 4.0.0-beta.1
 
 - Support for file-system caching has been dropped. Use [cache-
   loader](https://github.com/webpack-contrib/cache-loader) if you're after this
