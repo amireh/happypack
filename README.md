@@ -1,28 +1,22 @@
 # HappyPack [![Build Status](https://travis-ci.org/amireh/happypack.svg?branch=master)](https://travis-ci.org/amireh/happypack) [![codecov.io](https://codecov.io/github/amireh/happypack/coverage.svg?branch=master)](https://codecov.io/github/amireh/happypack?branch=master)
 
-HappyPack makes initial webpack builds faster by transforming files in
-parallel.
-
-See ["How it works"](#how-it-works) below for more details.
+HappyPack makes initial webpack builds faster by transforming files [in
+parallel](#how-it-works).
 
 ## Usage
 
-```
+```shell
 npm install --save-dev happypack
 ```
 
 HappyPack provides both a plugin and a loader in order to do its job so you
 must use both to enable it.
 
-The plugin is the default export of the package (what you get by calling
-`require("happypack")`) and can be [configured](#configuration), but at the
-very least it needs to know which loaders to use to process files.
-
 Normally, you define loader rules to tell webpack how to process certain files.
 With HappyPack, you switch things around so that you pass the loaders to
 HappyPack's plugin and instead tell webpack to use `happypack/loader`.
 
-Below is a sample configuration.
+Below is a sample configuration that shows those steps in action.
 
 ```javascript
 // @file: webpack.config.js
@@ -32,7 +26,8 @@ exports.module = {
   loaders: {
     test: /.js$/,
     // 1) replace your original list of loaders with "happypack/loader":
-    loader: 'happypack/loader',
+    // loaders: [ 'babel-loader?presets[]=es2015' ],
+    loaders: [ 'happypack/loader' ],
     include: [ /* ... */ ],
     exclude: [ /* ... */ ]
   }
@@ -42,13 +37,14 @@ exports.plugins = [
   // 2) create the plugin:
   new HappyPack({
     // 3) re-add the loaders you replaced above in #1:
-    loaders: [ 'babel?presets[]=es2015' ]
+    loaders: [ 'babel-loader?presets[]=es2015' ]
   })
 ];
 ```
 
 That's it. Now sources that match `.js$` will be handed off to HappyPack which
-will transform them in parallel using the loaders you specified.
+will transform them in parallel using the loaders you specified (`babel-loader`
+in this example.)
 
 ## Configuration
 
@@ -131,12 +127,12 @@ Defaults to: `3`
 
 ### `threadPool: HappyThreadPool`
 
-A custom thread-pool to use for retrieving worker threads. Normally, this
+A pre-defined thread-pool to use for retrieving worker threads. Normally, this
 is managed internally by each `HappyPlugin` instance, but you may override
 this behavior for better results.
 
-See [the section on thread pools](#shared-thread-pools) below for more
-information about this.
+[The section on thread pools](#shared-thread-pools) explains how and when to
+use this.
 
 Defaults to: `null`
 
@@ -217,10 +213,10 @@ by the second one using the style loaders.
 
 ## Shared thread pools
 
-Normally, each `HappyPlugin` instance you create internally manages its own
-threads which are used to compile sources. However, if you have a number of
-plugins, it can be more optimal to create a thread pool yourself and then
-configure the instances to share that pool, minimizing the idle time of
+Normally, each HappyPack plugin you create internally creates its own threads
+which are used to run the loaders. However, if you're using more than one
+HappyPack plugin it can be more optimal to create a thread pool yourself and
+then configure the plugins to share that pool, minimizing the idle time of
 threads within it.
 
 Here's an example of using a custom pool of 5 threads that will be shared
@@ -288,19 +284,23 @@ The short answer is: yes, it finally does! The longer answer is that you need
 to use [ts-loader](https://github.com/TypeStrong/ts-loader) in 
 "transpiling-only" mode then use the special plugin [fork-ts-checker-notifier-webpack-plugin](https://github.com/johnnyreilly/fork-ts-checker-notifier-webpack-plugin) to perform static type checking.
 
-More information can be found in [this wiki article](https://github.com/amireh/happypack/wiki/TypeScript), in the [ts-loader "happypack mode" section](https://github.com/TypeStrong/ts-loader#happypackmode-boolean-defaultfalse) and you can refer to the [example](./examples/ts-loader) that shows this in action.
+More information can be found in the [ts-loader "happypack mode" section](https://github.com/TypeStrong/ts-loader#happypackmode-boolean-defaultfalse) and you can refer to the [example](./examples/ts-loader) that shows this in action.
 
-Huge thanks to @johnnyreilly, @aindlq, @piotr-oles, @abergs and many others for
+Big thanks to @johnnyreilly, @aindlq, @piotr-oles, @abergs and many others for
 making this work.
 
-### Does it work with loader X or Y?
+### Does it work with loader XYZ?
 
-We're keeping track of known loader support in [this wiki page](https://github.com/amireh/happypack/wiki/Loader-Compatibility-List). Some loaders 
-may require extra configuration to make them work.
+We're keeping track of loader support in [this wiki page](https://github.com/amireh/happypack/wiki/Loader-Compatibility-List). Some loaders may require 
+extra configuration to make them work.
 
 If the loader you're trying to use isn't listed there, you can refer to [this](https://github.com/amireh/happypack/wiki/Webpack-Loader-API-Support) wiki page
 to see which loader APIs are supported. If your loader uses any API that is NOT
 supported, chances are that it will not work with HappyPack.
+
+As a general rule, any loader that accepts "functions" in options will not work
+unless it also accepts reading those options from a file, like babel-loader
+does with `.babelrc` and postcss-loader too.
 
 ## Does it work under Windows?
 
