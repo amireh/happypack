@@ -1,15 +1,9 @@
 # HappyPack [![Build Status](https://travis-ci.org/amireh/happypack.svg?branch=master)](https://travis-ci.org/amireh/happypack) [![codecov.io](https://codecov.io/github/amireh/happypack/coverage.svg?branch=master)](https://codecov.io/github/amireh/happypack?branch=master)
 
-HappyPack makes webpack builds faster by allowing you to transform multiple
-files _in parallel_.
+HappyPack makes initial webpack builds faster by transforming files in
+parallel.
 
-See "How it works" below for more details.
-
-## Motivation
-
-- webpack initial build times are horrifying in large codebases (3k+ modules)
-- something that works for one-time builds (e.g. CI) and for continuous ones
-  (i.e. `--watch` during development)
+See ["How it works"](#how-it-works) below for more details.
 
 ## Usage
 
@@ -17,48 +11,55 @@ See "How it works" below for more details.
 npm install --save-dev happypack
 ```
 
-In your `webpack.config.js`, you need to use the plugin and tell it of the
-loaders it should use to transform the sources.
+HappyPack provides both a plugin and a loader in order to do its job so you
+must use both to enable it.
+
+The plugin is the default export of the package (what you get by calling
+`require("happypack")`) and can be [configured](#configuration), but at the
+very least it needs to know which loaders to use to process files.
+
+Normally, you define loader rules to tell webpack how to process certain files.
+With HappyPack, you switch things around so that you pass the loaders to
+HappyPack's plugin and instead tell webpack to use `happypack/loader`.
+
+Below is a sample configuration.
 
 ```javascript
-var HappyPack = require('happypack');
+// @file: webpack.config.js
+const HappyPack = require('happypack');
+
+exports.module = {
+  loaders: {
+    test: /.js$/,
+    // 1) replace your original list of loaders with "happypack/loader":
+    loader: 'happypack/loader',
+    include: [ /* ... */ ],
+    exclude: [ /* ... */ ]
+  }
+};
 
 exports.plugins = [
+  // 2) create the plugin:
   new HappyPack({
-    // loaders is the only required parameter:
-    loaders: [ 'babel?presets[]=es2015' ],
-
-    // customize as needed, see Configuration below
+    // 3) re-add the loaders you replaced above in #1:
+    loaders: [ 'babel?presets[]=es2015' ]
   })
 ];
 ```
 
-Now you replace your current loaders with HappyPack's loader:
-
-```javascript
-exports.module = {
-  loaders: {
-    test: /.js$/,
-    loaders: [ 'happypack/loader' ],
-    include: [
-      // ...
-    ],
-  }
-};
-```
-
-That's it. Now sources that match `.js$` will be handed off to happypack which
+That's it. Now sources that match `.js$` will be handed off to HappyPack which
 will transform them in parallel using the loaders you specified.
 
 ## Configuration
 
 These are the parameters you can pass to the plugin when you instantiate it.
+`loaders` is the only required parameter.
 
-### `loaders: Array.<String|Object{path: String, query: String}>`
+### `loaders: Array`
 
-Each loader entry consists of the name or path of loader that would
-transform the files and an optional query string to pass to it. This looks
-similar to what you'd pass to webpack's `loader` config.
+Each entry consists of the name (or absolute path) of the loader that
+would transform the files and an optional query string to pass to it. This
+looks similar to what you'd pass to webpack's `loader` config.
 
 > **Heads up!**
 >
@@ -67,6 +68,43 @@ similar to what you'd pass to webpack's `loader` config.
 >
 > See [this wiki page](https://github.com/amireh/happypack/wiki/Webpack-Loader-API-Support) for more details on current Loader API support.
 
+The following notations are officially supported and are all equivalent:
+
+```javascript
+{
+  loaders: [
+    // a string with embedded query for options
+    'babel-loader?presets[]=es2015',
+
+    {
+      loader: 'babel-loader'
+    },
+
+    // "query" string
+    {
+      loader: 'babel-loader',
+      query:  '?presets[]=es2015'
+    },
+
+    // "query" object
+    {
+      loader: 'babel-loader',
+      query: {
+        presets: [ 'es2015' ]
+      }
+    },
+
+    // Webpack 2+ "options" object instead of "query"
+    {
+      loader: 'babel-loader',
+      options: {
+        presets: [ 'es2015' ]
+      }
+    }
+  ]
+}
+```
+
 ### `id: String`
 
 A unique id for this happy plugin. This is used by the loader to know which
@@ -74,9 +112,9 @@ plugin it's supposed to talk to.
 
 Normally, you would not need to specify this unless you have more than one
 HappyPack plugin defined, in which case you'll need distinct IDs to tell them
-apart. See "Using multiple instances" below for more information on that.
+apart. See [this section](#using-multiple-instances) for more information.
 
-Defaults to: "1"
+Defaults to: `"1"`
 
 ### `threads: Number`
 
@@ -97,7 +135,8 @@ A custom thread-pool to use for retrieving worker threads. Normally, this
 is managed internally by each `HappyPlugin` instance, but you may override
 this behavior for better results.
 
-See "Shared thread pools" below for more information about this.
+See [the section on thread pools](#shared-thread-pools) below for more
+information about this.
 
 Defaults to: `null`
 
@@ -110,8 +149,8 @@ Defaults to: `true`
 
 ### `verboseWhenProfiling: Boolean`
 
-Enable this if you want happypack to still produce its output even when you're
-doing a `webpack --profile` run. Since this variable was introduced, happypack
+Enable this if you want HappyPack to still produce its output even when you're
+doing a `webpack --profile` run. Since this variable was introduced, HappyPack
 will be silent when doing a profile build in order not to corrupt any JSON
 output by webpack (i.e. when using `--json` as well.)
 
@@ -153,9 +192,9 @@ exports.plugins = [
   }),
 
   new HappyPack({
-    id: 'coffeescripts',
+    id: 'styles',
     threads: 2,
-    loaders: [ 'coffee-loader' ]
+    loaders: [ 'style-loader', 'css-loader', 'less-loader' ]
   })
 ];
 
@@ -166,15 +205,15 @@ exports.module.loaders = [
   },
 
   {
-    test: /\.coffee$/,
-    loaders: [ 'happypack/loader?id=coffeescripts' ]
+    test: /\.less$/,
+    loaders: [ 'happypack/loader?id=styles' ]
   },
 ]
 ```
 
 Now `.js` files will be handled by the first Happy plugin which will use
-`babel-loader` to transform them, while `.coffee` files will be handled
-by the second one using the `coffee-loader` as a transformer.
+`babel-loader` to transform them, while `.less` files will be handled
+by the second one using the style loaders.
 
 ## Shared thread pools
 
@@ -265,14 +304,12 @@ supported, chances are that it will not work with HappyPack.
 
 ## Does it work under Windows?
 
-There have been a few reports (e.g [GH-99](https://github.com/amireh/happypack/issues/99) and [GH-70](https://github.com/amireh/happypack/issues/70)) that it does not.
-
-It's difficult for me to confirm or to troubleshoot as I have no access to 
-such an environment. If you do and are willing to help, please do!
+Yes, as of version 4.0.0 it should. If you come across issues using the plugin
+on Windows, feel free to open a ticket.
 
 ## License (MIT)
 
-Copyright (c) <2015-2016> <ahmad@amireh.net>
+Copyright (c) <2015-2017> <ahmad@amireh.net>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
