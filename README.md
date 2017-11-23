@@ -23,14 +23,16 @@ Below is a sample configuration that shows those steps in action.
 const HappyPack = require('happypack');
 
 exports.module = {
-  loaders: {
-    test: /.js$/,
-    // 1) replace your original list of loaders with "happypack/loader":
-    // loaders: [ 'babel-loader?presets[]=es2015' ],
-    loaders: [ 'happypack/loader' ],
-    include: [ /* ... */ ],
-    exclude: [ /* ... */ ]
-  }
+  rules: [
+    {
+      test: /.js$/,
+      // 1) replace your original list of loaders with "happypack/loader":
+      // loaders: [ 'babel-loader?presets[]=es2015' ],
+      use: 'happypack/loader',
+      include: [ /* ... */ ],
+      exclude: [ /* ... */ ]
+    }
+  ]
 };
 
 exports.plugins = [
@@ -194,15 +196,15 @@ exports.plugins = [
   })
 ];
 
-exports.module.loaders = [
+exports.module.rules = [
   {
     test: /\.js$/,
-    loaders: [ 'happypack/loader?id=jsx' ]
+    use: 'happypack/loader?id=jsx'
   },
 
   {
     test: /\.less$/,
-    loaders: [ 'happypack/loader?id=styles' ]
+    use: 'happypack/loader?id=styles'
   },
 ]
 ```
