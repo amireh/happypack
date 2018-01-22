@@ -1,5 +1,27 @@
 ## HappyPack Changelog
 
+### 4.0.1
+
+Maintenance release for stripping down the built package to include only
+the source files and to exclude transient/development-specific files. Refs
+GH-205, thanks to @filipesilva.
+
+### 4.0.0
+
+Breaking release with two primary changes:
+
+First, this release contains a fix for a long-standing issue on Windows
+systems where the worker processes would hang indefinitely.
+
+Second, the caching functionality has been removed[1]. Users relying on the
+caching functionality may want to consider using the dedicated
+[cache-loader](https://github.com/webpack-contrib/cache-loader) but please
+keep in mind that this is not officially supported or endorsed by HappyPack
+and is not guaranteed to work (as is the case with other loaders.)
+
+[1] See [this thread](https://github.com/amireh/happypack/issues/154#issuecomment-305627697)
+    for more context about the caching change.
+
 ### 4.0.0-beta.5
 
 - Support for webpack{2,3} loader context API `this.getDependencies`
