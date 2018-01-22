@@ -60,5 +60,12 @@
     "exclude": [
       "lib/**/*.test.js"
     ]
-  }
+  },
+  "files": [
+    "lib",
+    "CHANGELOG.md",
+    "LICENSE",
+    "loader.js",
+    "README.md"
+  ]
 }
