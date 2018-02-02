@@ -270,15 +270,9 @@ See [./CHANGELOG.md](./CHANGELOG.md).
 
 ## FAQ
 
-### Does it work with webpack 2?
+### Does it work with webpack 2/3?
 
-As of version 3.0.3, it does to a certain extent. You can look at
-the [pending issues](https://github.com/amireh/happypack/issues?q=is%3Aopen+is%3Aissue+label%3Awebpack2) to see if any of those
-affect you.
-
-If you come across an issue that is exclusive to webpack 2, a fix has
-to be provided by the community (or you) as the author currently has no
-plans for providing webpack 2 support.
+Yes. You should use version 4.0.1.
 
 ### Does it work with TypeScript?
 
