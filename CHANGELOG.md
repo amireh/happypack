@@ -1,5 +1,8 @@
 ## HappyPack Changelog
 
+### 4.0.1 
+- Released.
+
 ### 4.0.0-beta.5
 
 - Support for webpack{2,3} loader context API `this.getDependencies`
