@@ -1,12 +1,6 @@
 {
   "name": "@happypack-examples/extract-text-webpack-plugin--webpack-1",
   "private": true,
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "1.0.1",

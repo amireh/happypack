@@ -1,11 +1,6 @@
 {
   "name": "@happypack-examples/babel-loader--webpack1",
   "private": true,
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "babel-core": "6.3.26",
     "babel-loader": "6.2.0",

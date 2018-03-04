@@ -5,19 +5,21 @@ env:
 
 node_js:
   - stable
-  - 4
+  - 6
 
 install:
   - npm install --ignore-scripts
   - (cd upstream/webpack1; npm install)
   - (cd upstream/webpack2; npm install)
   - (cd upstream/webpack3; npm install)
+  - (cd upstream/webpack4; npm install)
 
 script:
   - npm run lint
   - npm run test:coverage # this will run the webpack1 suite
   - npm run test:webpack2
   - npm run test:webpack3
+  - npm run test:webpack4
 
 after_success:
   - npm run coverage:ci
@@ -28,3 +30,4 @@ cache:
     - upstream/webpack1/node_modules
     - upstream/webpack2/node_modules
     - upstream/webpack3/node_modules
+    - upstream/webpack4/node_modules

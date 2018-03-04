@@ -1,11 +1,6 @@
 {
   "name": "@happypack-examples/sass-loader--webpack-1",
   "private": true,
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "autoprefixer-loader": "3.2.0",
     "css-loader": "0.23.1",

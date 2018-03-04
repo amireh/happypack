@@ -1,11 +1,6 @@
 {
   "name": "@happypack-examples/source-maps--webpack-1",
   "private": true,
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "babel-core": "6.3.26",
     "babel-loader": "6.2.0"

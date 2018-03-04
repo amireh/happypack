@@ -5,6 +5,8 @@
 - Added support for webpack4 resolving APIs, thanks to @marcokam. Refs GH-215
 - HappyPlugin now accepts `rules` along with `loaders` for the loader list so
   that it's consistent with webpack notation.
+- Minimum supported version of node has been upped to v6.11.5 to match
+  webpack's.
 
 ### 4.0.1
 

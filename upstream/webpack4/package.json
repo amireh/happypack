@@ -2,7 +2,7 @@
   "name": "happypack-test-vendor__webpack4",
   "private": true,
   "dependencies": {
-    "webpack": "4.0.1",
+    "webpack": "4.1.0",
     "webpack-cli": "2.0.10"
   }
 }
