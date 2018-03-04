@@ -38,11 +38,7 @@ function run_example() {
 
     function stage2__build() {
       if [ -f "${build_script}" ]; then
-        (
-          set -e
-          . "${build_script}" "${pkg_dir}" "${out_dir}"
-          set +e
-        )
+        (. "${build_script}" "${pkg_dir}" "${out_dir}")
       else
         $WEBPACK_BIN --bail --config "${pkg_dir}/vanilla/webpack.config.js" &&
         $WEBPACK_BIN --bail --config "${pkg_dir}/happy/webpack.config.js"
@@ -51,11 +47,7 @@ function run_example() {
 
     function stage3__assert() {
       if [ -f "${test_script}" ]; then
-        (
-          set -e
-          cd "${out_dir}"; . "${test_script}"
-          set +e
-        )
+        (cd "${out_dir}"; . "${test_script}")
       else
         return 0
       fi
