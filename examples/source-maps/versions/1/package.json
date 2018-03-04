@@ -1,5 +1,6 @@
 {
-  "name": "happypack-examples__source-maps",
+  "name": "@happypack-examples/source-maps--webpack-1",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

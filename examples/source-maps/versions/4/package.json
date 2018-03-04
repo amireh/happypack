@@ -1,0 +1,8 @@
+{
+  "name": "@happypack-examples/source-maps--webpack-4",
+  "private": true,
+  "dependencies": {
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.3"
+  }
+}
