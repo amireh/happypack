@@ -1,4 +1,3 @@
-var getWebpackVersion = require('./getWebpackVersion');
 var get = require('lodash').get;
 var set = require('lodash').set;
 var assign = require('lodash').assign;
@@ -8,12 +7,35 @@ var VERSION_ANY = '*';
 var VERSION_1 = /^1/;
 var VERSION_2 = /^2/;
 var VERSION_3 = /^3/;
+var VERSION_4 = /^4/;
 var composers = {
   '*': [
     {
       versions: [ VERSION_ANY ],
       composeFn: function(config, directive) {
         return assign({}, config, directive[1]);
+      }
+    }
+  ],
+
+  'entry': [
+    {
+      versions: [ VERSION_ANY ],
+      composeFn: function(config, directive) {
+        return assign({}, config, {
+          entry: directive[1]
+        });
+      }
+    }
+  ],
+
+  'output': [
+    {
+      versions: [ VERSION_ANY ],
+      composeFn: function(config, directive) {
+        return assign({}, config, {
+          output: assign({}, config.output, directive[1])
+        });
       }
     }
   ],
@@ -29,7 +51,7 @@ var composers = {
     },
 
     {
-      versions: [ VERSION_2, VERSION_3 ],
+      versions: [ VERSION_2, VERSION_3, VERSION_4 ],
       composeFn: function(config, directive) {
         var loaders = [].concat(get(config, 'module.rules') || []);
         var loader = assign({}, directive[1]);
@@ -59,7 +81,7 @@ var composers = {
     },
 
     {
-      versions: [ VERSION_2, VERSION_3 ],
+      versions: [ VERSION_2, VERSION_3, VERSION_4 ],
       composeFn: function(config, directive) {
         var baseValue = [].concat(get(config, 'module.rules') || []);
 
@@ -76,7 +98,6 @@ var composers = {
     }
   ],
 
-
   'module.postLoader': [
     {
       versions: [ VERSION_1 ],
@@ -92,7 +113,7 @@ var composers = {
     },
 
     {
-      versions: [ VERSION_2, VERSION_3 ],
+      versions: [ VERSION_2, VERSION_3, VERSION_4 ],
       composeFn: function(config, directive) {
         var baseValue = [].concat(get(config, 'module.rules') || []);
 
@@ -122,7 +143,7 @@ var composers = {
     },
 
     {
-      versions: [ VERSION_2, VERSION_3 ],
+      versions: [ VERSION_2, VERSION_3, VERSION_4 ],
       composeFn: identity
     }
   ],
@@ -142,7 +163,7 @@ var composers = {
       }
     },
     {
-      versions: [ VERSION_2, VERSION_3 ],
+      versions: [ VERSION_2, VERSION_3, VERSION_4 ],
       composeFn: function(config, directive) {
         var resolve = get(config, 'resolve');
         var baseValue = get(resolve, 'modules') || [];
@@ -164,7 +185,7 @@ var composers = {
       }
     },
     {
-      versions: [ VERSION_2, VERSION_3 ],
+      versions: [ VERSION_2, VERSION_3, VERSION_4 ],
       composeFn: function(config, directive) {
         var paths = Object.keys(directive[1]).map(function(key) {
           return directive[1][key];
@@ -183,7 +204,7 @@ var composers = {
       composeFn: identity,
     },
     {
-      versions: [ VERSION_2, VERSION_3 ],
+      versions: [ VERSION_2, VERSION_3, VERSION_4 ],
       composeFn: function(config) {
         var resolveLoader = get(config, 'resolveLoader') || {};
 
@@ -200,7 +221,7 @@ var composers = {
       composeFn: identity,
     },
     {
-      versions: [ VERSION_2, VERSION_3 ],
+      versions: [ VERSION_2, VERSION_3, VERSION_4 ],
       composeFn: function(config, directive) {
         var resolveLoader = get(config, 'resolveLoader') || {};
         var moduleExtensions = get(resolveLoader, 'moduleExtensions') || [];
@@ -210,7 +231,55 @@ var composers = {
         }))
       }
     }
-  ]
+  ],
+
+  'mode': [
+    {
+      versions: [ VERSION_4 ],
+      composeFn: function(config, directive) {
+        return set(config, 'mode', directive[1])
+      }
+    },
+    {
+      versions: [ VERSION_1, VERSION_2, VERSION_3 ],
+      composeFn: function(config, directive) {
+        return config
+      }
+    }
+  ],
+
+  'devtool': [
+    {
+      versions: [ VERSION_ANY ],
+      composeFn: function(config, directive) {
+        return set(config, 'devtool', directive[1])
+      }
+    }
+  ],
+  'plugin': [
+    {
+      versions: [ VERSION_ANY ],
+      composeFn: function(config, directive) {
+        return set(config, 'plugins', [].concat(config.plugins || []).concat(directive[1]))
+      }
+    }
+  ],
+  'context': [
+    {
+      versions: [ VERSION_ANY ],
+      composeFn: function(config, directive) {
+        return set(config, 'context', directive[1])
+      }
+    }
+  ],
+  'bail': [
+    {
+      versions: [ VERSION_ANY ],
+      composeFn: function(config, directive) {
+        return set(config, 'bail', !!directive[1])
+      }
+    }
+  ],
 }
 
 composers['module.loader'] = composers['loader']

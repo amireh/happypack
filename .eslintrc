@@ -4,6 +4,10 @@
     "mocha": true
   },
 
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+
   "rules": {
     "no-trailing-spaces": 2,
     "indent": [2, 2, {

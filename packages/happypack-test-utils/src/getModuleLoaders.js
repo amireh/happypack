@@ -3,6 +3,7 @@ var VERSION_ANY = '*';
 var VERSION_1 = /^1/;
 var VERSION_2 = /^2/;
 var VERSION_3 = /^3/;
+var VERSION_4 = /^4/;
 
 module.exports = function getModuleLoaders(compiler) {
   var webpackVersion = getWebpackVersion();
@@ -10,7 +11,7 @@ module.exports = function getModuleLoaders(compiler) {
   if (versionMatches(webpackVersion)(VERSION_1)) {
     return compiler.options.module.loaders;
   }
-  else if (versionMatches(webpackVersion)([ VERSION_2, VERSION_3 ])) {
+  else if (versionMatches(webpackVersion)([ VERSION_2, VERSION_3, VERSION_4 ])) {
     return compiler.options.module.rules;
   }
 }

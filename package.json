@@ -6,15 +6,19 @@
   "scripts": {
     "lint": "eslint lib",
     "test": "npm run test:webpack1",
-    "test:webpack1": "NODE_PATH=upstream/webpack1/node_modules mocha --opts .mocha",
-    "test:webpack2": "NODE_PATH=upstream/webpack2/node_modules mocha --opts .mocha",
-    "test:webpack3": "NODE_PATH=upstream/webpack3/node_modules mocha --opts .mocha",
+    "test:webpack1": "NODE_PATH='./packages:./upstream/webpack1/node_modules' mocha --opts .mocha",
+    "test:webpack2": "NODE_PATH='./packages:./upstream/webpack2/node_modules' mocha --opts .mocha",
+    "test:webpack3": "NODE_PATH='./packages:./upstream/webpack3/node_modules' mocha --opts .mocha",
+    "test:webpack4": "NODE_PATH='./packages:./upstream/webpack4/node_modules' mocha --opts .mocha",
     "test:coverage": "nyc npm test",
     "test:examples": "./examples/build-all.sh",
     "coverage": "nyc report",
     "coverage:html": "nyc report --reporter html",
     "coverage:ci": "nyc report --reporter=text-lcov > tmp/coverage.lcov && codecov --disable search -f tmp/coverage.lcov",
-    "prepublish": "npm run lint && npm run test:webpack1 && npm run test:webpack2 && npm run test:webpack3 && npm run test:examples"
+    "prepublish": "npm run lint && npm run test:webpack1 && npm run test:webpack2 && npm run test:webpack3 && npm run test:webpack4 && npm run test:examples"
+  },
+  "engines": {
+    "node": ">=6.11.5"
   },
   "repository": {
     "type": "git",
@@ -41,11 +45,9 @@
   "devDependencies": {
     "codecov": "1.0.1",
     "eslint": "2.13.1",
-    "happypack-test-utils": "file:packages/happypack-test-utils",
     "mocha": "3.0.1",
     "multiline-slash": "2.0.0",
-    "nyc": "7.1.0",
-    "webpack-config-composer": "file:packages/webpack-config-composer"
+    "nyc": "7.1.0"
   },
   "dependencies": {
     "async": "1.5.0",
