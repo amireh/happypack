@@ -1,4 +1,4 @@
-var getWebpackVersion = require('webpack-config-composer').getWebpackVersion;
+var { webpackVersion } = require('@happypack/webpack-config-composer');
 var VERSION_ANY = '*';
 var VERSION_1 = /^1/;
 var VERSION_2 = /^2/;
@@ -6,8 +6,6 @@ var VERSION_3 = /^3/;
 var VERSION_4 = /^4/;
 
 module.exports = function getModuleLoaders(compiler) {
-  var webpackVersion = getWebpackVersion();
-
   if (versionMatches(webpackVersion)(VERSION_1)) {
     return compiler.options.module.loaders;
   }
@@ -16,14 +14,14 @@ module.exports = function getModuleLoaders(compiler) {
   }
 }
 
-function versionMatches(webpackVersion) {
+function versionMatches(version) {
   return function(versionStrings) {
     return [].concat(versionStrings).some(function(versionString) {
       if (versionString === VERSION_ANY) {
         return true;
       }
 
-      return webpackVersion.match(versionString);
+      return version.match(versionString);
     })
   }
 }

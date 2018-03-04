@@ -13,6 +13,9 @@ install:
   - (cd upstream/webpack2; npm install)
   - (cd upstream/webpack3; npm install)
   - (cd upstream/webpack4; npm install)
+  - (cd packages/@happypack/example-utils; npm install --ignore-scripts)
+  - (cd packages/@happypack/test-utils; npm install --ignore-scripts)
+  - (cd packages/@happypack/webpack-config-composer; npm install --ignore-scripts)
 
 script:
   - npm run lint

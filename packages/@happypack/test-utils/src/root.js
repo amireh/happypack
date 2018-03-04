@@ -1,5 +1,5 @@
 var path = require('path');
-var rootFragments = [ __dirname, '../../../' ];
+var rootFragments = [ __dirname, '../../../../' ];
 var resolve = path.resolve.bind(path);
 
 exports.join = function() {

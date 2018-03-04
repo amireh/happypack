@@ -1,6 +1,6 @@
 var sinon = require('sinon');
 var chai = require('chai');
-var composer = require('webpack-config-composer');
+var composer = require('@happypack/webpack-config-composer');
 
 sinon.assert.expose(chai.assert, { prefix: "" });
 

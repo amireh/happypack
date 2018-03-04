@@ -1,8 +1,6 @@
-var getWebpackVersion = require('webpack-config-composer').getWebpackVersion;
+var { webpackVersion } = require('@happypack/webpack-config-composer');
 
 module.exports = function multiWebpackAssert(specs) {
-  var webpackVersion = getWebpackVersion();
-
   specs
     .filter(function(x) {
       return [].concat(x[0]).some(function(versionString) {
