@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+declare -a EX_WHITELIST=()
+declare -a EX_BLACKLIST=()
+
 function apply_function() {
   local desc=$1
   shift 1
@@ -52,4 +55,43 @@ function for_each_directory() {
     local dir_name=$(basename "${dir}")
     $fn $dir_name
   done
+}
+
+# check if the user has requested to either skip a task or run it exclusively
+function wants() {
+  if [[ " ${EX_BLACKLIST[@]} " =~ " $1 " ]]; then
+    return 1
+  elif [[ ${#EX_WHITELIST[@]} -ne 0 && ! " ${EX_WHITELIST[@]} " =~ " $1 " ]]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
+function skip() {
+  return 0
+}
+
+# parse -O (only) and -S (skip) options to filter tasks:
+#
+# 1) -O TASK_NAME[ -O TASK_NAME[...]] can be used to specify exactly which tasks
+#    to run
+# 2) -S TASK_NAME[ -S TASK_NAME[...]] can be used to exclude tasks from running
+#
+# you should test whether a task is runnable through the wants() function:
+#
+#     wants "some_task" && run_some_task
+function read_wants() {
+  while getopts ":s:o:ch" opt
+  do
+    case $opt in
+      s) EX_BLACKLIST+=("${OPTARG}")          ;;
+      o) EX_WHITELIST+=("${OPTARG}")          ;;
+      c) tty_colorize                         ;;
+      h) tty_print_help                       ;;
+      *) echo "Invalid option: -$OPTARG" >&2  ;;
+    esac
+  done
+
+  shift "$((OPTIND-1))"
 }

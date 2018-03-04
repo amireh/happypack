@@ -29,6 +29,7 @@ exports.outputDir = module => {
 }
 
 exports.exampleDir = module => exampleInfo(module).dir
+exports.resolve = (module, ...relPath) => path.join(exampleInfo(module).dir, ...relPath)
 
 exports.happyLoader = path.resolve(__dirname, '../../../lib/HappyLoader.js');
 exports.HappyPack = require('../../../lib/HappyPlugin.js')
