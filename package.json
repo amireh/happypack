@@ -44,7 +44,7 @@
   "homepage": "https://github.com/amireh/happypack#readme",
   "devDependencies": {
     "codecov": "1.0.1",
-    "eslint": "2.13.1",
+    "eslint": "4.18.2",
     "mocha": "3.0.1",
     "multiline-slash": "2.0.0",
     "nyc": "7.1.0"

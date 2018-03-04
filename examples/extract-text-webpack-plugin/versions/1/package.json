@@ -1,5 +1,5 @@
 {
-  "name": "happypack-examples__extract-text-webpack-plugin",
+  "name": "@happypack-examples/extract-text-webpack-plugin--webpack-1",
   "private": true,
   "version": "1.0.0",
   "description": "",
@@ -8,16 +8,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-core": "^6.13.2",
-    "babel-loader": "^6.2.4",
-    "babel-preset-es2015": "^6.13.2",
-    "babel-preset-react": "^6.11.1",
     "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "1.0.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "node-sass": "^3.8.0",
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1"
   }

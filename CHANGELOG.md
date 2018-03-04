@@ -1,5 +1,11 @@
 ## HappyPack Changelog
 
+### 5.0.0-beta.1
+
+- Added support for webpack4 resolving APIs, thanks to @marcokam. Refs GH-215
+- HappyPlugin now accepts `rules` along with `loaders` for the loader list so
+  that it's consistent with webpack notation.
+
 ### 4.0.1
 
 Maintenance release for stripping down the built package to include only

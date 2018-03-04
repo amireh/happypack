@@ -7,26 +7,7 @@ if [ ! -d examples ]; then
   exit 1
 fi
 
-. "examples/build/director.sh"
-
-function babel-loader {
-  set -e
-
-  echo "Testing HappyPack with babel-loader"
-  echo "-----------------------------------"
-
-  local example="examples/babel-loader"
-  setup_example $example
-
-  $WEBPACK_BIN --bail --config $example/webpack.config.js
-  $WEBPACK_BIN --bail --config $example/webpack.config--raw.js
-
-  diff \
-    $example/dist/main.js \
-    $example/dist/main.raw.js
-
-  grep "success" $example/dist/main.js
-}
+. "examples/build.util.sh"
 
 function cache-loader {
   set -e
@@ -127,18 +108,27 @@ function extract-text-webpack-plugin {
   echo "Testing HappyPack with ExtractTextPlugin"
   echo "----------------------------------------"
 
-  local example="examples/extract-text-webpack-plugin"
+  local example=${1:-"examples/extract-text-webpack-plugin"}
   setup_example $example
 
-  $WEBPACK_BIN --bail --config $example/webpack.config.js
+  echo "Webpack (WITHOUT HAPPYPACK)"
+
   $WEBPACK_BIN --bail --config $example/webpack.config--raw.js
 
-  diff \
-    $example/dist/styles.css \
-    $example/dist--raw/styles.css
+  echo "Webpack (WITH HAPPYPACK)"
 
-  grep "{ className: 'less scss' },"  $example/dist/main.js
-  grep ".less {"                      $example/dist/styles.css
+  $WEBPACK_BIN --bail --config $example/webpack.config.js
+
+  diff \
+    "${example}/dist/less.css" \
+    "${example}/dist--raw/less.css"
+
+  diff \
+    "${example}/dist/sass.css" \
+    "${example}/dist--raw/sass.css"
+
+  grep "color: red;"                   "${example}/dist/less.css"
+  grep "font-size: 26px;"              "${example}/dist/sass.css"
 }
 
 function source-maps {
@@ -201,43 +191,109 @@ function multi-build {
   grep "success" $example/dist/server.js
 }
 
-purge_artifacts
+function run_example() {
+  local example=$1
+  local example_dir="$(pwd)/examples/${example}"
 
-with_webpack "1" run_example babel-loader
-with_webpack "2" run_example babel-loader
-with_webpack "3" run_example babel-loader
+  function run_version_example() {
+    local version=$1
+    local out_dir="${example_dir}/dist/versions/${version}"
+    local pkg_dir="${example_dir}/versions/${version}"
+    local test_file="${example_dir}/test.sh"
 
-with_webpack "2" run_example cache-loader
-with_webpack "3" run_example cache-loader
+    function stage0__clean_artifacts() {
+      if [ -d "${out_dir}" ]; then
+        rm -r "${out_dir}"
+      else
+        return 0
+      fi
+    }
 
-with_webpack "1" run_example extract-text-webpack-plugin
-with_webpack "2" run_example extract-text-webpack-plugin
-with_webpack "3" run_example extract-text-webpack-plugin
+    function stage1__install_deps() {
+      if [ -f "${pkg_dir}/package.json" ]; then
+        (cd "${pkg_dir}" && npm install)
+      else
+        return 0
+      fi
+    }
 
-with_webpack "1" run_example json-loader
-with_webpack "2" run_example json-loader
-with_webpack "3" run_example json-loader
+    function stage2__build() {
+      $WEBPACK_BIN --bail --config "${pkg_dir}/vanilla/webpack.config.js" &&
+      $WEBPACK_BIN --bail --config "${pkg_dir}/happy/webpack.config.js"
+    }
 
-with_webpack "1" run_example multi-build
-with_webpack "2" run_example multi-build
-with_webpack "3" run_example multi-build
+    function stage3__assert() {
+      if [ -f "${test_file}" ]; then
+        (
+          set -e
+          cd "${out_dir}"; . "${test_file}"
+          set +e
+        )
+      else
+        return 0
+      fi
+    }
 
-with_webpack "1" run_example sass-loader
-with_webpack "2" run_example sass-loader
-with_webpack "3" run_example sass-loader
+    function run_all_stages() {
+      stage0__clean_artifacts &&
+      stage1__install_deps &&
+      with_webpack $version stage2__build &&
+      stage3__assert
+    }
 
-with_webpack "1" run_example source-maps
-with_webpack "2" run_example source-maps
-with_webpack "3" run_example source-maps
+    apply_function "webpack@${version} ${example}" run_all_stages
+  }
 
-with_webpack "1" run_example transform-loader
-with_webpack "2" run_example transform-loader
-with_webpack "3" run_example transform-loader
+  for_each_directory "${example_dir}/versions" run_version_example
+}
 
-with_webpack "1" run_example ts-loader
-with_webpack "2" run_example ts-loader
-with_webpack "3" run_example ts-loader
+for example in examples/*/; do
+  if [ -f "${example}/test.sh" ]; then
+    run_example $(basename "${example}") || exit 1
+  else
+    echo "[WARN] ignoring example \"${example} since it has no test.sh file"
+  fi
+done
 
-with_webpack "1" run_example tslint-loader
-with_webpack "2" run_example tslint-loader
-with_webpack "3" run_example tslint-loader
+# with_webpack "2" run_example cache-loader
+# with_webpack "3" run_example cache-loader
+# with_webpack "4" run_example cache-loader
+
+# with_webpack "1" run_example extract-text-webpack-plugin
+# with_webpack "2" run_example extract-text-webpack-plugin
+# with_webpack "3" run_example extract-text-webpack-plugin
+
+# with_webpack "1" run_example json-loader
+# with_webpack "2" run_example json-loader
+# with_webpack "3" run_example json-loader
+# with_webpack "4" run_example json-loader
+
+# with_webpack "1" run_example multi-build
+# with_webpack "2" run_example multi-build
+# with_webpack "3" run_example multi-build
+# with_webpack "4" run_example multi-build
+
+# with_webpack "1" run_example sass-loader
+# with_webpack "2" run_example sass-loader
+# with_webpack "3" run_example sass-loader
+# with_webpack "4" run_example sass-loader
+
+# with_webpack "1" run_example source-maps
+# with_webpack "2" run_example source-maps
+# with_webpack "3" run_example source-maps
+# with_webpack "4" run_example source-maps
+
+# with_webpack "1" run_example transform-loader
+# with_webpack "2" run_example transform-loader
+# with_webpack "3" run_example transform-loader
+# with_webpack "4" run_example transform-loader
+
+# with_webpack "1" run_example ts-loader
+# with_webpack "2" run_example ts-loader
+# with_webpack "3" run_example ts-loader
+# with_webpack "4" run_example ts-loader
+
+# with_webpack "1" run_example tslint-loader
+# with_webpack "2" run_example tslint-loader
+# with_webpack "3" run_example tslint-loader
+# with_webpack "4" run_example tslint-loader

@@ -1,5 +1,6 @@
 {
-  "name": "happypack-examples__babel-loader",
+  "name": "@happypack-examples/babel-loader--webpack3",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

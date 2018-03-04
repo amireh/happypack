@@ -1,0 +1,5 @@
+{
+  "name": "@happypack/example-utils",
+  "main": "index.js",
+  "private": true
+}
