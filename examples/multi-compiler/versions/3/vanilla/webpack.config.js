@@ -1,0 +1,1 @@
+module.exports = require('../../2/vanilla/webpack.config.js')

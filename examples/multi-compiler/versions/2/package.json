@@ -1,0 +1,10 @@
+{
+  "name": "@happypack-examples/multi-compiler--webpack-1",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+  }
+}

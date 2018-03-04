@@ -1,8 +1,8 @@
 {
-  "name": "happypack-examples__multi-build",
+  "name": "@happypack-examples/multi-compiler--webpack-1",
+  "private": true,
   "version": "1.0.0",
   "description": "",
-  "main": "a.js",
   "author": "",
   "license": "ISC",
   "devDependencies": {

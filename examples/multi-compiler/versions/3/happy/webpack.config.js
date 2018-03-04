@@ -1,0 +1,1 @@
+module.exports = require('../../2/happy/webpack.config.js')
