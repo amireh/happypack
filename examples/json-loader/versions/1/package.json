@@ -1,5 +1,6 @@
 {
-  "name": "happypack-examples__json-loader",
+  "name": "@happypack-examples/json-loader--webpack-1",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
