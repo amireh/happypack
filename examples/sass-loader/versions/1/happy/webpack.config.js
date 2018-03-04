@@ -1,13 +1,13 @@
-var path = require('path');
-var HappyPack = require('../../');
-var composeWebpackConfig = require('../composeWebpackConfig');
+const path = require('path');
+const e = require('@happypack/example-utils')
+const { HappyPack } = e;
 
-module.exports = composeWebpackConfig({
+module.exports = {
   context: path.resolve(__dirname),
-  entry: path.resolve(__dirname, 'lib/index.scss'),
+  entry: e.resolve(module, 'lib/index.scss'),
 
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: e.outputDir(module),
     filename: '[name].js'
   },
 
@@ -22,8 +22,8 @@ module.exports = composeWebpackConfig({
     loaders: [
       {
         test: /\.scss$/,
-        loader: path.resolve(__dirname, '../../loader')
+        loader: e.happyLoader
       }
     ]
   }
-});
+}

@@ -1,13 +1,13 @@
-var path = require('path');
-var composeWebpackConfig = require('../composeWebpackConfig');
+const path = require('path');
+const e = require('@happypack/example-utils')
 
-module.exports = composeWebpackConfig({
+module.exports = ({
   context: path.resolve(__dirname),
-  entry: path.resolve(__dirname, 'lib/index.scss'),
+  entry: e.resolve(module, 'lib/index.scss'),
 
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].raw.js'
+    path: e.outputDir(module),
+    filename: '[name].js'
   },
 
   module: {

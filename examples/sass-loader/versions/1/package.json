@@ -1,5 +1,6 @@
 {
-  "name": "happypack-examples__sass-loader",
+  "name": "@happypack-examples/sass-loader--webpack-1",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
