@@ -1,5 +1,10 @@
 ## HappyPack Changelog
 
+### 5.0.0-beta.2
+
+- Fixed deprecation notice introduced by webpack 4 re `compiler.plugin`. Thanks
+  to @log2-hwan, refs GH-218.
+
 ### 5.0.0-beta.1
 
 - Added support for webpack4 resolving APIs, thanks to @marcokam. Refs GH-215

@@ -2,7 +2,7 @@
   "name": "happypack",
   "main": "./lib/HappyPlugin.js",
   "description": "webpack speed booster, makes you happy!",
-  "version": "5.0.0-beta.1",
+  "version": "5.0.0-beta.2",
   "scripts": {
     "lint": "eslint lib",
     "test": "npm run test:webpack1",
@@ -10,7 +10,7 @@
     "test:webpack2": "NODE_PATH='./packages:./upstream/webpack2/node_modules' mocha --opts .mocha",
     "test:webpack3": "NODE_PATH='./packages:./upstream/webpack3/node_modules' mocha --opts .mocha",
     "test:webpack4": "NODE_PATH='./packages:./upstream/webpack4/node_modules' mocha --opts .mocha",
-    "test:coverage": "nyc npm test",
+    "test:coverage": "nyc --silent npm run test:webpack1 && nyc --silent --no-clean npm run test:webpack2 && nyc --silent --no-clean npm run test:webpack3 && nyc --no-clean npm run test:webpack4",
     "test:examples": "./examples/build-all.sh",
     "coverage": "nyc report",
     "coverage:html": "nyc report --reporter html",
@@ -47,7 +47,7 @@
     "eslint": "4.18.2",
     "mocha": "3.0.1",
     "multiline-slash": "2.0.0",
-    "nyc": "7.1.0"
+    "nyc": "11.6.0"
   },
   "dependencies": {
     "async": "1.5.0",
