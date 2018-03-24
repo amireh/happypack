@@ -1,5 +1,10 @@
 ## HappyPack Changelog
 
+### 5.0.0-beta.3
+
+- The `rules` option that was introduced in 5.0.0-beta.1 was meant to be named
+  `use` and has thus been renamed. Sorry about the confusion!
+
 ### 5.0.0-beta.2
 
 - Fixed deprecation notice introduced by webpack 4 re `compiler.plugin`. Thanks
