@@ -2,7 +2,7 @@
   "name": "happypack",
   "main": "./lib/HappyPlugin.js",
   "description": "webpack speed booster, makes you happy!",
-  "version": "5.0.0-beta.3",
+  "version": "5.0.0-beta.4",
   "scripts": {
     "lint": "eslint lib",
     "test": "npm run test:webpack1",
