@@ -1,5 +1,9 @@
 ## HappyPack Changelog
 
+### 5.0.0
+
+Official support for webpack 4.
+
 ### 5.0.0-beta.4
 
 - The `use` option now works FRD. Who thought renaming variables would be so
