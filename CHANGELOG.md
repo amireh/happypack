@@ -1,5 +1,10 @@
 ## HappyPack Changelog
 
+### 5.0.0-beta.4
+
+- The `use` option now works FRD. Who thought renaming variables would be so
+  hard? Refs GH-225, thanks to @inoyakaigor
+
 ### 5.0.0-beta.3
 
 - The `rules` option that was introduced in 5.0.0-beta.1 was meant to be named

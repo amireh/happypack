@@ -15,7 +15,7 @@ module.exports = ({
 
   plugins: [
     new HappyPack({
-      rules: [
+      use: [
         e.resolve(module, 'identity-loader.js'),
         'babel-loader',
       ],

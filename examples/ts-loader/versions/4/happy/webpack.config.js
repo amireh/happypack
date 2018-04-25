@@ -31,7 +31,7 @@ module.exports = ({
     new HappyPack({
       id: 'ts',
       threads: 2,
-      rules: [
+      use: [
         {
           path: 'ts-loader',
           query: {

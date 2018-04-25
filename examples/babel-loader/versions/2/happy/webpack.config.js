@@ -13,7 +13,7 @@ module.exports = {
 
   plugins: [
     new HappyPack({
-      rules: [{
+      use: [{
         path: 'babel-loader',
         query: {
           plugins: [

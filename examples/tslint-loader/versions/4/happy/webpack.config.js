@@ -15,7 +15,7 @@ module.exports = ({
 
   plugins: [
     new HappyPack({
-      loaders: [ 'tslint-loader' ],
+      use: [ 'tslint-loader' ],
       threads: 2
     })
   ],
