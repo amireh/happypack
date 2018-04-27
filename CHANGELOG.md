@@ -1,39 +1,50 @@
-## HappyPack Changelog
+# HappyPack Changelog
 
-### 5.0.0
+## 5.0.0
 
-Official support for webpack 4.
+### Breaking changes
 
-### 5.0.0-beta.4
+- Minimum supported version of node is now 6.11.5
+
+### Features
+
+- Added support for webpack 4
+- New option `use`
+- New option `loaders`
+
+## 5.0.0-beta.4
 
 - The `use` option now works FRD. Who thought renaming variables would be so
   hard? Refs GH-225, thanks to @inoyakaigor
 
-### 5.0.0-beta.3
+## 5.0.0-beta.3
 
 - The `rules` option that was introduced in 5.0.0-beta.1 was meant to be named
   `use` and has thus been renamed. Sorry about the confusion!
 
-### 5.0.0-beta.2
+## 5.0.0-beta.2
 
 - Fixed deprecation notice introduced by webpack 4 re `compiler.plugin`. Thanks
   to @log2-hwan, refs GH-218.
 
-### 5.0.0-beta.1
+## 5.0.0-beta.1
 
 - Added support for webpack4 resolving APIs, thanks to @marcokam. Refs GH-215
 - HappyPlugin now accepts `rules` along with `loaders` for the loader list so
   that it's consistent with webpack notation.
+  
+### Breaking changes
+
 - Minimum supported version of node has been upped to v6.11.5 to match
   webpack's.
 
-### 4.0.1
+## 4.0.1
 
 Maintenance release for stripping down the built package to include only
 the source files and to exclude transient/development-specific files. Refs
 GH-205, thanks to @filipesilva.
 
-### 4.0.0
+## 4.0.0
 
 Breaking release with two primary changes:
 
@@ -49,18 +60,18 @@ and is not guaranteed to work (as is the case with other loaders.)
 [1] See [this thread](https://github.com/amireh/happypack/issues/154#issuecomment-305627697)
     for more context about the caching change.
 
-### 4.0.0-beta.5
+## 4.0.0-beta.5
 
 - Support for webpack{2,3} loader context API `this.getDependencies`
 - Support for webpack{2,3} loader context API `this.getContextDependencies`
 - Now interoperable with `cache-loader`
 
-### 4.0.0-beta.4
+## 4.0.0-beta.4
 
 - Default to buffered messaging mode when using standalone thread pools on
   Windows.
 
-### 4.0.0-beta.3
+## 4.0.0-beta.3
 
 Fixed bug around the use of `process.send()` that was causing a hang on
 Windows with sufficiently large number of modules (and message length.)
@@ -101,14 +112,14 @@ elapsed (ms) | buffering | mean (ms) | penalty (ms)
 21900
 22656        |           | 22299.2   | 537
 
-### 4.0.0-beta.2
+## 4.0.0-beta.2
 
 - Errors are now property serialized in `emitWarning` and `emitError` loader
   APIs. Refs GH-161
 - Deprecation upgrade: now using `loaderUtils.getOptions` instead of
   `.parseQuery`, refs GH-140
 
-### 4.0.0-beta.1
+## 4.0.0-beta.1
 
 - Support for file-system caching has been dropped. Use [cache-
   loader](https://github.com/webpack-contrib/cache-loader) if you're after this
@@ -127,31 +138,31 @@ elapsed (ms) | buffering | mean (ms) | penalty (ms)
   config (e.g. to adjust the loader listings) this option had very little
   value.
 
-### 3.1.0
+## 3.1.0
 
 - Fixed an edge race condition re cache signatures. Thanks to @saifelse, refs GH-159
 - Now propagating loader errors correctly to webpack from background processes. Thanks to @zinserjan, refs GH-14
 - Now exposing "minimize" to loader contexts. Thanks to @adventure-yunfei, refs GH-139
 
-### 3.0.3
+## 3.0.3
 
 - Added more webpack2 compatibility fixes
 - Fixed an issue that was causing cached files to be ignored. Thanks to
   @lijianzhang, refs GH-115
 
-### 3.0.2
+## 3.0.2
 
 - Accept "this.plugins" as a function in the loader context since webpack2
   now allows it to either be an object or a function. Thanks to @grigory51,
   refs GH-106
 
-### 3.0.1
+## 3.0.1
 
 - The temporary file path used for writing a loader's output is now suffixed
   with a random identifier to work around an edge case reported in GH-92. 
   Big thanks to @frankLife for the effort.
 
-### 3.0.0
+## 3.0.0
 
 This release, although it's a major one, was mostly concerned with internal
 changes and improvements to how the plugin worked. Most side-effects and global
@@ -191,7 +202,7 @@ register active compiler or loader instances. Instead, this book-keeping is done
 - The internal API `HappyThreadPool.get` has been dropped. Instead, the thread pool exposes a `compile` API similar to the Thread's.
 - The internal API `HappyThreadPool.getRPCHandler` has been dropped
 
-### 2.2.1
+## 2.2.1
 
 - Fixed an edge-case issue that was causing happypack to crash when a shared 
   threadpool is used by a pre-loader and a loader (or post-loader) that are 
@@ -200,87 +211,87 @@ register active compiler or loader instances. Instead, this book-keeping is done
   verbose to `false` and introduced the `debug` option to control diagnostic
   message logging. Refs GH-64
 
-### 2.2.0
+## 2.2.0
 
 - Fixed a regression in scanning loader "string chains" (multiple loaders 
   specified in the same string separated by `!`), refs GH-68
 - Added support for the loader API `this.loadModule()` which is used by
   less-loader, refs GH-66
 
-### 2.1.3
+## 2.1.3
 
 - Fixed an issue where certain loader configurations with queries weren't being
   properly recognized by HappyPack. Now, all known configuration variants 
   should work. (GH-65 and GH-26)
 
-### 2.1.2
+## 2.1.2
 
 - Process argv will no longer be passed to the child processes spawned by 
   HappyPack (refs GH-47)
 - Support for the `target` loader context variable has been added. Thanks to 
   @Akkuma (refs GH-46)
 
-### 2.1.1
+## 2.1.1
 
 - Fixed an issue where happypack would crash when loading invalid/corrupt 
   cache or source-map files. Big thanks to @benhughes for providing the patch in GH-42
 
-### 2.1.0
+## 2.1.0
 
 - Introduced SourceMap support
 
-### 2.0.6
+## 2.0.6
 
 - Introduced a new option `cacheSignatureGenerator` to handle use cases such
   as [GH-35]
 
-### 2.0.5
+## 2.0.5
 
 - Now using [mkdirp](https://github.com/substack/node-mkdirp) for creating the 
   temp directory to support nested ones
 
-### 2.0.4
+## 2.0.4
 
 - Fixed an issue where the cache was not being utilized on node v0.10 (since 
   `fs.statSync` doesn't exist with that name there) - thanks to [@XVincentX]
 
-### 2.0.2
+## 2.0.2
 
 - Fixed an issue that was causing loaders running in foreground to not receive 
   the compiler options
 
-### 2.0.1
+## 2.0.1
 
 - Package in NPM is now compact
 
-### 2.0.0
+## 2.0.0
 
 - Pitching loader support
 - More complete loader API support
 - More convenient configuration interface
 
-### 1.1.4
+## 1.1.4
 
 - Fixed an issue where the cache was being improperly invalidated due to 
   `cacheContext` not being stored properly (refs GH-17, thanks to @blowery)
 
-### 1.1.3
+## 1.1.3
 
 - Fixed an issue where the initial cache was not being saved properly
 
-### 1.1.2
+## 1.1.2
 
 - Fixed an issue on old node versions (0.10) with the EventEmitter API (GH-10)
 - Fixed an issue that was breaking the compiler if an invalid `threads` option
   was passed (evaluating to `NaN`)
 
-### 1.1.1
+## 1.1.1
 
 - Unrecognized and invalid config parameters will now cause the process to
   abort
 - The active version is logged on launch
 
-### 1.1.0
+## 1.1.0
 
 - Now supporting basic webpack loaders
 - Dropped the `transformer` parameter as it's no longer needed
@@ -288,6 +299,6 @@ register active compiler or loader instances. Instead, this book-keeping is done
 - Now using a forking model utilizing node.js's `process.fork()` for cleaner
   threading code
 
-### 1.0.2
+## 1.0.2
 
 - Loader will now accept IDs that aren't just numbers
