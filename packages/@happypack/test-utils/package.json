@@ -7,7 +7,7 @@
     "chai": "4.1.0",
     "fs-extra": "3.0.1",
     "invariant": "2.2.2",
-    "lodash": "4.17.4",
+    "lodash": "4.17.5",
     "sinon": "1.17.7"
   }
 }

@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "invariant": "2.2.2",
-    "lodash": "4.17.4"
+    "lodash": "4.17.5"
   },
   "devDependencies": {
     "chai": "4.1.0",
