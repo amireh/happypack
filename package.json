@@ -15,7 +15,7 @@
     "coverage": "nyc report",
     "coverage:html": "nyc report --reporter html",
     "coverage:ci": "nyc report --reporter=text-lcov > tmp/coverage.lcov && codecov --disable search -f tmp/coverage.lcov",
-    "prepublish": "npm run lint && npm run test:webpack1 && npm run test:webpack2 && npm run test:webpack3 && npm run test:webpack4 && npm run test:examples"
+    "prepublishOnly": "npm run lint && npm run test:webpack1 && npm run test:webpack2 && npm run test:webpack3 && npm run test:webpack4 && npm run test:examples"
   },
   "engines": {
     "node": ">=6.11.5"

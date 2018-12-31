@@ -6,7 +6,7 @@ You will need to npm install in a few places for it to work (look at
 A monstrous invocation like this should do it:
 
 ```shell
-npm install --ignore-scripts &&
+npm install &&
 for dir in {packages/@happypack,upstream}/*
 do
   ( cd $dir && npm install ) || exit $?

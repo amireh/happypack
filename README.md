@@ -3,6 +3,22 @@
 HappyPack makes initial webpack builds faster by transforming files [in
 parallel](#how-it-works).
 
+> **Maintenance mode notice**
+>
+> My interest in the project is fading away mainly because I'm not using
+> JavaScript as much as I was in the past. Additionally, Webpack's native
+> performance is improving and (I hope) it will soon make this plugin
+> unnecessary.
+>
+> See the FAQ entry about Webpack 4 and [thread-loader][thread-loader].
+>
+> Contributions are always welcome. Changes I make from this point will be
+> restricted to bug-fixing. If someone wants to take over, feel free to get
+> in touch.
+>
+> Thanks to everyone who used the library, contributed to it and helped in
+> refining it!!!
+
 ## Usage
 
 ```shell
@@ -270,9 +286,22 @@ See [./CHANGELOG.md](./CHANGELOG.md).
 
 ## FAQ
 
-### Does it work with webpack 2/3?
+### Does it work with Webpack 2 & 3?
 
-Yes. You should use version 4.0.1.
+Yes. You should use version >= 4.0.1 (of HappyPack).
+
+### Is it necessary for Webpack 4?
+
+Short answer: _maybe_ not.
+
+Long answer: there's now a competing add-on in the form of a _loader_ for
+processing files in multiple threads, exactly what HappyPack does. The fact
+that it's a loader and not a plugin (or both, in case of H.P.) makes it much
+simpler to configure. Look at [thread-loader][thread-loader] and if it works
+for you - that's great, otherwise you can try HappyPack and see which fares
+better for you.
+
+YMMV.
 
 ### Does it work with TypeScript?
 
@@ -316,3 +345,5 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[thread-loader]: https://github.com/webpack-contrib/thread-loader
