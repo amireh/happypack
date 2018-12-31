@@ -298,10 +298,14 @@ As a general rule, any loader that accepts "functions" in options will not work
 unless it also accepts reading those options from a file, like babel-loader
 does with `.babelrc` and postcss-loader too.
 
-## Does it work under Windows?
+### Does it work under Windows?
 
 Yes, as of version 4.0.0 it should. If you come across issues using the plugin
 on Windows, feel free to open a ticket.
+
+## Development
+
+See [HACKING.md](./HACKING.md).
 
 ## License (MIT)
 

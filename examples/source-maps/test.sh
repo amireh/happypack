@@ -1,1 +1,0 @@
-diff ./happy/main.js.map ./vanilla/main.js.map
