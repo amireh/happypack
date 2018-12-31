@@ -10,12 +10,6 @@ module.exports = {
     filename: '[name].js'
   },
 
-  resolveLoader: {
-    root: [
-      path.resolve(__dirname, '../node_modules')
-    ]
-  },
-
   module: {
     loaders: [
       {

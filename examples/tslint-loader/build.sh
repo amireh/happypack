@@ -1,3 +1,6 @@
-local pkg_dir=$1
+#!/usr/bin/env bash
 
-$WEBPACK_BIN --bail --config "${pkg_dir}/happy/webpack.config.js" | egrep -i "forbidden .?var.? keyword"
+cd "${EXAMPLE_PKG_DIR}" &&
+
+webpack --bail --config ./happy/webpack.config.js \
+  | grep -qEi "forbidden .?var.? keyword"

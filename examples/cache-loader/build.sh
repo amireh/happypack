@@ -1,15 +1,20 @@
-local pkg_dir=$1
-local out_dir=$2
+#!/usr/bin/env bash
 
 # we need to do this twice to make use of the cache
-for i in {0..1}; do
-  [ -d "${out_dir}" ] && rm -r "${out_dir}"
+build-and-test() {
+  cd "${EXAMPLE_PKG_DIR}" &&
 
-  $WEBPACK_BIN --bail --config "${pkg_dir}/vanilla/webpack.config.js"
-  $WEBPACK_BIN --bail --config "${pkg_dir}/happy/webpack.config.js"
+  rm -rf "${EXAMPLE_OUT_DIR}" &&
 
-  diff "${out_dir}/happy/main.js" "${out_dir}/vanilla/main.js"
+  webpack --bail --config ./vanilla/webpack.config.js &&
+  webpack --bail --config ./happy/webpack.config.js &&
 
-  grep "success" "${out_dir}/happy/main.js"
-  grep "success" "${out_dir}/vanilla/main.js"
-done
+  cd "${EXAMPLE_OUT_DIR}" &&
+
+  git-diff ./happy/main.js ./vanilla/main.js &&
+
+  grep -q 'success' ./happy/main.js &&
+  grep -q 'success' ./vanilla/main.js
+}
+
+build-and-test && build-and-test
