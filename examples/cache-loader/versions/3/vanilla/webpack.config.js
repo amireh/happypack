@@ -16,7 +16,12 @@ module.exports = {
         test: /\.js$/,
         include: [ e.resolve(module, 'lib') ],
         use: [
-          'cache-loader',
+          {
+            loader: 'cache-loader',
+            options: {
+              cacheDirectory: path.join(e.outputDir(module), '.cache')
+            }
+          },
           'babel-loader?presets[]=es2015&presets[]=react'
         ],
       }

@@ -1,14 +1,26 @@
 const path = require('path');
 const e = require('@happypack/example-utils');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 
 module.exports = {
   context: path.resolve(__dirname),
   entry: e.resolve(module, 'lib/a.js'),
+  devtool: false,
 
   output: {
     path: e.outputDir(module),
     filename: '[name].js'
   },
+
+  plugins: [
+    new HardSourceWebpackPlugin({
+      cacheDirectory: path.join(e.outputDir(module), '.cache/[confighash]'),
+      info: {
+        mode: 'none',
+        level: 'debug',
+      },
+    }),
+  ],
 
   module: {
     rules: [
@@ -16,13 +28,7 @@ module.exports = {
         test: /\.js$/,
         include: [ e.resolve(module, 'lib') ],
         use: [
-          {
-            loader: 'cache-loader',
-            options: {
-              cacheDirectory: path.join(e.outputDir(module), '.cache')
-            }
-          },
-          'babel-loader?presets[]=es2015&presets[]=react'
+          'babel-loader?presets[]=env&presets[]=react'
         ],
       }
     ]

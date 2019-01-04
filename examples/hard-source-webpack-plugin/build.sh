@@ -11,8 +11,8 @@ build-and-test() {
 
   git-diff ./happy/main.js ./vanilla/main.js &&
 
-  grep -q 'success' ./happy/main.js &&
-  grep -q 'success' ./vanilla/main.js
+  ( node vanilla/main.js | grep -q 'success' ) &&
+  ( node happy/main.js | grep -q 'success' )
 }
 
 rm -rf "${EXAMPLE_OUT_DIR}" && build-and-test && build-and-test
