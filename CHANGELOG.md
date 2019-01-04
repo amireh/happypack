@@ -1,5 +1,10 @@
 # HappyPack Changelog
 
+## 5.0.1
+
+- Fixed an issue causing HappyPack to fail when hard-source-webpack-plugin 
+  is enabled on Webpack 3. Refs GH-251, thanks to @FengXianGuo for the fix!
+
 ## 5.0.0
 
 ### Breaking changes
