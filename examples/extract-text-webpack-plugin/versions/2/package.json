@@ -6,7 +6,7 @@
     "extract-text-webpack-plugin": "2.1.2",
     "less": "3.0.1",
     "less-loader": "4.0.6",
-    "node-sass": "4.7.2",
+    "node-sass": "4.14.1",
     "sass-loader": "6.0.7",
     "style-loader": "0.20.2"
   }
